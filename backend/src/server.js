@@ -2,10 +2,12 @@ const pool = require('./config/db.js');
 const express = require("express");
 const app = express();
 const usersRouter = require('./routes/users.routes.js');
+const clientsRouter = require('./routes/clients.routes.js');
 
 app.use(express.json());
 
 app.use('/api/users', usersRouter);
+app.use('/api/clients', clientsRouter);
 
 
 
