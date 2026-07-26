@@ -1,0 +1,147 @@
+DROP TABLE IF EXISTS activity_logs;
+DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS tasks;
+DROP TABLE IF EXISTS audits;
+DROP TABLE IF EXISTS template_tasks;
+DROP TABLE IF EXISTS audit_templates;
+DROP TABLE IF EXISTS clients;
+DROP TABLE IF EXISTS users;
+
+
+
+
+CREATE TABLE users (
+	id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(255) UNIQUE NOT NULL,
+	password_hash TEXT NOT NULL,
+	role VARCHAR(20) NOT NULL,
+	phone_number VARCHAR(20),
+	is_active BOOLEAN DEFAULT TRUE,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE clients (
+	id SERIAL PRIMARY KEY,
+	company_name VARCHAR(100) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	location VARCHAR(255) NOT NULL,
+	phone_number VARCHAR(20),
+	industry VARCHAR(50) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE audit_templates(
+	id SERIAL PRIMARY KEY,
+	name varchar(100) not null,
+	description varchar(255),
+	audit_type varchar(50) not null, 
+	version int not null,
+	is_active boolean default true, 
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE template_tasks (
+    id SERIAL PRIMARY KEY,
+
+    template_id INT REFERENCES audit_templates(id),
+
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(255),
+
+    priority VARCHAR(50) NOT NULL,
+    order_number INT NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE audits (
+	id SERIAL PRIMARY KEY,
+	client_id INTEGER NOT NULL REFERENCES clients(id),
+	template_id INTEGER NOT NULL REFERENCES audit_templates(id),
+	manager_id INTEGER NOT NULL REFERENCES users(id),
+
+	audit_year INT NOT NULL,
+	audit_type VARCHAR(50) NOT NULL,
+
+	start_date DATE NOT NULL ,
+	due_date DATE NOT NULL,
+
+	priority VARCHAR(30) NOT NULL,
+	status VARCHAR(30) NOT NULL,
+
+	description VARCHAR(300) ,
+
+	is_archived BOOLEAN DEFAULT FALSE,
+	archived_at TIMESTAMP,
+	
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tasks (
+    id SERIAL PRIMARY KEY,
+
+    audit_id INT NOT NULL REFERENCES audits(id),
+    template_task_id INT NOT NULL REFERENCES template_tasks(id),
+
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(300),
+
+    assigned_auditor_id INT NOT NULL REFERENCES users(id),
+
+    priority VARCHAR(30) NOT NULL,
+    status VARCHAR(30) NOT NULL,
+
+    start_date DATE NOT NULL,
+    due_date DATE NOT NULL,
+    completed_at TIMESTAMP,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+
+    task_id INT NOT NULL REFERENCES tasks(id),
+    user_id INT NOT NULL REFERENCES users(id),
+    
+    content VARCHAR(300) not null,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE documents (
+    id SERIAL PRIMARY KEY,
+
+    task_id INT NOT NULL REFERENCES tasks(id),
+    uploaded_by INT NOT NULL REFERENCES users(id),
+
+    file_name VARCHAR(100) NOT NULL,
+    file_path VARCHAR(300) NOT NULL,
+
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE activity_logs(
+    id SERIAL PRIMARY KEY,
+
+    task_id INT  REFERENCES tasks(id),
+    changes_by INT NOT NULL REFERENCES users(id),
+
+    action VARCHAR(100) NOT NULL,
+
+	old_value TEXT,
+	new_value TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
