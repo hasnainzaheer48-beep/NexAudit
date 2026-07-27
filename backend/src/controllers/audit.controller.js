@@ -4,7 +4,18 @@ const pool = require('../config/db');
 
 const getAudits = async (req, res) => {
     try {
-        const result = await pool.query(`SELECT * FROM audits`);
+        const result = await pool.query(`SELECT
+                                        audits.*,
+                                        clients.company_name AS client,
+                                        users.first_name || ' ' || users.last_name AS manager,
+                                        audit_templates.name AS template
+                                        FROM audits
+                                        JOIN clients
+                                        ON audits.client_id = clients.id
+                                        JOIN users
+                                        ON audits.manager_id = users.id
+                                        JOIN audit_templates
+                                        ON audits.template_id = audit_templates.id`);
         res.json(result.rows);
     }
 
@@ -19,7 +30,19 @@ const getAudits = async (req, res) => {
 const getAuditById = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query(`SELECT * FROM audits WHERE id= $1`, [id]);
+        const result = await pool.query(`SELECT
+                                        audits.*,
+                                        clients.company_name AS client,
+                                        users.first_name || ' ' || users.last_name AS manager,
+                                        audit_templates.name AS template
+                                        FROM audits
+                                        JOIN clients
+                                        ON audits.client_id = clients.id
+                                        JOIN users
+                                        ON audits.manager_id = users.id
+                                        JOIN audit_templates
+                                        ON audits.template_id = audit_templates.id
+                                        WHERE audits.id = $1`, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send("Could not fetch Audit");
         }
@@ -140,20 +163,20 @@ const updateAudit = async (req, res) => {
         const { id } = req.params;
         const result = await pool.query(`UPDATE audits
                                          SET
-                                         client_id = COALESCE($1),
-                                         manager_id = COALESCE($2),
-                                         audit_year = COALESCE($3),
-                                         audit_type = COALESCE($4),
+                                         client_id = COALESCE($1, client_id),
+                                         manager_id = COALESCE($2, manager_id),
+                                         audit_year = COALESCE($3, audit_year),
+                                         audit_type = COALESCE($4, audit_type),
 
-                                         priority = COALESCE($5),
-                                         status = COALESCE($6),
+                                         priority = COALESCE($5, priority),
+                                         status = COALESCE($6, status),
 
-                                         description = COALESCE($7),
-                                         start_date = COALESCE($8),
-                                         due_date = COALESCE($9),
-                                         is_archived = COALESCE($10),
+                                         description = COALESCE($7, description),
+                                         start_date = COALESCE($8, start_date),
+                                         due_date = COALESCE($9, due_date),
+                                         is_archived = COALESCE($10, is_archived),
 
-                                         updated_at = CURRENT_TIME
+                                         updated_at = CURRENT_TIMESTAMP
 
                                          WHERE id= $11
                                          
