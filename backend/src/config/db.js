@@ -1,7 +1,6 @@
 let { Pool } = require("pg");
 let dotenv = require("dotenv");
 
-dotenv.config();
 
 dotenv.config();
 
