@@ -6,6 +6,7 @@ const clientsRouter = require('./routes/clients.routes.js');
 const auditTemplatesRouter = require('./routes/audit.templates.routes.js');
 const templateTaskRouter = require('./routes/template.tasks.routes.js')
 const auditsRouter = require('./routes/audits.routes.js');
+const tasksRouter = require('./routes/tasks.routes.js');
 
 app.use(express.json());
 
@@ -14,6 +15,7 @@ app.use('/api/clients', clientsRouter);
 app.use('/api/audit-templates', auditTemplatesRouter);
 app.use('/api/template-tasks', templateTaskRouter);
 app.use('/api/audits', auditsRouter);
+app.use('/api/tasks', tasksRouter);
 
 
 
