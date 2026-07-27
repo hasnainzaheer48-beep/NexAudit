@@ -51,16 +51,19 @@ CREATE TABLE audit_templates(
 CREATE TABLE template_tasks (
     id SERIAL PRIMARY KEY,
 
-    template_id INT REFERENCES audit_templates(id),
+    template_id INT REFERENCES audit_templates(id) ON DELETE CASCADE,
 
     title VARCHAR(100) NOT NULL,
     description VARCHAR(255),
 
-    priority VARCHAR(50) NOT NULL,
+    priority VARCHAR(50) DEFAULT 'Medium' NOT NULL
+	CHECK (priority IN ('Low', 'Medium', 'High', 'Critical')),
     order_number INT NOT NULL,
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+	UNIQUE (template_id, order_number)
 );
 
 CREATE TABLE audits (
@@ -76,7 +79,7 @@ CREATE TABLE audits (
 	due_date DATE NOT NULL,
 
 	priority VARCHAR(30) NOT NULL,
-	status VARCHAR(30) DEFAULT DRAFT NOT NULL,
+	status VARCHAR(30) DEFAULT 'DRAFT' NOT NULL,
 
 	description VARCHAR(300) ,
 
