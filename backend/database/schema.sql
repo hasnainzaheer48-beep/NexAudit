@@ -76,7 +76,7 @@ CREATE TABLE audits (
 	due_date DATE NOT NULL,
 
 	priority VARCHAR(30) NOT NULL,
-	status VARCHAR(30) NOT NULL,
+	status VARCHAR(30) DEFAULT DRAFT NOT NULL,
 
 	description VARCHAR(300) ,
 

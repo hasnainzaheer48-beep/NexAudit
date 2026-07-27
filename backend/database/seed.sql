@@ -54,7 +54,6 @@ audit_type,
 start_date,
 due_date,
 priority,
-status,
 description
 )
 VALUES
@@ -67,7 +66,6 @@ VALUES
 '2026-08-01',
 '2026-09-01',
 'High',
-'Planned',
 'Annual financial audit'
 );
 
