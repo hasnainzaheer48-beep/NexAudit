@@ -99,13 +99,15 @@ CREATE TABLE tasks (
     title VARCHAR(100) NOT NULL,
     description VARCHAR(300),
 
-    assigned_auditor_id INT NOT NULL REFERENCES users(id),
+    assigned_auditor_id INT REFERENCES users(id),
 
-    priority VARCHAR(30) NOT NULL,
-    status VARCHAR(30) NOT NULL,
+    priority VARCHAR(30) NOT NULL DEFAULT 'Medium',
+	CHECK (priority IN ('Low', 'Medium', 'High', 'Critical')),
+    status VARCHAR(30) NOT NULL DEFAULT 'Draft',
+	CHECK (status IN('Not Started', 'In Progress', 'Finished')),
 
-    start_date DATE NOT NULL,
-    due_date DATE NOT NULL,
+    start_date DATE ,
+    due_date DATE ,
     completed_at TIMESTAMP,
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
