@@ -90,7 +90,7 @@ VALUES
 'Review bank statements and cash records',
 2,
 'High',
-'Not Started',
+'Draft',
 '2026-08-01',
 '2026-08-10'
 ),
@@ -101,7 +101,7 @@ VALUES
 'Check inventory records',
 2,
 'Medium',
-'Not Started',
+'Draft',
 '2026-08-01',
 '2026-08-15'
 );

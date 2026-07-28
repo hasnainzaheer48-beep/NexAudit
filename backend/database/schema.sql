@@ -104,7 +104,7 @@ CREATE TABLE tasks (
     priority VARCHAR(30) NOT NULL DEFAULT 'Medium',
 	CHECK (priority IN ('Low', 'Medium', 'High', 'Critical')),
     status VARCHAR(30) NOT NULL DEFAULT 'Draft',
-	CHECK (status IN('Not Started', 'In Progress', 'Finished')),
+	CHECK (status IN('Draft', 'In Progress', 'Finished')),
 
     start_date DATE ,
     due_date DATE ,
