@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { getTasks, getTaskById, updateTask, deleteTask } = require('../controllers/tasks.controller');
+const { authenticate } = require('../middlewares/auth.middleware');
+
+router.use(authenticate);
 
 router.get('/', getTasks);
 router.get('/:id', getTaskById);

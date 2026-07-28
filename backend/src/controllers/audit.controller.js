@@ -149,9 +149,14 @@ const getAuditById = async (req, res) => {
 
 const createAudit = async (req, res) => {
 
+
+    if (!req.user) {
+        return res.status(401).send("Unauthorized");
+    }
+
     const { client_id,
         template_id,
-        manager_id,
+
 
         audit_year,
         audit_type,
@@ -162,6 +167,10 @@ const createAudit = async (req, res) => {
         start_date,
         due_date } = req.body;
 
+    const manager_id = req.user.id;
+
+
+
     if (!client_id) {
         return res.status(400).send("Client id is required");
     }
@@ -170,9 +179,7 @@ const createAudit = async (req, res) => {
         return res.status(400).send("Template Id is required");
     }
 
-    if (!manager_id) {
-        return res.status(400).send("Manager id is required");
-    }
+
 
     if (!audit_year) {
         return res.status(400).send("Audit Year is required");
