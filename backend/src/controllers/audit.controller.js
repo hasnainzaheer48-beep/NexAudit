@@ -10,11 +10,12 @@ const getAudits = async (req, res) => {
                                         users.first_name || ' ' || users.last_name AS manager,
                                         audit_templates.name AS template
                                         FROM audits
-                                        JOIN clients
+
+                                        LEFT JOIN clients
                                         ON audits.client_id = clients.id
-                                        JOIN users
+                                        LEFT JOIN users
                                         ON audits.manager_id = users.id
-                                        JOIN audit_templates
+                                        LEFT JOIN audit_templates
                                         ON audits.template_id = audit_templates.id`);
         res.json(result.rows);
     }
