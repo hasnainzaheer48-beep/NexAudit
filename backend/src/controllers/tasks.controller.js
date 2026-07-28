@@ -174,4 +174,33 @@ const deleteTask = async (req, res) => {
     }
 }
 
-module.exports = { getTasks, getTaskById, updateTask, deleteTask };
+
+const getTasksByAudit = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const audit = await pool.query(`SELECT id FROM audits where id=$1`, [id]);
+        if (audit.rows.length === 0) {
+            return res.status(404).send('Audit not found');
+        }
+        const result = await pool.query(`SELECT   
+                                        id,
+                                        title,
+                                        description,
+                                        priority,
+                                        status,
+                                        assigned_auditor_id,
+                                        due_date
+                                        FROM tasks WHERE audit_id = $1`, [id]);
+        if (result.rows.length === 0) {
+            return res.status(200).send([]);
+        }
+        return res.json(result.rows);
+    }
+
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could not get tasks");
+    }
+}
+
+module.exports = { getTasks, getTaskById, updateTask, deleteTask, getTasksByAudit };
