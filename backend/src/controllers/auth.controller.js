@@ -47,6 +47,38 @@ const login = async (req, res) => {
 
 }
 
+
+const getCurrentUser = async (req, res) => {
+
+    const id = req.user.id;
+
+    try {
+        const result = await pool.query(`SELECT
+                                            id,
+                                            first_name,
+                                            last_name,
+                                            role,
+                                            email,
+                                            phone_number,
+                                            is_active
+                                        FROM users
+                                        WHERE id = $1`, [id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).send("User not found");
+        }
+
+        return res.send(result.rows[0]);
+
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Could not get User');
+    }
+}
+
+
+
 module.exports = {
-    login
+    login, getCurrentUser
 };
