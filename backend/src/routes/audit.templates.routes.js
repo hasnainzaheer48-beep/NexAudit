@@ -6,6 +6,9 @@ const { getAuditTemplates,
 
 const express = require('express');
 const router = express.Router();
+const { authenticate } = require('../middlewares/auth.middleware');
+
+router.use(authenticate);
 
 router.get('/', getAuditTemplates);
 router.get('/:id', getAuditTemplateById);

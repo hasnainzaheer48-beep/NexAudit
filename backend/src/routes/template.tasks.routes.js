@@ -6,7 +6,9 @@ const {
     createTemplateTask,
     updateTemplateTask,
     deleteTemplateTask } = require('../controllers/template.tasks.controller');
+const { authenticate } = require('../middlewares/auth.middleware');
 
+router.use(authenticate)
 
 router.get('/', getTemplateTasks);
 
