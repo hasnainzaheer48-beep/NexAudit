@@ -310,4 +310,45 @@ const assignAuditor = async (req, res) => {
     }
 };
 
+
+const getTasksByAuditor = async (req, res) => {
+
+    try {
+
+        const auditorId = req.user.id;
+        const result = await pool.query(`
+            SELECT
+            tasks.id,
+            tasks.title,
+            tasks.description,
+            tasks.priority,
+            tasks.status,
+            tasks.start_date,
+            tasks.due_date,
+        clients.company_name AS client,
+        audits.id AS audit_id,
+        audits.audit_type AS audit_type
+        
+        FROM tasks
+        
+        JOIN audits
+        ON tasks.audit_id = audits.id
+        
+        JOIN clients
+        ON audits.client_id = clients.id
+        
+        WHERE tasks.assigned_auditor_id = $1
+
+
+        ORDER BY tasks.due_date ASC
+        `, [auditorId]);
+        res.send(result.rows);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could not get tasks");
+    }
+}
+
+
 module.exports = { getTasks, getTaskById, updateTask, deleteTask, getTasksByAudit, assignAuditor };
