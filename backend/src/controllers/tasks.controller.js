@@ -310,4 +310,4 @@ const assignAuditor = async (req, res) => {
     }
 };
 
-module.exports = { getTasks, getTaskById, updateTask, deleteTask, getTasksByAudit };
+module.exports = { getTasks, getTaskById, updateTask, deleteTask, getTasksByAudit, assignAuditor };
