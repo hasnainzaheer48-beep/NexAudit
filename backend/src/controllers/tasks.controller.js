@@ -342,13 +342,44 @@ const getTasksByAuditor = async (req, res) => {
 
         ORDER BY tasks.due_date ASC
         `, [auditorId]);
-        res.send(result.rows);
+        res.json(result.rows);
     }
     catch (error) {
         console.error(error);
         res.status(500).send("Could not get tasks");
     }
 }
+
+
+const updateTaskStatus = async (req, res) => {
+
+    const auditorId = req.user.id;
+    const { status } = req.body;
+    const task_id = req.params.id;
+
+    try {
+
+
+        const result = await pool.query(`
+           UPDATE tasks
+           SET 
+           status = $1,
+           updated_at = CURRENT_TIMESTAMP
+           WHERE id = $2
+           AND assigned_auditor_id = $3
+           RETURNING id, title, status, updated_at
+        `, [status, task_id, auditorId]);
+        if (result.rows.length === 0) {
+            return res.send('Could not find task')
+        }
+        res.json(result.rows[0]);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could not update task status");
+    }
+}
+
 
 
 module.exports = { getTasks, getTaskById, updateTask, deleteTask, getTasksByAudit, assignAuditor };
