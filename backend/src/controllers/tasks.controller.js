@@ -1,5 +1,6 @@
 const pool = require('../config/db');
 const { createActivityLog } = require('../utils/activityLogger');
+const { buildChanges } = require('../utils/buildChanges');
 //get Tasks
 
 const getTasks = async (req, res) => {
@@ -107,6 +108,11 @@ const updateTask = async (req, res) => {
             due_date,
             completed_at } = req.body;
         const { id } = req.params;
+        const oldRecord = await pool.query(`SELECT * FROM tasks where id=$1`, [id]);
+        if (oldRecord.rows.length === 0) {
+            return res.status(404).send("Could not fetch Task");
+        }
+
         const result = await pool.query(`UPDATE tasks
                                          SET
                                          audit_id = COALESCE($1, audit_id),
@@ -140,6 +146,26 @@ const updateTask = async (req, res) => {
             return res.status(404).send("Could not fetch Task");
         }
 
+        const { oldValue, newValue } = buildChanges(oldRecord.rows[0], result.rows[0], [
+            "audit_id",
+            "template_task_id",
+            "title",
+            "description",
+            "assigned_auditor_id",
+            "priority",
+            "status",
+            "start_date",
+            "due_date",
+            "completed_at"]);
+        await createActivityLog({
+            entityId: id,
+            entityType: 'Task',
+            changedBy: req.user.id,
+            action: 'Updated',
+            oldValue,
+            newValue
+
+        });
 
         res.json(result.rows[0]);
     }

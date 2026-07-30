@@ -1,4 +1,6 @@
 const pool = require('../config/db');
+const { createActivityLog } = require('../utils/activityLogger');
+const { buildChanges } = require('../utils/buildChanges');
 
 //Get All Clients
 
@@ -38,23 +40,34 @@ const getClientById = async (req, res) => {
 
 const createClient = async (req, res) => {
     try {
-        let { client_name,
+        let { company_name,
             email,
             location,
             phone_number,
             industry } = req.body;
         let result = await pool.query(`INSERT
-                                         INTO clients(client_name,
+                                         INTO clients(company_name,
                                          email,
                                          location,
                                          phone_number,
                                          industry)
                                         values ($1,$2,$3,$4,$5)
                                         RETURNING *`,
-            [client_name, email, location, phone_number, industry]
+            [company_name, email, location, phone_number, industry]
         );
 
-        res.json(result.rows[0]);
+        const client = result.rows[0];
+        await createActivityLog(
+            {
+                entityId: client.id,
+                entityType: 'Client',
+                changedBy: req.user.id,
+                action: 'Created',
+                newValue: client
+            }
+        );
+
+        res.json(client);
     }
 
     catch (error) {
@@ -67,7 +80,7 @@ const createClient = async (req, res) => {
 
 const updateClient = async (req, res) => {
     try {
-        const { client_name,
+        const { company_name,
             email,
             phone_number,
             location,
@@ -75,10 +88,15 @@ const updateClient = async (req, res) => {
 
         const { id } = req.params;
 
+        const oldRecord = await pool.query(`
+            SELECT *
+            FROM clients
+            WHERE id =$1`, [id]);
+
         const result = await pool.query(`
                 UPDATE clients
                 SET 
-                client_name = COALESCE($1, client_name),
+                company_name = COALESCE($1, company_name),
                 email = COALESCE($2, email),
                 phone_number = COALESCE($3, phone_number),
                 location = COALESCE($4, location),
@@ -88,7 +106,7 @@ const updateClient = async (req, res) => {
                 WHERE id = $6
 
                 RETURNING *
-                `, [client_name,
+                `, [company_name,
             email,
             phone_number,
             location,
@@ -97,6 +115,22 @@ const updateClient = async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).send("Client Not Found");
         }
+
+        const { oldValue, newValue } = buildChanges(oldRecord.rows[0], result.rows[0], [
+            "company_name",
+            "email",
+            "phone_number",
+            "location",
+            "industry"]);
+
+        await createActivityLog({
+            entityId: id,
+            entityType: 'Client',
+            changedBy: req.user.id,
+            action: 'Updated',
+            oldValue,
+            newValue
+        });
 
         res.json(result.rows[0]);
 
