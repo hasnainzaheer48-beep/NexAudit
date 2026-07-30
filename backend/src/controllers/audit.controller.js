@@ -1,5 +1,6 @@
 const pool = require('../config/db');
 const { createActivityLog } = require('../utils/activityLogger');
+const { buildChanges } = require('../utils/buildChanges');
 
 //Get all Audits
 
@@ -307,6 +308,8 @@ const updateAudit = async (req, res) => {
         if (status === 'Finished') {
             return res.status(400).send("Use /complete endpoint to complete an audit");
         }
+
+        const oldRecord = await pool.query(`SELECT * FROM audits where id =$1`, [id]);
         const result = await pool.query(`UPDATE audits
                                          SET
                                          client_id = COALESCE($1, client_id),
@@ -347,12 +350,27 @@ const updateAudit = async (req, res) => {
             return res.status(404).send("Could not fetch Audit");
         }
 
+        const { oldValue, newValue } = buildChanges(oldRecord.rows[0], result.rows[0], ["client_id",
+            "manager_id",
+            "audit_year",
+            "audit_type",
+
+            "priority",
+            "status",
+
+            "description",
+            "start_date",
+            "due_date",
+            "is_archived",])
+
         await createActivityLog(
             {
                 entityId: id,
                 entityType: 'Audit',
                 changedBy: req.user.id,
-                action: 'Update',
+                action: 'Updated',
+                oldValue,
+                newValue
 
             }
         )

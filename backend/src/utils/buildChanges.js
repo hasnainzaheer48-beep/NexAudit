@@ -10,4 +10,6 @@ function buildChanges(oldRecord, newRecord, fields) {
 
     return { oldValue, newValue };
 
-}; 
+};
+
+module.exports = { buildChanges };
