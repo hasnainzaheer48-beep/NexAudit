@@ -378,10 +378,52 @@ const deleteAudit = async (req, res) => {
 }
 
 
+const getAuditprogress = async (req, res) => {
+    const auditId = req.params.id;
+    try {
+        const auditResult = await pool.query(`SELECT id FROM audits WHERE id=$1`, [auditId]);
+        const audit = auditResult.rows;
+        if (audit.length === 0) {
+            return res.status(404).send("Audit Not Found");
+        }
+
+        const totalTaskResult = await pool.query(`SELECT COUNT(status) FROM tasks WHERE audit_id = $1 `, [auditId]);
+        const finishedTaskResult = await pool.query(`SELECT COUNT(status) FROM tasks WHERE audit_id = $1 AND status='Finished' `, [auditId]);
+
+
+        const totalTask = Number(totalTaskResult.rows[0].count);
+        if (totalTask === 0) {
+            return res.json({
+                total_task: 0,
+                finished_task: 0,
+                progress: 0
+            })
+        }
+        const finishedTask = Number(finishedTaskResult.rows[0].count);
+
+        let progress = Math.round((finishedTask / totalTask) * 100);
+        return res.json({
+            total_task: totalTask,
+            finished_task: finishedTask,
+            progress: progress
+        })
+
+    }
+
+    catch (error) {
+        console.error(error);
+        return res.send('Could not fetch progress');
+    }
+
+
+}
+
+
 module.exports = {
     getAudits,
     getAuditById,
     createAudit,
     updateAudit,
-    deleteAudit
+    deleteAudit,
+    getAuditprogress
 }
