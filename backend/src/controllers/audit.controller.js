@@ -303,6 +303,9 @@ const updateAudit = async (req, res) => {
             due_date,
             is_archived } = req.body;
         const { id } = req.params;
+        if (status === 'Finished') {
+            return res.status(400).send("Use /complete endpoint to complete an audit");
+        }
         const result = await pool.query(`UPDATE audits
                                          SET
                                          client_id = COALESCE($1, client_id),
@@ -418,6 +421,53 @@ const getAuditprogress = async (req, res) => {
 
 }
 
+const finishAudit = async (req, res) => {
+    const auditId = req.params.id;
+    try {
+        const auditResult = await pool.query(`SELECT id,status FROM audits WHERE id=$1`, [auditId]);
+        if (auditResult.rows.length === 0) {
+            return res.status(404).send("Audit Not Found");
+        }
+        const audit = auditResult.rows[0];
+        if (audit.status === 'Finished') {
+            return res.status(400).send('Audit is already Completed');
+        }
+
+        const taskCount = await pool.query(`
+            SELECT
+            COUNT(*)
+            FROM tasks
+            WHERE 
+            audit_id = $1
+            `, [auditId])
+
+        if (Number(taskCount.rows[0].count) === 0) {
+            return res.status(400).send("Audit has no tasks");
+        }
+
+        const taskResult = await pool.query(`
+            SELECT COUNT(*)
+            FROM tasks
+            WHERE audit_id = $1
+            AND status<>'Finished'`, [auditId]);
+        const task = Number(taskResult.rows[0].count);
+        if (task != 0) {
+            return res.status(400).send("There are unifinished tasks");
+        }
+
+        const updateAuditStatus = await pool.query(`
+            UPDATE audits
+            SET status = 'Finished'
+            WHERE id = $1
+            RETURNING id, status
+            `, [auditId]);
+        res.json(updateAuditStatus.rows[0]);
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).send("Failed to change status of audit to complete");
+    }
+}
 
 module.exports = {
     getAudits,
@@ -425,5 +475,6 @@ module.exports = {
     createAudit,
     updateAudit,
     deleteAudit,
-    getAuditprogress
+    getAuditprogress,
+    finishAudit
 }
