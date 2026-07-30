@@ -310,4 +310,76 @@ const assignAuditor = async (req, res) => {
     }
 };
 
-module.exports = { getTasks, getTaskById, updateTask, deleteTask, getTasksByAudit, assignAuditor };
+
+const getTasksByAuditor = async (req, res) => {
+
+    try {
+
+        const auditorId = req.user.id;
+        const result = await pool.query(`
+            SELECT
+            tasks.id,
+            tasks.title,
+            tasks.description,
+            tasks.priority,
+            tasks.status,
+            tasks.start_date,
+            tasks.due_date,
+        clients.company_name AS client,
+        audits.id AS audit_id,
+        audits.audit_type AS audit_type
+        
+        FROM tasks
+        
+        JOIN audits
+        ON tasks.audit_id = audits.id
+        
+        JOIN clients
+        ON audits.client_id = clients.id
+        
+        WHERE tasks.assigned_auditor_id = $1
+
+
+        ORDER BY tasks.due_date ASC
+        `, [auditorId]);
+        res.json(result.rows);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could not get tasks");
+    }
+}
+
+
+const updateTaskStatus = async (req, res) => {
+
+    const auditorId = req.user.id;
+    const { status } = req.body;
+    const task_id = req.params.id;
+
+    try {
+
+
+        const result = await pool.query(`
+           UPDATE tasks
+           SET 
+           status = $1,
+           updated_at = CURRENT_TIMESTAMP
+           WHERE id = $2
+           AND assigned_auditor_id = $3
+           RETURNING id, title, status, updated_at
+        `, [status, task_id, auditorId]);
+        if (result.rows.length === 0) {
+            return res.send('Could not find task')
+        }
+        res.json(result.rows[0]);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could not update task status");
+    }
+}
+
+
+
+module.exports = { getTasks, getTaskById, updateTask, deleteTask, getTasksByAudit, assignAuditor, updateTaskStatus, getTasksByAuditor };
