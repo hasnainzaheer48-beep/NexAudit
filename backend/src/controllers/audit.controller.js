@@ -1,4 +1,5 @@
 const pool = require('../config/db');
+const { createActivityLog } = require('../utils/activityLogger');
 
 //Get all Audits
 
@@ -458,9 +459,27 @@ const finishAudit = async (req, res) => {
         const updateAuditStatus = await pool.query(`
             UPDATE audits
             SET status = 'Finished'
+            updated_at = CURRENT_TIMESTAMP
             WHERE id = $1
             RETURNING id, status
             `, [auditId]);
+
+        await createActivityLog(
+            {
+                entityId: auditId,
+                entityType: 'Audit',
+                changedBy: req.user.id,
+                action: 'Completed',
+                oldValue: {
+                    status: auditResult.rows[0].status
+
+                },
+                newValue: {
+                    status: updateAuditStatus.rows[0].status
+
+                }
+            }
+        );
         res.json(updateAuditStatus.rows[0]);
     }
     catch (error) {
