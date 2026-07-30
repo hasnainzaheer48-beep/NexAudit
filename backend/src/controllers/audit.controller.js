@@ -263,6 +263,30 @@ const createAudit = async (req, res) => {
                 ]);
         }
 
+        await createActivityLog({
+            entityId: audit.id,
+            entityType: 'Audit',
+            changedBy: req.user.id,
+            action: 'Created',
+            oldValue: null,
+            newValue: {
+                client: client_id,
+                template: template_id,
+                manager: manager_id,
+
+                audit_year: audit_year,
+                audit_type: audit_type,
+
+                priority: priority,
+
+
+                description: description,
+                start_date: start_date,
+                due_date: due_date
+
+            },
+            db: client
+        });
         await client.query("COMMIT");
 
         res.json(audit);

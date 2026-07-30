@@ -1,12 +1,15 @@
+const pool = require('../config/db');
+
 const createActivityLog = async ({
     entityId,
     entityType,
     changedBy,
     action,
     oldValue = null,
-    newValue = null
+    newValue = null,
+    db = pool
 }) => {
-    await pool.query(`
+    await db.query(`
     INSERT INTO
     activity_logs(  
             entity_id,
