@@ -347,7 +347,15 @@ const updateAudit = async (req, res) => {
             return res.status(404).send("Could not fetch Audit");
         }
 
+        await createActivityLog(
+            {
+                entityId: id,
+                entityType: 'Audit',
+                changedBy: req.user.id,
+                action: 'Update',
 
+            }
+        )
         res.json(result.rows[0]);
     }
 
