@@ -417,5 +417,6 @@ module.exports = {
     getAuditById,
     createAudit,
     updateAudit,
-    deleteAudit
+    deleteAudit,
+    getAuditprogress
 }
