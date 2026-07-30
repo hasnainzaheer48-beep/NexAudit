@@ -424,12 +424,44 @@ const getAuditprogress = async (req, res) => {
 const finishAudit = async (req, res) => {
     const auditId = req.params.id;
     try {
-        const auditResult = await pool.query(`SELECT id FROM audits WHERE id=$1`, [auditId]);
+        const auditResult = await pool.query(`SELECT id,status FROM audits WHERE id=$1`, [auditId]);
         if (auditResult.rows.length === 0) {
             return res.status(404).send("Audit Not Found");
         }
         const audit = auditResult.rows[0];
-        res.send(audit);
+        if (audit.status === 'Finished') {
+            return res.status(400).send('Audit is already Completed');
+        }
+
+        const taskCount = await pool.query(`
+            SELECT
+            COUNT(*)
+            FROM tasks
+            WHERE 
+            audit_id = $1
+            `, [auditId])
+
+        if (Number(taskCount.rows[0].count) === 0) {
+            return res.status(400).send("Audit has no tasks");
+        }
+
+        const taskResult = await pool.query(`
+            SELECT COUNT(*)
+            FROM tasks
+            WHERE audit_id = $1
+            AND status<>'Finished'`, [auditId]);
+        const task = Number(taskResult.rows[0].count);
+        if (task != 0) {
+            return res.status(400).send("There are unifinished tasks");
+        }
+
+        const updateAuditStatus = await pool.query(`
+            UPDATE audits
+            SET status = 'Finished'
+            WHERE id = $1
+            RETURNING id, status
+            `, [auditId]);
+        res.json(updateAuditStatus.rows[0]);
     }
     catch (error) {
         console.error(error);
