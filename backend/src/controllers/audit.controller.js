@@ -382,19 +382,26 @@ const getAuditprogress = async (req, res) => {
     const auditId = req.params.id;
     try {
         const auditResult = await pool.query(`SELECT id FROM audits WHERE id=$1`, [auditId]);
-        const audit = auditResult.rows[0];
+        const audit = auditResult.rows;
         if (audit.length === 0) {
             return res.status(404).send("Audit Not Found");
         }
 
         const totalTaskResult = await pool.query(`SELECT COUNT(status) FROM tasks WHERE audit_id = $1 `, [auditId]);
-        if (totalTaskResult.rows.length === 0) {
-            return res.status(200).send("Audit has no tasks");
-        }
         const finishedTaskResult = await pool.query(`SELECT COUNT(status) FROM tasks WHERE audit_id = $1 AND status='Finished' `, [auditId]);
-        const totalTask = totalTaskResult.rows[0];
-        const finishedTask = finishedTaskResult.rows[0];
-        let progress = (finishedTask / totalTask) * 100;
+
+
+        const totalTask = Number(totalTaskResult.rows[0].count);
+        if (totalTask === 0) {
+            return res.json({
+                total_task: 0,
+                finished_task: 0,
+                progress: 0
+            })
+        }
+        const finishedTask = Number(finishedTaskResult.rows[0].count);
+
+        let progress = Math.round((finishedTask / totalTask) * 100);
         return res.json({
             total_task: totalTask,
             finished_task: finishedTask,
