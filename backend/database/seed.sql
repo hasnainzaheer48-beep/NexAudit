@@ -235,21 +235,82 @@ VALUES
 -- ACTIVITY LOGS
 
 INSERT INTO activity_logs
-(task_id,changes_by,action,old_value,new_value)
+(entity_id, entity_type, changed_by, action, old_value, new_value)
 VALUES
 
 (
-1,
-2,
-'Assigned Task',
-NULL,
-'Assigned to Usman Raza'
+    1,
+    'Audit',
+    2,
+    'Created',
+    NULL,
+    '{"status":"Draft","priority":"High"}'
+),
+
+
+(
+    1,
+    'Audit',
+    2,
+    'Completed',
+    '{"status":"In Progress"}',
+    '{"status":"Finished"}'
+),
+
+
+(
+    5,
+    'Task',
+    2,
+    'Assigned Auditor',
+    '{"assigned_auditor_id":null}',
+    '{"assigned_auditor_id":4}'
+),
+
+
+(
+    5,
+    'Task',
+    4,
+    'Status Updated',
+    '{"status":"Draft"}',
+    '{"status":"In Progress"}'
 ),
 
 (
-3,
-3,
-'Completed Task',
-'In Progress',
-'Finished'
+    5,
+    'Task',
+    4,
+    'Status Updated',
+    '{"status":"In Progress"}',
+    '{"status":"Finished"}'
+),
+
+
+(
+    2,
+    'Client',
+    2,
+    'Updated',
+    '{"phone_number":"03001234567"}',
+    '{"phone_number":"03111234567"}'
+),
+
+(
+    1,
+    'Audit Template',
+    2,
+    'Updated',
+    '{"version":1}',
+    '{"version":2}'
+),
+
+
+(
+    7,
+    'User',
+    1,
+    'Archived',
+    '{"is_active":true}',
+    '{"is_active":false}'
 );
