@@ -126,7 +126,7 @@ VALUES
 '2026-01-10',
 '2026-03-10',
 'High',
-'IN PROGRESS',
+'In Progress',
 'Annual financial audit for TechNova'
 ),
 
@@ -139,7 +139,7 @@ VALUES
 '2026-02-01',
 '2026-04-01',
 'Medium',
-'DRAFT',
+'Draft',
 'Compliance audit for GreenFields'
 );
 

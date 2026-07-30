@@ -303,6 +303,9 @@ const updateAudit = async (req, res) => {
             due_date,
             is_archived } = req.body;
         const { id } = req.params;
+        if (status === 'Finished') {
+            return res.status(400).send("Use /complete endpoint to complete an audit");
+        }
         const result = await pool.query(`UPDATE audits
                                          SET
                                          client_id = COALESCE($1, client_id),
@@ -418,6 +421,21 @@ const getAuditprogress = async (req, res) => {
 
 }
 
+const finishAudit = async (req, res) => {
+    const auditId = req.params.id;
+    try {
+        const auditResult = await pool.query(`SELECT id FROM audits WHERE id=$1`, [auditId]);
+        if (auditResult.rows.length === 0) {
+            return res.status(404).send("Audit Not Found");
+        }
+        const audit = auditResult.rows[0];
+        res.send(audit);
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).send("Failed to change status of audit to complete");
+    }
+}
 
 module.exports = {
     getAudits,
@@ -425,5 +443,6 @@ module.exports = {
     createAudit,
     updateAudit,
     deleteAudit,
-    getAuditprogress
+    getAuditprogress,
+    finishAudit
 }
