@@ -1,6 +1,7 @@
 const createActivityLog = async ({
     entityId,
     entityType,
+    changedBy,
     action,
     oldValue = null,
     newValue = null
@@ -18,6 +19,7 @@ const createActivityLog = async ({
     $1,$2,$3,$4,$5,$6
     )`, [entityId,
         entityType,
+        changedBy,
         action,
         oldValue,
         newValue]);

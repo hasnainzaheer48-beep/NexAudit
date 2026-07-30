@@ -1,5 +1,5 @@
 const pool = require('../config/db');
-
+const { createActivityLog } = require('../utils/activityLogger');
 //get Tasks
 
 const getTasks = async (req, res) => {
@@ -302,9 +302,26 @@ const assignAuditor = async (req, res) => {
             [newAuditorId, taskId]
         );
 
-        return res.json(updatedTask.rows[0]);
+        await createActivityLog({
+            entityId: taskId,
+            entityType: 'Task',
+            changedBy: req.user.id,
+            action: 'Assigned Auditor',
+            oldValue:
+            {
+                assigned_auditor_id: task.assigned_auditor_id,
 
-    } catch (error) {
+            },
+            newValue: {
+
+                assigned_auditor_id: newAuditorId
+            }
+        }
+        );
+
+        return res.json(updatedTask.rows[0]);
+    }
+    catch (error) {
         console.error(error);
         res.status(500).send("Could not assign auditor");
     }
@@ -316,6 +333,7 @@ const getTasksByAuditor = async (req, res) => {
     try {
 
         const auditorId = req.user.id;
+
         const result = await pool.query(`
             SELECT
             tasks.id,
@@ -359,7 +377,17 @@ const updateTaskStatus = async (req, res) => {
 
     try {
 
-
+        const oldStatus = await pool.query(`
+            SELECT status
+            FROM tasks
+            WHERE id = $1
+           AND assigned_auditor_id = $2`, [task_id, auditorId]);
+        if (oldStatus.rows.length === 0) {
+            return res.status(404).send('Could not find task or Not assigned to you');
+        }
+        if (oldStatus.rows[0].status === status) {
+            return res.status(200).send('Task already has this status');
+        }
         const result = await pool.query(`
            UPDATE tasks
            SET 
@@ -369,10 +397,24 @@ const updateTaskStatus = async (req, res) => {
            AND assigned_auditor_id = $3
            RETURNING id, title, status, updated_at
         `, [status, task_id, auditorId]);
-        if (result.rows.length === 0) {
-            return res.send('Could not find task')
-        }
-        res.json(result.rows[0]);
+
+        await createActivityLog(
+            {
+                entityId: task_id,
+                entityType: 'Task',
+                changedBy: auditorId,
+                action: 'Status Updated',
+                oldValue: {
+                    status: oldStatus.rows[0].status
+
+                },
+                newValue: {
+                    status: result.rows[0].status
+                }
+
+            }
+        );
+        return res.json(result.rows[0]);
     }
     catch (error) {
         console.error(error);
