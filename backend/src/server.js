@@ -8,6 +8,7 @@ const templateTaskRouter = require('./routes/template.tasks.routes.js')
 const auditsRouter = require('./routes/audits.routes.js');
 const tasksRouter = require('./routes/tasks.routes.js');
 const authRouter = require('./routes/auth.routes.js');
+const activityLoggerRouter = require('./routes/activity.logger.routes.js');
 
 app.use(express.json());
 
@@ -18,6 +19,7 @@ app.use('/api/template-tasks', templateTaskRouter);
 app.use('/api/audits', auditsRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/activity-logs', activityLoggerRouter);
 
 
 

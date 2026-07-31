@@ -97,7 +97,7 @@ const getActivityLogByEntityType = async (req, res) => {
             return res.status(404).send('Log not found');
         }
 
-        return res.json(result.rows[0]);
+        return res.json(result.rows);
     }
 
     catch (error) {
