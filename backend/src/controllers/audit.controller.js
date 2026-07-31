@@ -422,6 +422,16 @@ const deleteAudit = async (req, res) => {
             return res.status(404).send("Audit Not Found");
         }
 
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Audit',
+                changedBy: req.user.id,
+                action: 'Deleted',
+                oldValue: result.rows[0]
+            }
+        );
+
         res.json(result.rows[0]);
     }
 

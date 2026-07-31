@@ -13,7 +13,7 @@ const { requireRole } = require('../middlewares/roles.middleware');
 const express = require('express');
 const router = express.Router();
 
-// router.use(authenticate);
+router.use(authenticate);
 
 router.get('/', getAudits);
 

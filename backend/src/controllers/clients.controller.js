@@ -154,7 +154,16 @@ const deleteClient = async (req, res) => {
             return res.status(404).send("Client Not Found");
         }
 
-        res.json(result.rows[0]);
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Client',
+                changedBy: req.user.id,
+                action: 'Deleted',
+                oldValue: result.rows[0]
+            }
+        );
+        return res.json(result.rows[0]);
     }
 
     catch (error) {
