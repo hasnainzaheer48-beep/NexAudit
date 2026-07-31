@@ -1,5 +1,7 @@
 const pool = require('../config/db.js');
 const bcrypt = require('bcrypt');
+const { createActivityLog } = require('../utils/activityLogger.js');
+const { buildChanges } = require('../utils/buildChanges.js');
 
 //Get all users
 
@@ -49,10 +51,30 @@ const createUser = async (req, res) => {
 
         //hashing password
         const password_hash = await bcrypt.hash(password, 10);
-        let result = await pool.query('INSERT INTO users(first_name,last_name,email,password_hash,role,phone_number) values ($1,$2,$3,$4,$5,$6) RETURNING *',
+        let result = await pool.query(`
+                                        INSERT INTO users
+                                        (first_name,last_name,email,password_hash,role,phone_number)
+                                        values ($1,$2,$3,$4,$5,$6)
+                                        RETURNING *`,
             [first_name, last_name, email, password_hash, role, phone_number]
         );
 
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'User',
+                changedBy: req.user.id,
+                action: 'Created',
+                newValue:
+                {
+                    first_name: result.rows[0].first_name,
+                    last_name: result.rows[0].last_name,
+                    role: result.rows[0].role,
+                    phone_number: result.rows[0].phone_number,
+
+                }
+            }
+        );
         res.json(result.rows[0]);
     }
 
@@ -73,6 +95,8 @@ const updateUser = async (req, res) => {
 
         const { id } = req.params;
 
+        const oldRecord = await pool.query(`SELECT * FROM users WHERE id= $1`, [id]);
+
         const result = await pool.query(`
                 UPDATE users
                 SET 
@@ -90,6 +114,20 @@ const updateUser = async (req, res) => {
             return res.status(404).send("User Not Found");
         }
 
+        const { oldValue, newValue } = buildChanges(oldRecord.rows[0], result.rows[0], [
+            "first_name", "last_name", "phone_number",
+        ])
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'User',
+                changedBy: req.user.id,
+                action: 'Updated',
+                oldValue,
+                newValue
+            }
+        );
         res.json(result.rows[0]);
 
     }
@@ -111,6 +149,17 @@ const deleteUser = async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).send("User Not Found");
         }
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'User',
+                changedBy: req.user.id,
+                action: 'Deleted',
+                oldValue: result.rows[0],
+
+            }
+        );
 
         res.json(result.rows[0]);
     }
