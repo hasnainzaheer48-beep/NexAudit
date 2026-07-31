@@ -1,4 +1,6 @@
 const pool = require('../config/db');
+const { createActivityLog } = require('../utils/activityLogger');
+const { buildChanges } = require('../utils/buildChanges');
 
 //get all task templates
 
@@ -73,6 +75,22 @@ const createTemplateTask = async (req, res) => {
                 order_number]
         );
 
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Template Task',
+                changedBy: req.user.id,
+                action: 'Created',
+                newValue: {
+                    template_id: result.rows[0].template_id,
+                    title: result.rows[0].title,
+                    description: result.rows[0].description,
+                    priority: result.rows[0].priority,
+                    order_number: result.rows[0].order_number
+                }
+            }
+        );
+
         res.json(result.rows[0]);
     }
 
@@ -88,6 +106,9 @@ const updateTemplateTask = async (req, res) => {
     try {
         const { title, description, priority, order_number } = req.body;
         const { id } = req.params;
+
+        const oldRecord = await pool.query(`SELECT * FROM templates_tasks WHERE id= $1`, [id]);
+
         const result = await pool.query(`UPDATE template_tasks
                                          SET
                                          title = COALESCE($1,title),
@@ -105,6 +126,21 @@ const updateTemplateTask = async (req, res) => {
             return res.status(404).send("Could not fetch Template Task");
         }
 
+        const { oldValue, newValue } = buildChanges(oldRecord.rows[0], result.rows[0], [
+            "title", "description", "priority", "order_number"
+        ])
+
+
+        await createActivityLog(
+            {
+                entityId: id,
+                entityType: 'Template Task',
+                changedBy: req.user.id,
+                action: 'Updated',
+                oldValue,
+                newValue
+            }
+        );
 
         res.json(result.rows[0]);
     }
@@ -128,6 +164,18 @@ const deleteTemplateTask = async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).send("Template Task Not Found");
         }
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Template Task',
+                changedBy: req.user.id,
+                action: 'Deleted',
+                oldValue: result.rows[0],
+
+            }
+        );
+
 
         res.json(result.rows[0]);
     }

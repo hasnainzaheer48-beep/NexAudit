@@ -144,12 +144,23 @@ CREATE TABLE documents (
 CREATE TABLE activity_logs(
     id SERIAL PRIMARY KEY,
 
-    task_id INT  REFERENCES tasks(id),
-    changes_by INT NOT NULL REFERENCES users(id),
+    entity_id INT NOT NULL,
+	entity_type VARCHAR(100) NOT NULL,
+	CHECK (
+    entity_type IN (
+        'User',
+        'Client',
+        'Audit Template',
+        'Template Task',
+        'Audit',
+        'Task'
+    )),
+    changed_by INT NOT NULL REFERENCES users(id),
 
     action VARCHAR(100) NOT NULL,
+	CHECK (action IN('Created','Updated','Deleted','Assigned Auditor','Status Updated','Completed','Archived','Restored')),
 
-	old_value TEXT,
-	new_value TEXT,
+	old_value JSONB,
+	new_value JSONB,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,4 +1,6 @@
 const pool = require('../config/db');
+const { createActivityLog } = require('../utils/activityLogger');
+const { buildChanges } = require('../utils/buildChanges');
 
 //Get all Audits
 
@@ -261,6 +263,30 @@ const createAudit = async (req, res) => {
                 ]);
         }
 
+        await createActivityLog({
+            entityId: audit.id,
+            entityType: 'Audit',
+            changedBy: req.user.id,
+            action: 'Created',
+            oldValue: null,
+            newValue: {
+                client: client_id,
+                template: template_id,
+                manager: manager_id,
+
+                audit_year: audit_year,
+                audit_type: audit_type,
+
+                priority: priority,
+
+
+                description: description,
+                start_date: start_date,
+                due_date: due_date
+
+            },
+            db: client
+        });
         await client.query("COMMIT");
 
         res.json(audit);
@@ -306,6 +332,8 @@ const updateAudit = async (req, res) => {
         if (status === 'Finished') {
             return res.status(400).send("Use /complete endpoint to complete an audit");
         }
+
+        const oldRecord = await pool.query(`SELECT * FROM audits where id =$1`, [id]);
         const result = await pool.query(`UPDATE audits
                                          SET
                                          client_id = COALESCE($1, client_id),
@@ -346,7 +374,30 @@ const updateAudit = async (req, res) => {
             return res.status(404).send("Could not fetch Audit");
         }
 
+        const { oldValue, newValue } = buildChanges(oldRecord.rows[0], result.rows[0], ["client_id",
+            "manager_id",
+            "audit_year",
+            "audit_type",
 
+            "priority",
+            "status",
+
+            "description",
+            "start_date",
+            "due_date",
+            "is_archived",])
+
+        await createActivityLog(
+            {
+                entityId: id,
+                entityType: 'Audit',
+                changedBy: req.user.id,
+                action: 'Updated',
+                oldValue,
+                newValue
+
+            }
+        )
         res.json(result.rows[0]);
     }
 
@@ -370,6 +421,16 @@ const deleteAudit = async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).send("Audit Not Found");
         }
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Audit',
+                changedBy: req.user.id,
+                action: 'Deleted',
+                oldValue: result.rows[0]
+            }
+        );
 
         res.json(result.rows[0]);
     }
@@ -458,9 +519,27 @@ const finishAudit = async (req, res) => {
         const updateAuditStatus = await pool.query(`
             UPDATE audits
             SET status = 'Finished'
+            updated_at = CURRENT_TIMESTAMP
             WHERE id = $1
             RETURNING id, status
             `, [auditId]);
+
+        await createActivityLog(
+            {
+                entityId: auditId,
+                entityType: 'Audit',
+                changedBy: req.user.id,
+                action: 'Completed',
+                oldValue: {
+                    status: auditResult.rows[0].status
+
+                },
+                newValue: {
+                    status: updateAuditStatus.rows[0].status
+
+                }
+            }
+        );
         res.json(updateAuditStatus.rows[0]);
     }
     catch (error) {
