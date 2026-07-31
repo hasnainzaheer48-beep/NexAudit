@@ -1,4 +1,6 @@
 const pool = require('../config/db');
+const { createActivityLog } = require('../utils/activityLogger');
+const { buildChanges } = require('../utils/buildChanges');
 
 //Get all audit templates
 
@@ -57,7 +59,15 @@ const createAuditTemplate = async (req, res) => {
                                          VALUES ($1,$2,$3,$4) RETURNING *`,
             [name, description, audit_type, version]);
 
-
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Audit Template',
+                changedBy: req.user.id,
+                action: 'Created',
+                newValue: result.rows[0]
+            }
+        );
 
         res.json(result.rows[0]);
     }
@@ -76,6 +86,10 @@ const updateAuditTemplate = async (req, res) => {
     try {
         const { name, description, audit_type, version } = req.body;
         const { id } = req.params;
+
+        const oldRecord = await pool.query(`SELECT * FROM audit_templates WHERE id= $1`, [id]);
+
+
         const result = await pool.query(`UPDATE audit_templates
                                          SET
                                          name = COALESCE($1,name),
@@ -93,6 +107,18 @@ const updateAuditTemplate = async (req, res) => {
             return res.status(404).send("Could not fetch Audit Template");
         }
 
+        const { oldValue, newValue } = buildChanges(oldRecord.rows[0], result.rows[0], ["name", "description", "audit_type", "version"])
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Audit Template',
+                changedBy: req.user.id,
+                action: 'Updated',
+                oldValue,
+                newValue
+            }
+        );
 
         res.json(result.rows[0]);
     }
@@ -117,6 +143,18 @@ const deleteAuditTemplate = async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).send("Audit Template Not Found");
         }
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Audit Template',
+                changedBy: req.user.id,
+                action: 'Deleted',
+                oldValue: result.rows[0],
+
+            }
+        );
+
 
         res.json(result.rows[0]);
     }
