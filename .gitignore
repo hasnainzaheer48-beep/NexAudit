@@ -23,4 +23,4 @@ pnpm-debug.log*
 Thumbs.db
 
 # Obsidian
-docs/.obsidian/workspace.json
+docs/notes/.obsidian/workspace.json

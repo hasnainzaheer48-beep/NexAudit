@@ -11,10 +11,12 @@
             "id": "c69b1b5914df3297",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "type": "excalidraw",
+              "state": {
+                "file": "Frontend/login page.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "login page"
             }
           }
         ]
@@ -179,6 +181,9 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "c69b1b5914df3297",
-  "lastOpenFiles": []
+  "active": "49114a737f9204c2",
+  "lastOpenFiles": [
+    "Frontend/login page.md",
+    "Frontend"
+  ]
 }
