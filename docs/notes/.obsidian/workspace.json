@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "d774b03258589461",
+        "id": "8090544d67995fbe",
         "type": "tabs",
         "children": [
           {
-            "id": "bdb0172716889b01",
+            "id": "c69b1b5914df3297",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -37,7 +37,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -173,9 +175,10 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "bdb0172716889b01",
+  "active": "c69b1b5914df3297",
   "lastOpenFiles": []
 }
