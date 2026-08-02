@@ -8,7 +8,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        localStorage.remove("token");
+        localStorage.removeItem("token");
         setToken(null);
         navigate('/login');
 
