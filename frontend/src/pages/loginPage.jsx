@@ -7,7 +7,7 @@ import { AuthContext } from '../context/AuthContext'
 export default function Login() {
 
     const navigate = useNavigate();
-    const { setToken } = useContext(AuthContext)
+    const { setToken, setUser } = useContext(AuthContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -26,6 +26,7 @@ export default function Login() {
             setEmail('');
             setPassword('');
             const userData = await api.get('/api/auth/me');
+            setUser(userData.data);
             console.log(userData.data);
             navigate("/dashboard");
         }
