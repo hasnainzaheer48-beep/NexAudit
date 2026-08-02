@@ -3,31 +3,37 @@ import Login from './pages/loginPage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/dashboard'
 import ProtectedRoute from './components/ProtectedRoute'
-import Navbar from './components/layout/navbar'
+import Layout from './components/layout/layout'
+
+
 
 
 function App() {
 
 
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route
-    //       path="/login"
-    //       element={<Login />}
-    //     />
+    <BrowserRouter>
+      <Layout>
+      </Layout>
 
-    //     <Route
-    //       path="/dashboard"
-    //       element={
-    //         <ProtectedRoute>
-    //           <Dashboard />
-    //         </ProtectedRoute>
-    //       } />
+      <Routes>
+        <Route
+          path="/login"
+          element={<Login />}
+        />
 
-    //   </Routes>
-    // </BrowserRouter>
-    <Navbar />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+
+      </Routes>
+
+
+    </BrowserRouter>
   )
 }
 
