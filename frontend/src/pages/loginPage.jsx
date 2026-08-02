@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import login from '../api/axios';
+import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../context/AuthContext'
@@ -17,7 +17,8 @@ export default function Login() {
 
         try {
             event.preventDefault();
-            const result = await login.post('/api/auth/login', { email, password });
+            const result = await api.post('/api/auth/login', { email, password });
+
             const { token, message } = result.data;
             localStorage.setItem("token", token);
             setToken(token);
