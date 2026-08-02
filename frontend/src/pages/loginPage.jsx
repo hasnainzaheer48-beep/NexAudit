@@ -12,8 +12,11 @@ export default function Login() {
 
         try {
             event.preventDefault();
-            await login.post('/api/auth/login', { email, password });
-            console.log(event);
+            const result = await login.post('/api/auth/login', { email, password });
+            const { token, message } = result.data;
+            localStorage.setItem("token", token);
+            console.log(token);
+            console.log(message);
             setEmail('');
             setPassword('');
         }

@@ -1,4 +1,5 @@
 const pool = require('./config/db.js');
+const cors = require('cors');
 const express = require("express");
 const app = express();
 const usersRouter = require('./routes/users.routes.js');
@@ -10,7 +11,9 @@ const tasksRouter = require('./routes/tasks.routes.js');
 const authRouter = require('./routes/auth.routes.js');
 const activityLoggerRouter = require('./routes/activity.logger.routes.js');
 
+app.use(cors());
 app.use(express.json());
+
 
 app.use('/api/users', usersRouter);
 app.use('/api/clients', clientsRouter);
