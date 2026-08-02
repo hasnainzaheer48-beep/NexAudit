@@ -1,22 +1,16 @@
 import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+
 
 export default function Dashboard() {
 
-    const { setToken } = useContext(AuthContext);
+
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        localStorage.removeItem("token");
-        setToken(null);
-        navigate('/login');
 
-    }
     return (
         <div>
-            <h1>Welcome to Dashboard</h1>
-            <button onClick={handleClick}>Log Out</button>
+            <h1 className='text-2xl text-center'>Welcome to Dashboard</h1>
+
         </div>
     );
 
