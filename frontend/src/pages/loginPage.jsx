@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import login from '../api/axios';
+
+import { AuthContext } from '../context/AuthContext'
 
 export default function Login() {
 
+    const { setToken } = useContext(AuthContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,6 +18,7 @@ export default function Login() {
             const result = await login.post('/api/auth/login', { email, password });
             const { token, message } = result.data;
             localStorage.setItem("token", token);
+            setToken(token);
             console.log(token);
             console.log(message);
             setEmail('');
