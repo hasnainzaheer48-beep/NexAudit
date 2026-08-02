@@ -9,7 +9,7 @@ export default function Dashboard() {
 
     const handleClick = () => {
         localStorage.remove("token");
-        setToken('');
+        setToken(null);
         navigate('/login');
 
     }

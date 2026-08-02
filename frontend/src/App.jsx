@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Login from './pages/loginPage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/dashboard'
+import ProtectedRoute from './components/ProtectedRoute'
 
 
 function App() {
@@ -17,7 +18,11 @@ function App() {
 
         <Route
           path="/dashboard"
-          element={<Dashboard />} />
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
 
       </Routes>
     </BrowserRouter>
