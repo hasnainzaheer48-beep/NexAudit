@@ -18,7 +18,6 @@ export default function Login() {
         try {
             event.preventDefault();
             const result = await api.post('/api/auth/login', { email, password });
-
             const { token, message } = result.data;
             localStorage.setItem("token", token);
             setToken(token);
@@ -26,6 +25,8 @@ export default function Login() {
             console.log(message);
             setEmail('');
             setPassword('');
+            const userData = await api.get('/api/auth/me');
+            console.log(userData.data);
             navigate("/dashboard");
         }
         catch (error) {
