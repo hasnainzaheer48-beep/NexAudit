@@ -48,7 +48,7 @@ export default function Login() {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="inline-flex flex-col gap-3 ">
                 <input type="text" placeholder="Enter Email" value={email} onChange={handleEmail} />
                 <input type="password" placeholder="Enter Password" value={password} onChange={handlePassword} />
                 <button>Sign In</button>

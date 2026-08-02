@@ -13,23 +13,15 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Layout>
-      </Layout>
+
 
       <Routes>
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } />
-
+        <Route path="/login" element={<Login />} />
+        <Route element={< ProtectedRoute />}>
+          <Route element={< Layout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+        </Route>
       </Routes>
 
 
