@@ -6,6 +6,12 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Layout from './components/layout/layout'
 import RoleRoute from './components/RoleRoute'
 import ActivityLogs from './pages/activityLogs'
+import Tasks from './pages/tasks'
+import Audits from './pages/audits'
+import AuditTemplates from './pages/auditTemplates'
+import TemplateTasks from './pages/templateTasks'
+import Clients from './pages/clients'
+import Users from './pages/user'
 
 
 
@@ -23,13 +29,19 @@ function App() {
           <Route element={< Layout />}>
             <Route element={<RoleRoute roles={["ADMIN", "MANAGER", "AUDITOR"]} />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/activity-logs" element={<ActivityLogs />} />
+              <Route path="/tasks" element={<Tasks />} />
             </Route>
             <Route element={<RoleRoute roles={["ADMIN", "MANAGER"]} />}>
               {/* FOR ADMIN AND MANAGAER PATHS */}
+              <Route path="/activity-logs" element={<ActivityLogs />} />
+              <Route path="/audits" element={<Audits />} />
+              <Route path="/audit-templates" element={<AuditTemplates />} />
+              <Route path="/template-tasks" element={<TemplateTasks />} />
+              <Route path="/Clients" element={<Clients />} />
             </Route>
             <Route element={<RoleRoute roles={["ADMIN"]} />}>
               {/* FOR ADMIN PATHS */}
+              <Route path='/users' element={< Users />} />
             </Route>
           </Route>
         </Route>
