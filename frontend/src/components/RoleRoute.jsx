@@ -3,9 +3,11 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 
 export default function RoleRoute({ roles }) {
-    const { user } = useContext(AuthContext);
-
+    const { user, loading } = useContext(AuthContext);
     if (!user) {
+        return <Navigate to={"/login"} />
+    }
+    if (loading) {
         return null
     }
     const role = user.role;

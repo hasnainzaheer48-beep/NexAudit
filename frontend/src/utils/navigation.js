@@ -7,7 +7,7 @@ const navigation =
         },
         {
             name: "Activity Log",
-            path: "/activity-log"
+            path: "/activity-logs"
         },
         {
             name: "Audits",
@@ -46,7 +46,7 @@ const navigation =
         },
         {
             name: "Activity Log",
-            path: "/activity-log"
+            path: "/activity-logs"
         },
         {
             name: "Audits",
