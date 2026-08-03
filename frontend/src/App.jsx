@@ -5,6 +5,7 @@ import Dashboard from './pages/dashboard'
 import ProtectedRoute from './components/ProtectedRoute'
 import Layout from './components/layout/layout'
 import RoleRoute from './components/RoleRoute'
+import ActivityLogs from './pages/activityLogs'
 
 
 
@@ -22,6 +23,7 @@ function App() {
           <Route element={< Layout />}>
             <Route element={<RoleRoute roles={["ADMIN", "MANAGER", "AUDITOR"]} />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/activity-logs" element={<ActivityLogs />} />
             </Route>
             <Route element={<RoleRoute roles={["ADMIN", "MANAGER"]} />}>
               {/* FOR ADMIN AND MANAGAER PATHS */}
