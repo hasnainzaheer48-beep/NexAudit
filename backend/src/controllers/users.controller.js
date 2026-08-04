@@ -91,31 +91,48 @@ const updateUser = async (req, res) => {
     try {
         const { first_name,
             last_name,
+            email,
+            password,
+            role,
             phone_number } = req.body;
 
         const { id } = req.params;
 
-        const oldRecord = await pool.query(`SELECT * FROM users WHERE id= $1`, [id]);
+        const password_hash = null;
 
+        if (password) {
+
+            password_hash = await bcrypt.hash(password, 10);
+        }
+
+        const oldRecord = await pool.query(`SELECT * FROM users WHERE id= $1`, [id]);
         const result = await pool.query(`
                 UPDATE users
                 SET 
                 first_name = COALESCE($1, first_name),
                 last_name = COALESCE($2, last_name),
-                phone_number = COALESCE($3, phone_number),
+                email =  COALESCE($3, email),
+                password_hash = COALESCE($4, password_hash),
+                role = COALESCE($5, role),
+                phone_number = COALESCE($6, phone_number),
                 updated_at = CURRENT_TIMESTAMP
 
-                WHERE id = $4
+                WHERE id = $7
 
                 RETURNING *
-                `, [first_name, last_name, phone_number, id]);
+                `, [first_name,
+            last_name,
+            email,
+            password_hash,
+            role,
+            phone_number, id]);
 
         if (result.rows.length === 0) {
             return res.status(404).send("User Not Found");
         }
 
         const { oldValue, newValue } = buildChanges(oldRecord.rows[0], result.rows[0], [
-            "first_name", "last_name", "phone_number",
+            "first_name", "last_name", "phone_number", "email", "password_hash", "role"
         ])
 
         await createActivityLog(
