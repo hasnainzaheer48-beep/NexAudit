@@ -44,7 +44,7 @@ export default function Users() {
     return (
         <div>
             <button className="border" onClick={handleCreateUser}>Create User</button>
-            <CreateUserModal isOpen={showModal} onClose={handleClose} />
+            <CreateUserModal isOpen={showModal} onClose={handleClose} onUserCreated={getUsers} />
             <table className="border border-collapse table-auto mt-3">
                 <thead>
 
