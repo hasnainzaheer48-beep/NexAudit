@@ -12,6 +12,7 @@ import AuditTemplates from './pages/auditTemplates'
 import TemplateTasks from './pages/templateTasks'
 import Clients from './pages/clients'
 import Users from './pages/user'
+import Modal from './components/ui/Modal'
 
 
 
@@ -49,6 +50,7 @@ function App() {
 
 
     </BrowserRouter >
+
   )
 }
 
