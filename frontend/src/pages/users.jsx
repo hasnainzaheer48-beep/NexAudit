@@ -1,27 +1,14 @@
-import { useEffect, useState } from "react";
-import api from "../api/axios";
+import { useState } from "react";
 import CreateUserModal from "../components/users/createUserModal";
+import useUsers from "../hooks/useUsers";
 
 
 
 
 export default function Users() {
 
-    const [users, setUsers] = useState([]);
+    const { users, getUsers, loading, error } = useUsers();
     const [showModal, setShowModal] = useState(false);
-
-    const getUsers = async () => {
-        try {
-
-            const result = await api.get('/api/users');
-            setUsers(result.data)
-            console.log(result.data);
-        }
-        catch (error) {
-            console.error(error);
-        }
-    }
-
     const handleCreateUser = () => {
         setShowModal(true)
     }
@@ -31,14 +18,12 @@ export default function Users() {
 
 
 
-
-
-    useEffect(() => {
-        getUsers();
-
-    }, []);
-
-
+    if (loading) {
+        return <h1>Loading</h1>
+    }
+    if (error) {
+        return <h1>Error</h1>
+    }
 
 
     return (
@@ -56,22 +41,28 @@ export default function Users() {
                         <th className="border px-4 py-3">Email</th>
                         <th className="border px-4 py-3">Phone</th>
                         <th className="border px-4 py-3">Created At</th>
+                        <th className="border px-4 py-3">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         users?.map((user) => {
-                            return (<tr key={user.id}>
-                                <td className="border  px-4 py-3">{user.id}</td>
-                                <td className="border px-4 py-3">{user.first_name}</td>
-                                <td className="border px-4 py-3">{user.last_name}</td>
-                                <td className="border px-4 py-3">{user.role}</td>
-                                <td className="border px-4 py-3">{user.email}</td>
-                                <td className="border px-4 py-3">{user.phone_number}</td>
-                                <td className="border px-4 py-3">{new Date(user.created_at).toLocaleDateString()} </td>
-                            </tr>);
+                            return (<>
+                                <tr key={user.id}>
+                                    <td className="border  px-4 py-3">{user.id}</td>
+                                    <td className="border px-4 py-3">{user.first_name}</td>
+                                    <td className="border px-4 py-3">{user.last_name}</td>
+                                    <td className="border px-4 py-3">{user.role}</td>
+                                    <td className="border px-4 py-3">{user.email}</td>
+                                    <td className="border px-4 py-3">{user.phone_number}</td>
+                                    <td className="border px-4 py-3">{new Date(user.created_at).toLocaleDateString()} </td>
+                                    <td className="border px-4 py-3"><button>Edit</button></td>
+                                </tr>
+                            </>
+                            );
                         })
                     }
+
 
                 </tbody>
             </table>
