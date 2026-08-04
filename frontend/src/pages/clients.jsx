@@ -59,7 +59,10 @@ export default function Clients() {
                                     <td className="border px-4 py-3">{client.industry}</td>
                                     <td className="border px-4 py-3">{new Date(client.created_at).toLocaleDateString()}</td>
                                     <td className="border px-4 py-3">{new Date(client.updated_at).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3"><button>Edit</button></td>
+                                    <td className="border px-4 py-3"><button onClick={() => {
+                                        setSelectedClient(client);
+                                        setShowModal(true);
+                                    }}>Edit</button></td>
                                 </tr>
                             );
                         })
