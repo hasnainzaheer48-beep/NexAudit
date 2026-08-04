@@ -1,33 +1,20 @@
-import { useEffect, useState } from "react";
-import api from '../api/axios'
+import { useState } from "react";
+import useClients from "../hooks/useClients";
+
 
 
 export default function Clients() {
 
-    const [clients, setClients] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null)
+    const { loading, error, clients, getClients } = useClients();
 
-    const getClients = async () => {
-        try {
-            setLoading(true);
-            const result = await api.get('/api/clients');
-            setClients(result.data);
-
-        }
-        catch (error) {
-            console.error(error);
-            setError(error.message);
-        }
-        finally {
-            setLoading(false);
-        }
+    if (loading) {
+        return <h1>Loading</h1>
     }
 
+    if (error) {
+        return <>{error.message}</>
+    }
 
-    useEffect(() => {
-        getClients();
-    }, [])
 
     return (
         <table>
@@ -47,7 +34,7 @@ export default function Clients() {
                 {
                     clients.map((client) => {
                         return (
-                            <tr>
+                            <tr key={client.id}>
                                 <td className="border px-4 py-3">{client.id}</td>
                                 <td className="border px-4 py-3">{client.company_name}</td>
                                 <td className="border px-4 py-3">{client.email}</td>
