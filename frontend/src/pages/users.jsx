@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import CreateUserModal from "../components/users/createUserModal";
 
 
 
@@ -43,10 +44,7 @@ export default function Users() {
     return (
         <div>
             <button className="border" onClick={handleCreateUser}>Create User</button>
-            {showModal && (<div>
-                MODAL
-                <button className="border" onClick={handleClose}>Close</button>
-            </div>)}
+            <CreateUserModal isOpen={showModal} onClose={handleClose} />
             <table className="border border-collapse table-auto mt-3">
                 <thead>
 

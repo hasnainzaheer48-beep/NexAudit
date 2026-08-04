@@ -11,7 +11,7 @@ import Audits from './pages/audits'
 import AuditTemplates from './pages/auditTemplates'
 import TemplateTasks from './pages/templateTasks'
 import Clients from './pages/clients'
-import Users from './pages/user'
+import Users from './pages/users'
 import Modal from './components/ui/Modal'
 
 
