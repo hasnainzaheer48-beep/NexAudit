@@ -80,7 +80,7 @@ CREATE TABLE audits (
 
 	priority VARCHAR(30) NOT NULL,
 	CHECK (priority IN ('Low', 'Medium', 'High', 'Critical')),
-	status VARCHAR(30) DEFAULT 'DRAFT' NOT NULL,
+	status VARCHAR(30) DEFAULT 'Draft' NOT NULL,
 	CHECK (status IN('Draft', 'In Progress', 'Finished')),
 
 
