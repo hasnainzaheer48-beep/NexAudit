@@ -1,17 +1,17 @@
 import api from '../api/axios'
 import { useState, useEffect } from 'react';
 
-export default function useClients() {
+export default function useTemplateTasks(templateId) {
 
-    const [auditTemplates, setAuditTemplates] = useState([]);
+    const [templateTasks, setTemplateTasks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null)
 
-    const getAuditTemplates = async () => {
+    const getTemplateTasks = async () => {
         try {
             setLoading(true);
-            const result = await api.get('/api/audit-templates');
-            setAuditTemplates(result.data);
+            const result = await api.get(`/api/template-tasks/template/${templateId}`);
+            setTemplateTasks(result.data);
 
         }
         catch (error) {
@@ -25,11 +25,11 @@ export default function useClients() {
 
 
     useEffect(() => {
-        getAuditTemplates();
+        getTemplateTasks();
     }, [])
 
     return (
-        { loading, error, auditTemplates, getAuditTemplates }
+        { loading, error, templateTasks, getTemplateTasks }
     );
 
 }
