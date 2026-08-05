@@ -39,6 +39,7 @@ function App() {
               <Route path="/audit-templates" element={<AuditTemplates />} />
               <Route path="/template-tasks" element={<TemplateTasks />} />
               <Route path="/Clients" element={<Clients />} />
+              <Route path="/audit-templates/:templateId/tasks" element={<TemplateTasks />} />
             </Route>
             <Route element={<RoleRoute roles={["ADMIN"]} />}>
               {/* FOR ADMIN PATHS */}
