@@ -84,7 +84,7 @@ const createAuditTemplate = async (req, res) => {
 
 const updateAuditTemplate = async (req, res) => {
     try {
-        const { name, description, audit_type, version } = req.body;
+        const { name, description, audit_type, version, is_active } = req.body;
         const { id } = req.params;
 
         const oldRecord = await pool.query(`SELECT * FROM audit_templates WHERE id= $1`, [id]);
@@ -96,12 +96,13 @@ const updateAuditTemplate = async (req, res) => {
                                          description = COALESCE($2, description),
                                          audit_type = COALESCE($3, audit_type),
                                          version = COALESCE($4,version),
+                                         is_active = COALESCE($5, is_active),
                                          updated_at = CURRENT_TIMESTAMP
 
-                                         WHERE id= $5
+                                         WHERE id= $6
                                          
                                          RETURNING *`,
-            [name, description, audit_type, version, id]);
+            [name, description, audit_type, version, is_active, id]);
 
         if (result.rows.length === 0) {
             return res.status(404).send("Could not fetch Audit Template");
