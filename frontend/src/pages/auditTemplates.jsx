@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useAuditTemplates from "../hooks/useAuditTemplates";
 import AuditTemplatesFormModal from "../components/auditTemplates/auditTemplatesFormModal";
-
+import { useNavigate } from 'react-router-dom'
 
 
 export default function AuditTemplates() {
@@ -9,6 +9,8 @@ export default function AuditTemplates() {
     const { loading, error, auditTemplates, getAuditTemplates } = useAuditTemplates();
     const [showModal, setShowModal] = useState(false);
     const [selectedAuditTemplate, setSelectedAuditTemplate] = useState(null);
+
+    const navigate = useNavigate();
 
     const handleCreateAuditTemplate = () => {
         setShowModal(true);
@@ -59,10 +61,16 @@ export default function AuditTemplates() {
                                     <td className="border px-4 py-3">{String(auditTemplate.is_active)}</td>
                                     <td className="border px-4 py-3">{new Date(auditTemplate.created_at).toLocaleDateString()}</td>
                                     <td className="border px-4 py-3">{new Date(auditTemplate.updated_at).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3"><button onClick={() => {
+                                    <td className="border px-4 py-3"><button className="border px-2 mr-1" onClick={() => {
                                         setSelectedAuditTemplate(auditTemplate);
                                         setShowModal(true);
-                                    }}>Edit</button></td>
+                                    }}>Edit</button>
+                                        <button className="border px-2" onClick={() => {
+                                            navigate(`/audit-templates/${auditTemplate.id}/tasks`)
+                                        }}>Tasks</button>
+
+                                    </td>
+
                                 </tr>
                             );
                         })
