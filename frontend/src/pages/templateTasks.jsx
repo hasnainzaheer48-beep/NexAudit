@@ -71,7 +71,7 @@ export default function TemplateTasks() {
                     }
                 </tbody>
             </table>
-            <AuditTemplatesFormModal
+            <TemplateTasksFormModal
                 isOpen={showModal}
                 selectedTemplateTask={selectedTemplateTask}
                 onClose={handleClose}
