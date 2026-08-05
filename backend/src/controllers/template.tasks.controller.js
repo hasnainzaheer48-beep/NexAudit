@@ -107,7 +107,7 @@ const updateTemplateTask = async (req, res) => {
         const { title, description, priority, order_number } = req.body;
         const { id } = req.params;
 
-        const oldRecord = await pool.query(`SELECT * FROM templates_tasks WHERE id= $1`, [id]);
+        const oldRecord = await pool.query(`SELECT * FROM template_tasks WHERE id= $1`, [id]);
 
         const result = await pool.query(`UPDATE template_tasks
                                          SET
@@ -186,11 +186,31 @@ const deleteTemplateTask = async (req, res) => {
     }
 }
 
+const getTemplateTaskByAuditTemplate = async (req, res) => {
+
+    try {
+        const { templateId } = req.params;
+        const result = await pool.query(`
+            SELECT * 
+            FROM template_tasks
+            WHERE template_id = $1
+            ORDER BY order_number
+            `, [templateId]);
+        return res.json(result.rows);
+
+    }
+
+    catch (error) {
+        return res.status(500).send('Could not Fetch template Tasks')
+    }
+}
+
 module.exports = {
     getTemplateTasks,
     getTemplateTaskById,
     createTemplateTask,
     updateTemplateTask,
-    deleteTemplateTask
+    deleteTemplateTask,
+    getTemplateTaskByAuditTemplate
 };
 

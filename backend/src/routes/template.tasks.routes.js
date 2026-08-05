@@ -5,14 +5,17 @@ const {
     getTemplateTaskById,
     createTemplateTask,
     updateTemplateTask,
-    deleteTemplateTask } = require('../controllers/template.tasks.controller');
+    deleteTemplateTask,
+    getTemplateTaskByAuditTemplate } = require('../controllers/template.tasks.controller');
 const { authenticate } = require('../middlewares/auth.middleware');
 
 router.use(authenticate)
 
 router.get('/', getTemplateTasks);
 
+router.get('/template/:templateId', getTemplateTaskByAuditTemplate)
 router.get('/:id', getTemplateTaskById);
+
 
 router.post('/', createTemplateTask);
 
