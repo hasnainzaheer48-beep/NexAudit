@@ -10,7 +10,7 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
     const { auditTemplates } = useAuditTemplates();
 
     const priorities = ['Low', 'Medium', 'High', 'Critical'];
-    const statuses = ['Draft', 'In Progress', 'Finished'];
+    const statuses = ['Draft', 'In Progress'];
 
 
     const [formData, setFormData] = useState({
@@ -87,8 +87,8 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
                 template_id: selectedAudit.template_id,
                 audit_year: selectedAudit.audit_year,
                 audit_type: selectedAudit.audit_type,
-                start_date: selectedAudit.start_date,
-                due_date: selectedAudit.due_date,
+                start_date: selectedAudit.start_date.split('T')[0],
+                due_date: selectedAudit.due_date.split('T')[0],
                 priority: selectedAudit.priority,
                 status: selectedAudit.status,
                 description: selectedAudit.description,
@@ -157,7 +157,7 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
                 <label>
                     Priority
                     <select name="priority" type="text" value={formData.priority} onChange={handleChange} required >
-
+                        <option value="">Select Priority</option>
                         {
                             priorities.map((priority) => {
                                 return <option key={priority} value={priority}>{priority}</option>
@@ -168,22 +168,23 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
 
                 </label>
 
-                <label>
+                {isEditing && <label>
                     Status
                     <select name="status" type="text" value={formData.status} onChange={handleChange} required >
+                        <option value="">Select Status</option>
                         {
                             statuses.map((status) => {
                                 return <option key={status} value={status}>{status}</option>
                             })
                         }
                     </select>
-                </label>
+                </label>}
                 <label>Description<input name="description" type="text" value={formData.description} onChange={handleChange} required /></label>
 
-                <label>Archived<select name="is_archived" value={formData.is_archived} onChange={handleChange} required>
+                {isEditing && <label>Archived<select name="is_archived" value={formData.is_archived} onChange={handleChange} required>
                     <option key={true} value={true}>TRUE</option>
                     <option key={false} value={false}>FALSE</option>
-                </select></label>
+                </select></label>}
                 <button className="border">{isEditing ? "Update" : "Create"}</button>
             </form>
             <button className="border" onClick={onClose} >Close</button>
