@@ -518,7 +518,7 @@ const finishAudit = async (req, res) => {
 
         const updateAuditStatus = await pool.query(`
             UPDATE audits
-            SET status = 'Finished'
+            SET status = 'Finished',
             updated_at = CURRENT_TIMESTAMP
             WHERE id = $1
             RETURNING id, status

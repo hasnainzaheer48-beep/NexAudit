@@ -9,16 +9,25 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
         description: '',
         audit_type: '',
         version: '',
-        is_active: ''
+        is_active: true
     });
+
+
 
     const isEditing = selectedAuditTemplate !== null;
 
     const handleChange = (event) => {
 
+
+        let value = event.target.value;
+
+        if (event.target.name === "is_active") {
+            value = value === "true";
+        }
+
         const newFormData = {
             ...formData,
-            [event.target.name]: event.target.value
+            [event.target.name]: value
         }
         setFormData(newFormData);
     }
@@ -28,15 +37,15 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
 
         try {
 
-            isEditing ? await api.patch(`api/audit-templates/${selectedAuditTemplate.id}`, formData) :
-                await api.post(`api/audit-templates`, formData);
+            isEditing ? await api.patch(`/api/audit-templates/${selectedAuditTemplate.id}`, formData) :
+                await api.post(`/api/audit-templates`, formData);
 
             setFormData({
                 name: '',
                 description: '',
                 audit_type: '',
                 version: '',
-                is_active: ''
+                is_active: true
             });
 
             onAuditTemplateCreated();
@@ -53,11 +62,11 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
 
         if (isEditing) {
             setFormData({
-                name: selectedClient.name,
-                description: selectedClient.description,
-                audit_type: selectedClient.audit_type,
-                version: selectedClient.version,
-                is_active: selectedClient.is_active
+                name: selectedAuditTemplate.name,
+                description: selectedAuditTemplate.description,
+                audit_type: selectedAuditTemplate.audit_type,
+                version: selectedAuditTemplate.version,
+                is_active: selectedAuditTemplate.is_active
             });
 
         }
@@ -67,7 +76,7 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
                 description: '',
                 audit_type: '',
                 version: '',
-                is_active: ''
+                is_active: true
             });
 
         }
@@ -83,7 +92,10 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
                 <label>Description<input name="description" type="text" value={formData.description} onChange={handleChange} required /></label>
                 <label>Audit Type<input name="audit_type" type="text" value={formData.audit_type} onChange={handleChange} required /></label>
                 <label>Version<input name="version" type="text" value={formData.version} onChange={handleChange} required /></label>
-                <label>Active<input name="is_active" type="text" value={formData.is_active} onChange={handleChange} required /></label>
+                <label>Active<select name="is_active" value={formData.is_active} onChange={handleChange} required>
+                    <option key={true} value={true}>TRUE</option>
+                    <option key={false} value={false}>FALSE</option>
+                </select></label>
                 <button className="border">{isEditing ? "Update" : "Create"}</button>
             </form>
             <button className="border" onClick={onClose} >Close</button>
