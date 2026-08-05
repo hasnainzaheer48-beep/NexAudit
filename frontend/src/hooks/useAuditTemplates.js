@@ -1,7 +1,7 @@
 import api from '../api/axios'
 import { useState, useEffect } from 'react';
 
-export default function useClients() {
+export default function useAuditTemplates() {
 
     const [auditTemplates, setAuditTemplates] = useState([]);
     const [loading, setLoading] = useState(true);
