@@ -23,7 +23,7 @@ router.get('/:id/progress', getAuditprogress);
 
 router.post('/', requireRole("MANAGER"), createAudit);
 
-router.get('/:id/complete', finishAudit);
+router.patch('/:id/complete', finishAudit);
 router.patch('/:id', requireRole("MANAGER"), updateAudit);
 
 router.delete('/:id', requireRole("MANAGER"), deleteAudit);
