@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom";
+
 import useTasks from "../hooks/useTasks";
 import { useState } from "react";
-import TemplateTasksFormModal from "../components/templateTasks/templateTasksFormModal";
+import TasksFormModal from "../components/tasks/tasksFormModal";
 
 
 
@@ -12,12 +12,6 @@ export default function Tasks() {
     const [showModal, setShowModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
 
-
-
-    const handleCreateTask = () => {
-        setShowModal(true);
-        setSelectedTask(null);
-    }
 
     const handleClose = () => {
         setShowModal(false);
@@ -34,7 +28,7 @@ export default function Tasks() {
 
     return (
         <div>
-            <button className="border" onClick={handleCreateTask}>Create Tasks</button>
+
 
             <table className="mt-4">
                 <thead>
@@ -50,6 +44,7 @@ export default function Tasks() {
                         <th className="border px-4 py-3">Status</th>
                         <th className="border px-4 py-3">Start Date</th>
                         <th className="border px-4 py-3">Due Date</th>
+                        <th className="border px-4 py-3">Completed At</th>
                         <th className="border px-4 py-3">Created At</th>
                         <th className="border px-4 py-3">Updated At</th>
                         <th className="border px-4 py-3">Action</th>
@@ -69,8 +64,9 @@ export default function Tasks() {
                                     <td className="border px-4 py-3">{task.description}</td>
                                     <td className="border px-4 py-3">{task.priority}</td>
                                     <td className="border px-4 py-3">{task.status}</td>
-                                    <td className="border px-4 py-3">{new Date(task.start_date).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3">{new Date(task.due_date).toLocaleDateString()}</td>
+                                    <td className="border px-4 py-3">{task.start_date ? new Date(task.start_date).toLocaleDateString() : 'Null'}</td>
+                                    <td className="border px-4 py-3">{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</td>
+                                    <td className="border px-4 py-3">{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</td>
                                     <td className="border px-4 py-3">{new Date(task.created_at).toLocaleDateString()}</td>
                                     <td className="border px-4 py-3">{new Date(task.updated_at).toLocaleDateString()}</td>
                                     <td className="border px-4 py-3"><button className="border px-2 mr-1" onClick={() => {
@@ -83,12 +79,12 @@ export default function Tasks() {
                     }
                 </tbody>
             </table>
-            {/* <TemplateTasksFormModal
+            <TasksFormModal
                 isOpen={showModal}
-                selectedTemplateTask={selectedTemplateTask}
+                selectedTask={selectedTask}
                 onClose={handleClose}
-                onTemplateTaskCreated={getTemplateTasks}
-                templateId={templateId} /> */}
+                onTaskCreated={getTasks}
+            />
         </div>
 
 
