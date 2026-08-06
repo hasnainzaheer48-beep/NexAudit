@@ -391,13 +391,7 @@ const getTasksByAuditor = async (req, res) => {
 
         const result = await pool.query(`
             SELECT
-            tasks.id,
-            tasks.title,
-            tasks.description,
-            tasks.priority,
-            tasks.status,
-            tasks.start_date,
-            tasks.due_date,
+            tasks.*,
         clients.company_name AS client,
         audits.id AS audit_id,
         audits.audit_type AS audit_type
