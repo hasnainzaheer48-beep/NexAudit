@@ -44,7 +44,7 @@ const getTaskById = async (req, res) => {
                                         on tasks.audit_id = audits.id
                                         left join clients
                                         on audits.client_id = clients.id
-                                        WHERE id = $1`, [id]);
+                                        WHERE tasks.id = $1`, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send('Could not find the Task');
         }
