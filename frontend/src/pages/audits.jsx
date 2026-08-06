@@ -79,6 +79,8 @@ export default function Audits() {
                                         setSelectedAudit(audit);
                                         setShowModal(true);
                                     }}>Edit</button>
+
+                                        <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
                                     </td>
                                 </tr>
                             );

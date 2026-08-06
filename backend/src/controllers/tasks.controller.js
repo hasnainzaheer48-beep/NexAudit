@@ -233,15 +233,19 @@ const getTasksByAudit = async (req, res) => {
         if (audit.rows.length === 0) {
             return res.status(404).send('Audit not found');
         }
-        const result = await pool.query(`SELECT   
-                                        id,
-                                        title,
-                                        description,
-                                        priority,
-                                        status,
-                                        assigned_auditor_id,
-                                        due_date
-                                        FROM tasks WHERE audit_id = $1`, [id]);
+        const result = await pool.query(`select 
+                                        tasks.*,
+                                        users.first_name || ' ' || users.last_name AS assigned_auditor,
+                                        clients.company_name AS company 
+                                        from
+                                        tasks
+                                        left join users
+                                        on tasks.assigned_auditor_id = users.id
+                                        left join audits
+                                        on tasks.audit_id = audits.id
+                                        left join clients
+                                        on audits.client_id = clients.id
+                                        WHERE tasks.audit_id = $1`, [id]);
         if (result.rows.length === 0) {
             return res.status(200).send([]);
         }
