@@ -5,7 +5,18 @@ const { buildChanges } = require('../utils/buildChanges');
 
 const getTasks = async (req, res) => {
     try {
-        const result = await pool.query(`SELECT * FROM tasks`);
+        const result = await pool.query(`select 
+                                        tasks.*,
+                                        users.first_name || ' ' || users.last_name AS assigned_auditor,
+                                        clients.company_name AS company
+                                        from
+                                        tasks
+                                        left join users
+                                        on tasks.assigned_auditor_id = users.id
+                                        left join audits
+                                        on tasks.audit_id = audits.id
+                                        left join clients
+                                        on audits.client_id = clients.id`);
         res.json(result.rows);
     }
 
@@ -21,7 +32,19 @@ const getTasks = async (req, res) => {
 const getTaskById = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query(`SELECT * FROM tasks WHERE id = $1`, [id]);
+        const result = await pool.query(`select 
+                                        tasks.*,
+                                        users.first_name || ' ' || users.last_name AS assigned_auditor,
+                                        clients.company_name AS company 
+                                        from
+                                        tasks
+                                        left join users
+                                        on tasks.assigned_auditor_id = users.id
+                                        left join audits
+                                        on tasks.audit_id = audits.id
+                                        left join clients
+                                        on audits.client_id = clients.id
+                                        WHERE id = $1`, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send('Could not find the Task');
         }
