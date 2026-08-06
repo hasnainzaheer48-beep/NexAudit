@@ -78,7 +78,7 @@ const navigation =
         },
         {
             name: " My Tasks",
-            path: "/tasks"
+            path: "/tasks/me"
         },
 
 
