@@ -5,7 +5,18 @@ const { buildChanges } = require('../utils/buildChanges');
 
 const getTasks = async (req, res) => {
     try {
-        const result = await pool.query(`SELECT * FROM tasks`);
+        const result = await pool.query(`select 
+                                        tasks.*,
+                                        users.first_name || ' ' || users.last_name AS assigned_auditor,
+                                        clients.company_name AS company
+                                        from
+                                        tasks
+                                        left join users
+                                        on tasks.assigned_auditor_id = users.id
+                                        left join audits
+                                        on tasks.audit_id = audits.id
+                                        left join clients
+                                        on audits.client_id = clients.id`);
         res.json(result.rows);
     }
 
@@ -21,7 +32,19 @@ const getTasks = async (req, res) => {
 const getTaskById = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query(`SELECT * FROM tasks WHERE id = $1`, [id]);
+        const result = await pool.query(`select 
+                                        tasks.*,
+                                        users.first_name || ' ' || users.last_name AS assigned_auditor,
+                                        clients.company_name AS company 
+                                        from
+                                        tasks
+                                        left join users
+                                        on tasks.assigned_auditor_id = users.id
+                                        left join audits
+                                        on tasks.audit_id = audits.id
+                                        left join clients
+                                        on audits.client_id = clients.id
+                                        WHERE tasks.id = $1`, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send('Could not find the Task');
         }
@@ -97,9 +120,7 @@ const getTaskById = async (req, res) => {
 
 const updateTask = async (req, res) => {
     try {
-        const { audit_id,
-            template_task_id,
-            title,
+        const {
             description,
             assigned_auditor_id,
             priority,
@@ -115,25 +136,22 @@ const updateTask = async (req, res) => {
 
         const result = await pool.query(`UPDATE tasks
                                          SET
-                                         audit_id = COALESCE($1, audit_id),
-                                         template_task_id = COALESCE($2, template_task_id),
-                                         title = COALESCE($3, title),
-                                         description = COALESCE($4, description),
-                                         assigned_auditor_id = COALESCE($5, assigned_auditor_id),
-                                         priority = COALESCE($6, priority),
-                                         status = COALESCE($7, status),
-                                         start_date = COALESCE($8, start_date),
-                                         due_date = COALESCE($9, due_date),
-                                         completed_at = COALESCE($10, completed_at),
+                                       
+                                       
+                                      
+                                         description = COALESCE($1, description),
+                                         assigned_auditor_id = COALESCE($2, assigned_auditor_id),
+                                         priority = COALESCE($3, priority),
+                                         status = COALESCE($4, status),
+                                         start_date = COALESCE($5, start_date),
+                                         due_date = COALESCE($6, due_date),
+                                         completed_at = COALESCE($7, completed_at),
                                          updated_at = CURRENT_TIMESTAMP
 
-                                         WHERE id= $11
+                                         WHERE id= $8
                                          
                                          RETURNING *`,
             [
-                audit_id,
-                template_task_id,
-                title,
                 description,
                 assigned_auditor_id,
                 priority,
@@ -147,9 +165,6 @@ const updateTask = async (req, res) => {
         }
 
         const { oldValue, newValue } = buildChanges(oldRecord.rows[0], result.rows[0], [
-            "audit_id",
-            "template_task_id",
-            "title",
             "description",
             "assigned_auditor_id",
             "priority",
