@@ -1,6 +1,10 @@
 import { useParams } from "react-router-dom"
 import useAudit from "../hooks/useAudit";
 import useAuditProgress from "../hooks/useAuditProgress";
+import useTask from "../hooks/useTasksByAudit";
+import useTasksByAudit from "../hooks/useTasksByAudit";
+import AuditTasksTable from "../components/audits/auditTasksTable";
+
 
 
 
@@ -9,7 +13,8 @@ export default function AuditDetails() {
     const { auditId } = useParams();
     const { audit, getAudit, error, loading } = useAudit(auditId);
     const { auditProgress, getAuditprogress } = useAuditProgress(auditId);
-    console.log(auditProgress)
+    const { tasks, getTasksByAudit } = useTasksByAudit(auditId);
+    console.log(tasks)
 
     if (loading) {
         return <div>Loading</div>
@@ -38,7 +43,7 @@ export default function AuditDetails() {
             <div>
                 <div>Tasks</div>
                 <hr />
-                <div></div>
+                <AuditTasksTable tasks={tasks} getTasks={getTasksByAudit} />
             </div>
         </div>
     )
