@@ -422,6 +422,7 @@ const updateTaskStatus = async (req, res) => {
     const auditorId = req.user.id;
     const { status } = req.body;
     const task_id = req.params.id;
+    let result = {};
 
     try {
 
@@ -438,7 +439,7 @@ const updateTaskStatus = async (req, res) => {
         }
 
         if (status === "Finished") {
-            const result = await pool.query(`
+            result = await pool.query(`
            UPDATE tasks
            SET 
            status = $1,
@@ -451,7 +452,7 @@ const updateTaskStatus = async (req, res) => {
         }
         else {
 
-            const result = await pool.query(`
+            result = await pool.query(`
                 UPDATE tasks
                 SET 
                 status = $1,

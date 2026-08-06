@@ -1,8 +1,15 @@
+import { useState } from "react";
 import useTasksByAuditor from "../hooks/useTasksByAuditor"
+import TasksByAuditorFormModal from "../components/tasksByAuditor/tasksByAuditorFormModal";
+
+
 
 export default function TasksByAuditor() {
 
     const { tasks, loading, error, getTasksByAuditor } = useTasksByAuditor();
+    const [showModal, setShowModal] = useState(false);
+    const [selectedTask, setSelectedTask] = useState(null);
+
     console.log(tasks);
     const handleClose = () => {
         setShowModal(false);
@@ -72,12 +79,12 @@ export default function TasksByAuditor() {
                     }
                 </tbody>
             </table>
-            {/* <TasksFormModal
-                    isOpen={showModal}
-                    selectedTask={selectedTask}
-                    onClose={handleClose}
-                    onTaskCreated={getTasks}
-                /> */}
+            <TasksByAuditorFormModal
+                isOpen={showModal}
+                selectedTask={selectedTask}
+                onClose={handleClose}
+                onTaskUpdated={getTasksByAuditor}
+            />
         </div>
 
 
