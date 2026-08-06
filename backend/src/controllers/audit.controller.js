@@ -521,7 +521,7 @@ const finishAudit = async (req, res) => {
             SET status = 'Finished',
             updated_at = CURRENT_TIMESTAMP
             WHERE id = $1
-            RETURNING id, status
+            RETURNING *
             `, [auditId]);
 
         await createActivityLog(

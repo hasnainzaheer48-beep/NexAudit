@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom"
 import useAudit from "../hooks/useAudit";
 import useAuditProgress from "../hooks/useAuditProgress";
-import useTask from "../hooks/useTasksByAudit";
 import useTasksByAudit from "../hooks/useTasksByAudit";
 import AuditTasksTable from "../components/audits/auditTasksTable";
+import api from "../api/axios";
+
 
 
 
@@ -11,12 +12,27 @@ import AuditTasksTable from "../components/audits/auditTasksTable";
 export default function AuditDetails() {
 
     const { auditId } = useParams();
-    const { audit, getAudit, error, loading } = useAudit(auditId);
-    const { auditProgress, getAuditprogress } = useAuditProgress(auditId);
-    const { tasks, getTasksByAudit } = useTasksByAudit(auditId);
-    console.log(auditProgress)
+    const { audit, getAudit, error, loading: auditLoading } = useAudit(auditId);
+    const { auditProgress, getAuditprogress, loading: progressLoading } = useAuditProgress(auditId);
+    const { tasks, getTasksByAudit, loading: tasksLoading } = useTasksByAudit(auditId);
+    console.log(auditProgress);
 
-    if (loading) {
+    const handleFinishAudit = async () => {
+        try {
+            await api.patch(`/api/audits/${auditId}/complete`);
+            getAudit();
+            getAuditprogress();
+            getTasksByAudit();
+        }
+        catch (error) {
+            console.error(error);
+            alert(error.response?.data || "Failed to finish audit.");
+        }
+    }
+
+
+
+    if (auditLoading || progressLoading || tasksLoading) {
         return <div>Loading</div>
     }
 
@@ -52,6 +68,12 @@ export default function AuditDetails() {
                 <div>{auditProgress.finished_task} / {auditProgress.total_task} <br />
                     {auditProgress.progress} </div>
             </div>
+            <br />
+            <button
+                disabled={auditProgress.progress !== 100 || audit.status === "Finished"}
+                className="border"
+                onClick={handleFinishAudit}
+            >{audit.status === "Finished" ? "Audit Completed" : "Finish Audit"}</button>
 
         </div>
     )
