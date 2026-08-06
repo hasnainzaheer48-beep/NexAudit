@@ -512,8 +512,8 @@ const finishAudit = async (req, res) => {
             WHERE audit_id = $1
             AND status<>'Finished'`, [auditId]);
         const task = Number(taskResult.rows[0].count);
-        if (task != 0) {
-            return res.status(400).send("There are unifinished tasks");
+        if (task !== 0) {
+            return res.status(400).send("There are unfinished tasks");
         }
 
         const updateAuditStatus = await pool.query(`

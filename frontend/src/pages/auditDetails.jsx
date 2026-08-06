@@ -14,7 +14,7 @@ export default function AuditDetails() {
     const { audit, getAudit, error, loading } = useAudit(auditId);
     const { auditProgress, getAuditprogress } = useAuditProgress(auditId);
     const { tasks, getTasksByAudit } = useTasksByAudit(auditId);
-    console.log(tasks)
+    console.log(auditProgress)
 
     if (loading) {
         return <div>Loading</div>
@@ -45,6 +45,14 @@ export default function AuditDetails() {
                 <hr />
                 <AuditTasksTable tasks={tasks} getTasks={getTasksByAudit} />
             </div>
+            <br />
+            <div>
+                <div>Progress</div>
+                <hr />
+                <div>{auditProgress.finished_task} / {auditProgress.total_task} <br />
+                    {auditProgress.progress} </div>
+            </div>
+
         </div>
     )
 }
