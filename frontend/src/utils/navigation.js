@@ -18,10 +18,6 @@ const navigation =
             path: "/audit-templates"
         },
         {
-            name: "Template Tasks",
-            path: "/template-tasks"
-        },
-        {
             name: "Tasks",
             path: "/tasks"
         },
@@ -56,10 +52,7 @@ const navigation =
             name: "Audit Templates",
             path: "/audit-templates"
         },
-        {
-            name: "Template Tasks",
-            path: "/template-tasks"
-        },
+
         {
             name: "Tasks",
             path: "/tasks"
