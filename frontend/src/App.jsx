@@ -9,6 +9,7 @@ import ActivityLogs from './pages/activityLogs'
 import Tasks from './pages/tasks'
 import Audits from './pages/audits'
 import AuditTemplates from './pages/auditTemplates'
+import AuditDetails from './pages/auditDetails'
 import TemplateTasks from './pages/templateTasks'
 import Clients from './pages/clients'
 import Users from './pages/users'
@@ -40,6 +41,7 @@ function App() {
               <Route path="/template-tasks" element={<TemplateTasks />} />
               <Route path="/Clients" element={<Clients />} />
               <Route path="/audit-templates/:templateId/tasks" element={<TemplateTasks />} />
+              <Route path='/audits/audit-details/:auditId' element={<AuditDetails />} />
             </Route>
             <Route element={<RoleRoute roles={["ADMIN"]} />}>
               {/* FOR ADMIN PATHS */}
