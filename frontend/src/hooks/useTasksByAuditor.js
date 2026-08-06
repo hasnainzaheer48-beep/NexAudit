@@ -14,7 +14,7 @@ const useTasksByAuditor = () => {
 
             setLoading(true);
             const result = await api.get(`/api/tasks/me`);
-            setTasks(result);
+            setTasks(result.data);
 
         }
         catch (error) {
