@@ -35,7 +35,7 @@ export default function Sidebar() {
                 }
 
             </nav>
-            <button className="bg-[#4d1717] text-white rounded-2xl p-2 font-semibold hover:cursor-pointer hover:scale-103 hover:duration-300 " onClick={handleClick}>Log Out</button>
+            <button className="bg-[#4d1717] text-white rounded-2xl p-2 font-semibold hover:cursor-pointer hover:scale-103 duration-300 " onClick={handleClick}>Log Out</button>
         </aside>
     )
 }

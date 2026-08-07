@@ -43,17 +43,11 @@ export default function Audits() {
                         <th className="border px-4 py-3">CLient Id</th>
                         <th className="border px-4 py-3">Template Id</th>
                         <th className="border px-4 py-3">Manager</th>
-                        <th className="border px-4 py-3">Audit Year</th>
-                        <th className="border px-4 py-3">Audit Type</th>
-                        <th className="border px-4 py-3">Start Date</th>
-                        <th className="border px-4 py-3">Due Date</th>
+
+
                         <th className="border px-4 py-3">Priority</th>
                         <th className="border px-4 py-3">Status</th>
-                        <th className="border px-4 py-3">Description</th>
-                        <th className="border px-4 py-3">Archived</th>
-                        <th className="border px-4 py-3">Archived At</th>
-                        <th className="border px-4 py-3">Created At</th>
-                        <th className="border px-4 py-3">Updated At</th>
+
                         <th className="border px-4 py-3">Action</th>
                     </tr>
                 </thead>
@@ -66,17 +60,11 @@ export default function Audits() {
                                     <td className="border px-4 py-3">{audit.client}</td>
                                     <td className="border px-4 py-3">{audit.template}</td>
                                     <td className="border px-4 py-3">{audit.manager}</td>
-                                    <td className="border px-4 py-3">{audit.audit_year}</td>
-                                    <td className="border px-4 py-3">{audit.audit_type}</td>
-                                    <td className="border px-4 py-3">{new Date(audit.start_date).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3">{new Date(audit.due_date).toLocaleDateString()}</td>
+
                                     <td className="border px-4 py-3">{audit.priority}</td>
                                     <td className="border px-4 py-3">{audit.status}</td>
-                                    <td className="border px-4 py-3">{audit.description}</td>
-                                    <td className="border px-4 py-3">{String(audit.is_archived)}</td>
-                                    <td className="border px-4 py-3">{audit.archived_at}</td>
-                                    <td className="border px-4 py-3">{new Date(audit.created_at).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3">{new Date(audit.updated_at).toLocaleDateString()}</td>
+
+
 
                                     <td className="border px-4 py-3">
                                         {(user?.role === "MANAGER") &&

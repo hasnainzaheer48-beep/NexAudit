@@ -13,13 +13,31 @@ export default function Dashboard() {
     const { user, loading } = useContext(AuthContext);
     if (loading) return null;
     if (user.role === "ADMIN") {
-        return <AdminDashboard />
+        return (
+            <div>
+                <div className='text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
+                <AdminDashboard />
+            </div>
+        )
     }
     if (user.role === "AUDITOR") {
-        return <AuditorDashboard />
+        return (
+            <div>
+                <div className='text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
+                <AuditorDashboard />
+            </div>
+        )
+
+
     }
     if (user.role === "MANAGER") {
-        return <ManagerDashboard />
+        return (
+            <div>
+                <div className='text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
+                <ManagerDashboard />
+            </div>
+        )
+
     }
 
 }
