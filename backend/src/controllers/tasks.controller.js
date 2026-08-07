@@ -390,19 +390,18 @@ const getTasksByAuditor = async (req, res) => {
         const auditorId = req.user.id;
 
         const result = await pool.query(`
-            SELECT
-            tasks.*,
-        clients.company_name AS client,
-        audits.id AS audit_id,
-        audits.audit_type AS audit_type
-        
-        FROM tasks
-        
-        JOIN audits
-        ON tasks.audit_id = audits.id
-        
-        JOIN clients
-        ON audits.client_id = clients.id
+                                        select
+                                        tasks.*,
+                                        users.first_name || ' ' || users.last_name AS assigned_auditor,
+                                        clients.company_name AS company
+                                        from
+                                        tasks
+                                        left join users
+                                        on tasks.assigned_auditor_id = users.id
+                                        left join audits
+                                        on tasks.audit_id = audits.id
+                                        left join clients
+                                        on audits.client_id = clients.id
         
         WHERE tasks.assigned_auditor_id = $1
 
@@ -423,6 +422,7 @@ const updateTaskStatus = async (req, res) => {
     const auditorId = req.user.id;
     const { status } = req.body;
     const task_id = req.params.id;
+    let result = {};
 
     try {
 
@@ -437,16 +437,32 @@ const updateTaskStatus = async (req, res) => {
         if (oldStatus.rows[0].status === status) {
             return res.status(200).send('Task already has this status');
         }
-        const result = await pool.query(`
+
+        if (status === "Finished") {
+            result = await pool.query(`
            UPDATE tasks
            SET 
            status = $1,
-           updated_at = CURRENT_TIMESTAMP
+           updated_at = CURRENT_TIMESTAMP,
+           completed_at = CURRENT_TIMESTAMP
            WHERE id = $2
            AND assigned_auditor_id = $3
            RETURNING id, title, status, updated_at
         `, [status, task_id, auditorId]);
+        }
+        else {
 
+            result = await pool.query(`
+                UPDATE tasks
+                SET 
+                status = $1,
+                updated_at = CURRENT_TIMESTAMP
+                WHERE id = $2
+                AND assigned_auditor_id = $3
+                RETURNING id, title, status, updated_at
+                `, [status, task_id, auditorId]);
+
+        }
         await createActivityLog(
             {
                 entityId: task_id,

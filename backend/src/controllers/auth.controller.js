@@ -60,7 +60,8 @@ const getCurrentUser = async (req, res) => {
                                             role,
                                             email,
                                             phone_number,
-                                            is_active
+                                            is_active,
+                                            created_at
                                         FROM users
                                         WHERE id = $1`, [id]);
 

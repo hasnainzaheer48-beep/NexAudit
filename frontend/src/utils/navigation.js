@@ -73,12 +73,8 @@ const navigation =
             path: "/dashboard"
         },
         {
-            name: "Audits",
-            path: "/audits/me"
-        },
-        {
             name: " My Tasks",
-            path: "/tasks"
+            path: "/tasks/me"
         },
 
 
