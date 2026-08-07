@@ -50,12 +50,28 @@ export default function Login() {
 
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} className="inline-flex flex-col gap-3 ">
-                <input type="text" placeholder="Enter Email" value={email} onChange={handleEmail} />
-                <input type="password" placeholder="Enter Password" value={password} onChange={handlePassword} />
-                <button>Sign In</button>
-            </form>
+        <div className="bg-[#cbcbcb] min-h-screen flex items-center justify-center">
+            {/* Login Box */}
+            <div className="bg-[#f2f2f2] max-w-7xl flex rounded-2xl p-4 shadow-xl ">
+                {/* form */}
+                <div className="sm:w-1/2">
+                    <h1 className="font-bold text-5xl mb-5 text-center ">
+                        Welcome To NexAudit
+                    </h1>
+                    <h2 className="font-semibold text-2xl mb-23 text-center ">
+                        Login
+                    </h2>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-8">
+                        <input className="border bg-white border-gray-500 text-2xl rounded-xl p-2 focus:outline-none focus:border-gray-700 " type="text" placeholder="Email" value={email} onChange={handleEmail} />
+                        <input className="border bg-white border-gray-500 text-2xl rounded-xl p-2 focus:outline-none focus:border-gray-700  " type="password" placeholder="Password" value={password} onChange={handlePassword} />
+                        <button className=" bg-[#4d1717] text-white text-2xl rounded-xl p-2 hover:scale-102 duration-300 ">Sign In</button>
+                    </form>
+                </div>
+                {/* image */}
+                <div className="w-1/2 sm:block hidden ">
+                    <img className="rounded-2xl " src="/loginPage2.jpg" />
+                </div>
+            </div>
         </div>
     );
 }
