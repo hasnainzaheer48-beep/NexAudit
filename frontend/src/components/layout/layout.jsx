@@ -13,17 +13,17 @@ export default function Layout() {
 
     return (
         <>
-            <div className='h-screen flex flex-col'>
+            <div className=' h-screen flex p-3 gap-2  bg-[#cbcbcb]'>
 
-                <Navbar />
+                <Sidebar />
 
-                <div className='flex flex-1'>
 
-                    <Sidebar />
-                    <main className='flex-1'>
-                        <Outlet />
-                    </main>
-                </div>
+
+
+                <main className='flex-1 bg-[#F9FAFB] rounded-2xl shadow-2xl p-4 overflow-y-auto ' >
+                    <Outlet />
+                </main>
+
             </div>
 
         </>

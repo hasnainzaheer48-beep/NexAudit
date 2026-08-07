@@ -23,17 +23,19 @@ export default function Sidebar() {
 
     }
     return (
-        <aside className="bg-gray-200 flex flex-col w-64 h-full">
-            <div className="p-6 text-2xl font-bold">HELOO</div>
+        <aside className="bg-[#F9FAFB] flex flex-col w-64 h-full shrink-0 rounded-2xl shadow-lg p-2 ">
+            <div className="p-6 text-2xl font-bold text-center ">NexAudit</div>
             <nav className="flex-1 flex flex-col">
                 {
                     links.map((link) => {
-                        return <NavLink key={link.path} to={link.path}>{link.name}</NavLink>
+                        return <button className='text-center '>
+                            <NavLink key={link.path} to={link.path}>{link.name}</NavLink>
+                        </button>
                     })
                 }
 
             </nav>
-            <button className="bg-white border-2 border-black" onClick={handleClick}>Log Out</button>
+            <button className="bg-[#4d1717] text-white rounded-2xl p-2 font-semibold hover:cursor-pointer hover:scale-103 hover:duration-300 " onClick={handleClick}>Log Out</button>
         </aside>
     )
 }
