@@ -54,4 +54,23 @@ const uploadDocument = async (req, res) => {
 
 }
 
-module.exports = { uploadDocument }
+const getDocumentsByTask = async (req, res) => {
+    const { taskId } = req.params;
+    try {
+        const result = await pool.query(`
+            SELECT * 
+            FROM documents
+            WHERE task_id = $1`,
+            [
+                taskId
+            ]);
+
+        res.json(result.rows);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could Not get Docs by Tasks");
+    }
+}
+
+module.exports = { uploadDocument, getDocumentsByTask }

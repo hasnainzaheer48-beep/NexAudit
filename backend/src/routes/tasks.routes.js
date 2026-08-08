@@ -4,7 +4,7 @@ const { getTasks, getTaskById, getTasksByAudit, updateTask, deleteTask, assignAu
 const { authenticate } = require('../middlewares/auth.middleware');
 const { requireRole } = require('../middlewares/roles.middleware');
 const upload = require('../middlewares/upload.middleware');
-const { uploadDocument } = require('../controllers/document.controller');
+const { uploadDocument, getDocumentsByTask } = require('../controllers/document.controller');
 const { validateTask } = require('../middlewares/validateTask.middleware');
 
 router.use(authenticate);
@@ -18,6 +18,7 @@ router.get('/audit/:id', getTasksByAudit);
 
 router.get('/:id', getTaskById);
 
+router.get('/:taskId/documents', validateTask, upload.single("file"), getDocumentsByTask);
 router.post('/:taskId/documents', validateTask, upload.single("file"), uploadDocument);
 
 router.patch('/:id/assign', requireRole('MANAGER'), assignAuditor);
