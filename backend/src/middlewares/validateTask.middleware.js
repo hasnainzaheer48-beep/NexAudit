@@ -1,4 +1,4 @@
-const { pool } = require('../config/db')
+const pool = require('../config/db')
 
 const validateTask = async (req, res, next) => {
     try {

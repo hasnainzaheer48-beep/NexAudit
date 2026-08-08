@@ -1,5 +1,5 @@
-const { pool } = require('../config/db');
-const { fs } = require('fs/promises');
+const pool = require('../config/db');
+const fs = require('fs/promises');
 
 const uploadDocument = async (req, res) => {
 

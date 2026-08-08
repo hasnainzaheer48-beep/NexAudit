@@ -55,7 +55,7 @@ export default function TaskDetails() {
                 {/* Documents Upload and View */}
                 <div>Docs</div>
                 <button onClick={handleUpload} className="border p-1 mb-2">Add Docs</button><br />
-                <UploadDocumentFormModal isOpen={showModal} onClose={handleClose} />
+                <UploadDocumentFormModal isOpen={showModal} onClose={handleClose} taskId={taskId} onUploaded={getTask} />
                 <hr />
                 {/* ------------------------------------------------- */}
                 <div>Comments</div><br /><hr />
