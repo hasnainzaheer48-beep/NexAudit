@@ -12,7 +12,27 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({
-    storage
+    storage,
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = [
+            "application/pdf",
+            "image/png",
+            "image/jpeg",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ];
+
+        if (allowedTypes.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(new Error("File type not allowed"));
+        }
+    },
+    limits: {
+        fileSize: 10 * 1024 * 1024
+    }
 })
 
 
