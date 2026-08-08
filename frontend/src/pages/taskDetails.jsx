@@ -24,14 +24,15 @@ export default function TaskDetails() {
                 <div>Description: {task.description}</div><br />
                 <div>Start Date: {task.start_date ? new Date(task.start_date).toLocaleDateString() : '-'}</div><br />
                 <div>Due Date: {task.due_date ? new Date(task.due_date).toLocaleDateString() : '-'}</div><br />
-                <div>Completed At: {task.completed ? new Date(task.complete_at).toLocaleDateString : "-"}</div><br />
+                <div>Completed At: {task.completed ? new Date(task.completed_at).toLocaleDateString() : "-"}</div><br />
                 <div>Created At: {new Date(task.created_at).toLocaleDateString()}</div><br />
                 <div>Updated At: {task.updated_at ? new Date(task.updated_at).toLocaleDateString() : '-'}</div><br />
                 <hr />
                 <div>Status: {task.status} </div><br />
                 <div>Priority: {task.priority}</div><br />
                 <hr />
-                <div>Docs</div><br />
+                <div>Docs</div>
+                <button className="border p-1 mb-2">Add Docs</button><br />
                 <hr />
                 <div>Comments</div><br /><hr />
                 <div>More Details</div><br />

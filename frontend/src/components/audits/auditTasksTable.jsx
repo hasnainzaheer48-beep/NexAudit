@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TasksFormModal from "../tasks/tasksFormModal";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -7,6 +8,7 @@ export default function AuditTasksTable({ tasks, getTasks }) {
 
     const [showModal, setShowModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
+    const navigate = useNavigate();
 
     const handleClose = () => {
         setShowModal(false);
@@ -51,7 +53,9 @@ export default function AuditTasksTable({ tasks, getTasks }) {
                                     <td className="border px-4 py-3"><button className="border px-2 mr-1" onClick={() => {
                                         setSelectedTask(task);
                                         setShowModal(true);
-                                    }}>Edit</button></td>
+                                    }}>Edit</button>
+                                        <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button>
+                                    </td>
                                 </tr>
                             );
                         })
