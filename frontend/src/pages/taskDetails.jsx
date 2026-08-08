@@ -1,10 +1,25 @@
 import { useParams } from "react-router-dom"
 import useTask from "../hooks/useTask";
+import UploadDocumentFormModal from "../components/documents/uploadDocumentFormModal";
+import { useState } from "react";
+
 
 export default function TaskDetails() {
 
     const { taskId } = useParams();
     const { loading, error, task, getTask } = useTask(taskId);
+    const [showModal, setShowModal] = useState(false);
+
+
+    const handleUpload = () => {
+        setShowModal(true);
+    }
+
+
+    const handleClose = () => {
+        setShowModal(false);
+    }
+
 
     if (loading) {
         return null;
@@ -18,6 +33,8 @@ export default function TaskDetails() {
         <>
             <div>Task Details</div><hr />
             <div>
+
+                {/* Basic Info */}
                 <div>Title: {task.title}</div><br />
                 <div>Company: {task.company}</div><br />
                 <div>Assigned Auditor: {task.assigned_auditor}</div><br />
@@ -31,9 +48,16 @@ export default function TaskDetails() {
                 <div>Status: {task.status} </div><br />
                 <div>Priority: {task.priority}</div><br />
                 <hr />
+                {/* --------------------------------- */}
+
+
+
+                {/* Documents Upload and View */}
                 <div>Docs</div>
-                <button className="border p-1 mb-2">Add Docs</button><br />
+                <button onClick={handleUpload} className="border p-1 mb-2">Add Docs</button><br />
+                <UploadDocumentFormModal isOpen={showModal} onClose={handleClose} />
                 <hr />
+                {/* ------------------------------------------------- */}
                 <div>Comments</div><br /><hr />
                 <div>More Details</div><br />
                 <div>Task Id: {task.id}</div><br />
