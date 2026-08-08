@@ -10,6 +10,7 @@ const { validateTask } = require('../middlewares/validateTask.middleware');
 router.use(authenticate);
 
 router.get('/', getTasks);
+router.get('/:taskId/documents', validateTask, upload.single("file"), getDocumentsByTask);
 router.get('/me', requireRole('AUDITOR'), getTasksByAuditor);
 
 
@@ -18,7 +19,6 @@ router.get('/audit/:id', getTasksByAudit);
 
 router.get('/:id', getTaskById);
 
-router.get('/:taskId/documents', validateTask, upload.single("file"), getDocumentsByTask);
 router.post('/:taskId/documents', validateTask, upload.single("file"), uploadDocument);
 
 router.patch('/:id/assign', requireRole('MANAGER'), assignAuditor);
