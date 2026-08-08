@@ -131,13 +131,15 @@ CREATE TABLE comments (
 
 CREATE TABLE documents (
     id SERIAL PRIMARY KEY,
-
-    task_id INT NOT NULL REFERENCES tasks(id),
+    audit_id INT NOT NULL REFERENCES audits(id),
+    task_id INT REFERENCES tasks(id),
     uploaded_by INT NOT NULL REFERENCES users(id),
-
-    file_name VARCHAR(100) NOT NULL,
+    original_name VARCHAR(255) NOT NULL,
+    stored_name VARCHAR(255) NOT NULL,
     file_path VARCHAR(300) NOT NULL,
-
+    mime_type VARCHAR(100) NOT NULL,
+    file_size INT NOT NULL,
+    description TEXT,
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
