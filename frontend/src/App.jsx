@@ -15,6 +15,7 @@ import Clients from './pages/clients'
 import Users from './pages/users'
 import Modal from './components/ui/Modal'
 import TasksByAuditor from './pages/tasksByAuditor'
+import TaskDetails from './pages/taskDetails'
 
 
 
@@ -33,6 +34,7 @@ function App() {
             <Route element={<RoleRoute roles={["ADMIN", "MANAGER", "AUDITOR"]} />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/tasks" element={<Tasks />} />
+              <Route path="/tasks/task-details/:taskId" element={<TaskDetails />} />
             </Route>
             <Route element={<RoleRoute roles={["ADMIN", "MANAGER"]} />}>
               {/* FOR ADMIN AND MANAGAER PATHS */}
