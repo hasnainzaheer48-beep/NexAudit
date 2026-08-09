@@ -1,14 +1,14 @@
 
 import CommentCard from "./commentCard";
 
-export default function ShowTaskComments({ taskId, comments }) {
+export default function ShowTaskComments({ taskId, comments, setComments }) {
 
 
 
 
 
     const onDelete = (commentId) => {
-        setDocuments((prev) => {
+        setComments((prev) => {
             return prev.filter((comment) => comment.id !== commentId)
         });
     }
@@ -17,7 +17,7 @@ export default function ShowTaskComments({ taskId, comments }) {
 
 
     return (
-        <div className="p-2">
+        <div className="p-2 flex flex-col gap-3">
             {
                 comments.map((comment) => {
                     return <CommentCard key={comment.id} onDelete={onDelete} comment={comment} />
