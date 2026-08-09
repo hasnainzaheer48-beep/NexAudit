@@ -489,4 +489,13 @@ const updateTaskStatus = async (req, res) => {
 
 
 
-module.exports = { getTasks, getTaskById, updateTask, deleteTask, getTasksByAudit, assignAuditor, updateTaskStatus, getTasksByAuditor };
+module.exports = {
+    getTasks,
+    getTaskById,
+    updateTask,
+    deleteTask,
+    getTasksByAudit,
+    assignAuditor,
+    updateTaskStatus,
+    getTasksByAuditor
+};

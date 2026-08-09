@@ -120,7 +120,7 @@ CREATE TABLE tasks (
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
 
-    task_id INT NOT NULL REFERENCES tasks(id),
+    task_id INT NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
     user_id INT NOT NULL REFERENCES users(id),
     
     content VARCHAR(300) not null,
@@ -140,7 +140,10 @@ CREATE TABLE documents (
     mime_type VARCHAR(100) NOT NULL,
     file_size INT NOT NULL,
     description TEXT,
-    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	is_deleted BOOLEAN DEFAULT false,
+	deleted_at TIMESTAMP,
+	deleted_by INT REFERENCES users(id);
 );
 
 CREATE TABLE activity_logs(

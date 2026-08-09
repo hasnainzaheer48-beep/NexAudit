@@ -3,8 +3,10 @@
 3. [x] File saved to public/docs
 4. [x] Validate file
 5. [x] Insert document metadata into PostgreSQL
-6. [ ]  GET documents for a task 
-7. [ ]  Download document 
-8. [ ]   Delete document 
-9. [ ] React upload UI 
-10. [ ] React document list
+6. [x]  GET documents for a task 
+7. [x]  Download document 
+8. [x]   Delete document 
+9. [x] React upload UI 
+10. [x] React document list
+11. [ ] Make Comment Table
+12. [ ] Make Backend Endpoints 
