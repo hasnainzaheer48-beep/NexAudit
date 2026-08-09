@@ -1,17 +1,14 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuditsFormModal from "../components/audits/auditsFormModal";
-import { useNavigate } from 'react-router-dom'
-import useAudits from "../hooks/useAudits";
-import { AuthContext } from "../context/AuthContext";
+import useAuditByManager from "../hooks/useAuditsByManager";
 
 
-export default function Audits() {
+export default function AuditsByManager() {
 
-    const { loading, error, audits, getAudits } = useAudits();
+    const { loading, error, audits, getAuditsByManager } = useAuditByManager();
     const [showModal, setShowModal] = useState(false);
     const [selectedAudit, setSelectedAudit] = useState(null);
-    const { user } = useContext(AuthContext);
-
     const navigate = useNavigate();
 
     const handleCreateAudit = () => {
@@ -28,13 +25,14 @@ export default function Audits() {
     }
 
     if (error) {
-        return <>{error}</>
+        return <>{error.message}</>
     }
+
 
 
     return (
         <div>
-            {(user?.role === "MANAGER") && <button className="border" onClick={handleCreateAudit}>Create Audit</button>}
+            <button className="border" onClick={handleCreateAudit}>Create Audit</button>
 
             <table className="mt-4">
                 <thead>
@@ -42,7 +40,7 @@ export default function Audits() {
                         <th className="border px-4 py-3">Id</th>
                         <th className="border px-4 py-3">CLient Id</th>
                         <th className="border px-4 py-3">Template Id</th>
-                        <th className="border px-4 py-3">Manager</th>
+
 
 
                         <th className="border px-4 py-3">Priority</th>
@@ -59,7 +57,7 @@ export default function Audits() {
                                     <td className="border px-4 py-3">{audit.id}</td>
                                     <td className="border px-4 py-3">{audit.client}</td>
                                     <td className="border px-4 py-3">{audit.template}</td>
-                                    <td className="border px-4 py-3">{audit.manager}</td>
+
 
                                     <td className="border px-4 py-3">{audit.priority}</td>
                                     <td className="border px-4 py-3">{audit.status}</td>
@@ -67,11 +65,11 @@ export default function Audits() {
 
 
                                     <td className="border px-4 py-3">
-                                        {(user?.role === "MANAGER") &&
-                                            <button className="border px-2 mr-1" onClick={() => {
-                                                setSelectedAudit(audit);
-                                                setShowModal(true);
-                                            }}>Edit</button>}
+
+                                        <button className="border px-2 mr-1" onClick={() => {
+                                            setSelectedAudit(audit);
+                                            setShowModal(true);
+                                        }}>Edit</button>
 
                                         <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
                                     </td>
@@ -81,11 +79,8 @@ export default function Audits() {
                     }
                 </tbody>
             </table>
-            <AuditsFormModal isOpen={showModal} selectedAudit={selectedAudit} onClose={handleClose} onAuditCreated={getAudits} />
+            <AuditsFormModal isOpen={showModal} selectedAudit={selectedAudit} onClose={handleClose} onAuditCreated={getAuditsByManager} />
         </div>
 
-
-
-
-    );
+    )
 }
