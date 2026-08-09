@@ -6,6 +6,7 @@ import ShowTaskDocuments from "../components/documents/showTaskDocuments";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import ShowTaskComments from "../components/comments/showTaskComments";
+import Documents from "../components/documents/documents";
 
 export default function TaskDetails() {
 
@@ -15,7 +16,7 @@ export default function TaskDetails() {
     const { user } = useContext(AuthContext);
 
 
-    const handleUpload = () => {
+    const handleCreate = () => {
         setShowModal(true);
     }
 
@@ -58,9 +59,7 @@ export default function TaskDetails() {
 
                 {/* Documents Upload and View */}
                 <div>Documents</div>
-                <ShowTaskDocuments taskId={taskId} />
-                {(user.role === "AUDITOR") && <button onClick={handleUpload} className="border p-1 mb-2">Add Docs</button>}<br />
-                <UploadDocumentFormModal isOpen={showModal} onClose={handleClose} taskId={taskId} onUploaded={getTask} />
+                <Documents user={user} taskId={taskId} getTask={getTask} />
                 <hr />
                 {/* ------------------------------------------------- */}
 
@@ -68,7 +67,7 @@ export default function TaskDetails() {
                 <div id="Comment-Section" className="flex flex-col">
                     <div id="Comment-Section-Header" className="flex items-center justify-between p-2 px-3">
                         <div className="font-bold">Comments</div>
-                        <div><button className="border p-1 font-semibold">Create Comment</button></div>
+                        <div><button className="border p-1 font-semibold" onClick={handleCreate}>Create Comment</button></div>
                     </div>
                     <div id="Comment-Cards-Box" className="flex-1">
                         <ShowTaskComments taskId={taskId} />
