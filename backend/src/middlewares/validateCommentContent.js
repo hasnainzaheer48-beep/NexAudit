@@ -11,3 +11,5 @@ const validateCommentContent = (req, res, next) => {
 
     next();
 };
+
+module.exports = { validateCommentContent }

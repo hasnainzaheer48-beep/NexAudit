@@ -75,6 +75,7 @@ const editComment = async (req, res) => {
             SET content = $1;
             updated_at = CURRENT_TIMESTAMP
             WHERE id = $2
+            AND is_deleted = false
             RETURNING *
 
             `, [content, commentId]);

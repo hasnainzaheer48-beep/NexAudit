@@ -22,3 +22,4 @@ const authorizeCommentModification = async (req, res, next) => {
         res.status(500).send('Could not check comment modification validity');
     }
 }
+module.exports = { authorizeCommentModification }
