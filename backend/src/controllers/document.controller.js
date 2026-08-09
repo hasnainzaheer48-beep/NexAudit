@@ -60,7 +60,8 @@ const getDocumentsByTask = async (req, res) => {
         const result = await pool.query(`
             SELECT * 
             FROM documents
-            WHERE task_id = $1`,
+            WHERE task_id = $1
+            AND is_deleted = false`,
             [
                 taskId
             ]);
@@ -109,7 +110,36 @@ const downloadDocument = async (req, res) => {
     }
 }
 
+const deleteDocument = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const result = await pool.query(`
+            UPDATE documents
+            SET
+            is_deleted = true,
+            deleted_at = CURRENT_TIMESTAMP,
+            deleted_by = $1
+            WHERE id = $2
+            AND is_deleted = false
+            RETURNING *
+            `, [req.user.id, id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Document not found');
+        }
+
+        return res.json(result.rows[0]);
+
+
+    }
+    catch (error) {
+        console.error(error)
+        return res.status(500).send('Could Not Delete Document');
+    }
+}
 
 
 
-module.exports = { uploadDocument, getDocumentsByTask, getDocument, downloadDocument }
+
+module.exports = { uploadDocument, getDocumentsByTask, getDocument, downloadDocument, deleteDocument }

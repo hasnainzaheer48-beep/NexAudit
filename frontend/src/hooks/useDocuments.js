@@ -29,10 +29,10 @@ export default function useDocuments(taskId) {
 
     useEffect(() => {
         getDocuments();
-    }, [])
+    }, [taskId])
 
     return (
-        { loading, error, documents, getDocuments }
+        { loading, error, documents, getDocuments, setDocuments }
     );
 
 }

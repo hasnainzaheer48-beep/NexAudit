@@ -1,6 +1,6 @@
 import api from '../../api/axios'
+export default function DocumentCard({ document: doc, onDelete }) {
 
-export default function DocumentCard({ document: doc }) {
 
 
     const handleOpen = async () => {
@@ -13,7 +13,7 @@ export default function DocumentCard({ document: doc }) {
         window.open(url, "_blank");
     }
 
-    const hanldeDownload = async () => {
+    const handleDownload = async () => {
 
         try {
             const response = await api.get(`/api/documents/${doc.id}/download`,
@@ -36,6 +36,15 @@ export default function DocumentCard({ document: doc }) {
         }
 
     }
+    const handleDelete = async () => {
+        try {
+            await api.patch(`/api/documents/${doc.id}/delete`);
+            onDelete(doc.id);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
 
 
 
@@ -44,7 +53,8 @@ export default function DocumentCard({ document: doc }) {
             <div className="text-md font-semibold ">{doc.original_name}</div>
             <div>{((doc.mime_type).split('/')[1]).toUpperCase()} • {((doc.file_size) / (1024 * 1024)).toFixed(2)} MB</div>
             <button className="border p-1 rounded-lg bg-white font-semibold mb-1" onClick={handleOpen}>Open</button>
-            <button className="border p-1 rounded-lg bg-white font-semibold " onClick={hanldeDownload} >Download</button>
+            <button className="border p-1 rounded-lg bg-white font-semibold " onClick={handleDownload} >Download</button>
+            <button className="border p-1 rounded-lg bg-white font-semibold " onClick={handleDelete} >Delete</button>
 
         </div>
     )
