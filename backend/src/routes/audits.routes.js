@@ -16,12 +16,12 @@ const router = express.Router();
 
 router.use(authenticate);
 
-router.get('/', getAudits);
+router.get('/', requireRole("ADMIN"), getAudits);
 
+router.get('/me', requireRole("MANAGER"), getAuditsByManager)
 
 router.get('/:id', getAuditById);
 router.get('/:id/progress', getAuditprogress);
-router.get('/me', requireRole("MANAGER"), getAuditsByManager)
 
 router.post('/', requireRole("MANAGER"), createAudit);
 

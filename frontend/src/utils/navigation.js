@@ -45,8 +45,8 @@ const navigation =
             path: "/activity-logs"
         },
         {
-            name: "Audits",
-            path: "/audits"
+            name: "My Audits",
+            path: "/audits/me"
         },
         {
             name: "Audit Templates",

@@ -28,7 +28,7 @@ export default function Audits() {
     }
 
     if (error) {
-        return <>{error.message}</>
+        return <>{error}</>
     }
 
 
