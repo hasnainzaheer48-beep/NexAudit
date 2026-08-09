@@ -11,6 +11,7 @@ const tasksRouter = require('./routes/tasks.routes.js');
 const authRouter = require('./routes/auth.routes.js');
 const activityLoggerRouter = require('./routes/activity.logger.routes.js');
 const documentRouter = require('./routes/documents.routes.js');
+const commentsRouter = require('./routes/comments.routes.js');
 
 app.use(cors());
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use('/api/tasks', tasksRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/activity-logs', activityLoggerRouter);
 app.use('/api/documents/', documentRouter);
+app.use('/api/comments/', commentsRouter);
 
 
 

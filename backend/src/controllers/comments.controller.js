@@ -72,7 +72,7 @@ const editComment = async (req, res) => {
 
         const result = await pool.query(`
             UPDATE comments
-            SET content = $1;
+            SET content = $1,
             updated_at = CURRENT_TIMESTAMP
             WHERE id = $2
             AND is_deleted = false

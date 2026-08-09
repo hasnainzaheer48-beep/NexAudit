@@ -14,10 +14,11 @@ export default function EditCommentFormModal({ isOpen, onClose, comment, onEdite
     const handleSubmit = async (event) => {
 
         event.preventDefault();
+        if (!content.trim()) return;
         try {
-            await api.post(`/api/comments/${taskId}/comments`, { content });
-            setContent('');
-            onCreated();
+            await api.patch(`/api/comments/${comment.id}/edit`, { content });
+
+            onEdited();
             onClose();
         }
         catch (error) {
@@ -26,13 +27,17 @@ export default function EditCommentFormModal({ isOpen, onClose, comment, onEdite
 
     }
 
+    useEffect(() => {
+        setContent(comment?.content);
+    }, [comment]);
+
 
     if (!isOpen) return null;
     return (
         <Modal>
             <form onSubmit={handleSubmit} >
                 <label>Edit Comment
-                    <input type="text" placeholder="Edit Comment" value={content} onChange={handleChange} />
+                    <input type="text" placeholder="Edit Comment" value={content} onChange={handleChange} required />
                 </label>
                 <button className="border">Save Changes</button>
             </form>
