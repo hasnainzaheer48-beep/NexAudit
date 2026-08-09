@@ -11,3 +11,4 @@ router.use(authenticate);
 
 router.patch('/:commentId/edit', authorizeCommentModification, validateCommentContent, editComment);
 router.patch('/:commentId/delete', authorizeCommentModification, deleteComment);
+

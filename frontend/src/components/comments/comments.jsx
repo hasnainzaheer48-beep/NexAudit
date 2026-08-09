@@ -33,7 +33,7 @@ export default function Comments({ taskId, }) {
                 <div><button className="border p-1 font-semibold" onClick={handleCreate}>Create Comment</button></div>
             </div>
             <div id="Comment-Cards-Box" className="flex-1">
-                <ShowTaskComments taskId={taskId} comments={comments} setComments={setComments} />
+                <ShowTaskComments taskId={taskId} comments={comments} setComments={setComments} getComments={getComments} />
             </div>
             <CreateCommentFormModal isOpen={showModal} onClose={handleClose} taskId={taskId} onCreated={getComments} />
         </div>

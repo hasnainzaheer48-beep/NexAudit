@@ -45,7 +45,7 @@ const getCommentsByTask = async (req, res) => {
             join users
             on comments.user_id = users.id
             WHERE task_id = $1
-            AND is_false = false
+            AND is_deleted = false
             `,
             [
                 req.task.id
