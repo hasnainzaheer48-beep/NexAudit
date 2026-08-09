@@ -30,8 +30,14 @@ const getCommentsByTask = async (req, res) => {
 
     try {
         const result = await pool.query(`
-            SELECT * 
-            FROM comments
+           select 
+            comments.*,
+            users.first_name || ' ' || users.last_name as user,
+            users.role
+
+            from comments
+            join users
+            on comments.user_id = users.id
             WHERE task_id = $1
             `,
             [

@@ -21,7 +21,7 @@ export default function ShowTaskComments({ taskId }) {
         <div className="p-2">
             {
                 comments.map((comment) => {
-                    return <CommentCard key={comment.id} comment={comment} />
+                    return <CommentCard key={comment.id} onDelete={onDelete} comment={comment} />
                 })
             }
         </div>

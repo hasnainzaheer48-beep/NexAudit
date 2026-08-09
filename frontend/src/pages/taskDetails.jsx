@@ -66,8 +66,8 @@ export default function TaskDetails() {
 
                 {/* ---------------Comments-------------- */}
                 <div id="Comment-Section" className="flex flex-col">
-                    <div id="Comment-Section-Header" className="flex items-center justify-between p-1">
-                        <div>Comments</div>
+                    <div id="Comment-Section-Header" className="flex items-center justify-between p-2 px-3">
+                        <div className="font-bold">Comments</div>
                         <div><button className="border p-1 font-semibold">Create Comment</button></div>
                     </div>
                     <div id="Comment-Cards-Box" className="flex-1">
