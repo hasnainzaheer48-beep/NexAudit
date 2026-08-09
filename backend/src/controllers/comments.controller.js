@@ -23,6 +23,8 @@ const createComment = async (req, res) => {
     }
     catch (error) {
 
+        return res.status(500).send('Could not create comment');
+
     }
 }
 
@@ -51,9 +53,39 @@ const getCommentsByTask = async (req, res) => {
     }
     catch (error) {
         console.error(error);
-        res.status(500).send("Could Not get Docs by Tasks");
+        res.status(500).send("Could Not get Comments by Tasks");
 
     }
 }
+
+const editComment = async (req, res) => {
+
+    try {
+
+        const { commentId } = req.params;
+        const { content } = req.body;
+
+        const result = await pool.query(`
+            UPDATE comments
+            SET content = COALESCE($1, content);
+            updated_at = CURRENT_TIMESTAMP
+            WHERE id = $2
+            RETURNING *
+
+            `, [content, commentId]);
+
+
+        res.json(result.rows[0]);
+
+
+
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could Not edit comment");
+
+    }
+}
+
 
 module.exports = { createComment, getCommentsByTask }
