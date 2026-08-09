@@ -97,19 +97,19 @@ const downloadDocument = async (req, res) => {
         const { id } = req.params;
         const result = await pool.query(`SELECT * FROM documents WHERE id = $1`, [id]);
         if (result.rows.length === 0) {
-            return res.send("This document does not exist");
+            return res.status(404).send("This document does not exist");
         }
         const document = result.rows[0];
-        return res.download(document.file_path, document.originalname)''
+        return res.download(document.file_path, document.original_name);
 
     }
     catch (error) {
         console.error(error)
-        return res.status(500).send('Could Not Open Document');
+        return res.status(500).send('Could Not Download Document');
     }
 }
 
 
 
 
-module.exports = { uploadDocument, getDocumentsByTask, getDocument }
+module.exports = { uploadDocument, getDocumentsByTask, getDocument, downloadDocument }
