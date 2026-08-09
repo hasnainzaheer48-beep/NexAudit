@@ -5,7 +5,8 @@ const {
     updateAudit,
     deleteAudit,
     getAuditprogress,
-    finishAudit
+    finishAudit,
+    getAuditsByManager
 } = require('../controllers/audit.controller')
 
 const { authenticate } = require('../middlewares/auth.middleware');
@@ -20,6 +21,7 @@ router.get('/', getAudits);
 
 router.get('/:id', getAuditById);
 router.get('/:id/progress', getAuditprogress);
+router.get('/me', requireRole("MANAGER"), getAuditsByManager)
 
 router.post('/', requireRole("MANAGER"), createAudit);
 

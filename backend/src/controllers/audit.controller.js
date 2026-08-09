@@ -548,6 +548,34 @@ const finishAudit = async (req, res) => {
     }
 }
 
+const getAuditsByManager = async (req, res) => {
+    try {
+
+        const result = await pool.query(`SELECT
+                                        audits.*,
+                                        clients.company_name AS client,
+                                        users.first_name || ' ' || users.last_name AS manager,
+                                        audit_templates.name AS template
+                                        FROM audits
+                                        JOIN clients
+                                        ON audits.client_id = clients.id
+                                        JOIN users
+                                        ON audits.manager_id = users.id
+                                        JOIN audit_templates
+                                        ON audits.template_id = audit_templates.id
+                                        WHERE audits.manager_id = $1`, [req.user.id]);
+
+        res.json(result.rows);
+    }
+
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could not fetch Audits");
+
+    }
+}
+
+
 module.exports = {
     getAudits,
     getAuditById,
@@ -555,5 +583,6 @@ module.exports = {
     updateAudit,
     deleteAudit,
     getAuditprogress,
-    finishAudit
+    finishAudit,
+    getAuditsByManager
 }
