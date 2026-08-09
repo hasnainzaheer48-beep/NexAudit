@@ -1,12 +1,11 @@
-import useComements from "../../hooks/useComments"
+
 import CommentCard from "./commentCard";
 
-export default function ShowTaskComments({ taskId }) {
+export default function ShowTaskComments({ taskId, comments }) {
 
-    const { loading, error, comments, getComments, setComments } = useComements(taskId);
 
-    if (loading) return null;
-    if (error) return console.log(error);
+
+
 
     const onDelete = (commentId) => {
         setDocuments((prev) => {

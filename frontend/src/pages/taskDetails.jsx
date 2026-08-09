@@ -7,23 +7,14 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import ShowTaskComments from "../components/comments/showTaskComments";
 import Documents from "../components/documents/documents";
+import CreateCommentFormModal from "../components/comments/createCommentFormModal";
+import Comments from "../components/comments/comments";
 
 export default function TaskDetails() {
 
     const { taskId } = useParams();
     const { loading, error, task, getTask } = useTask(taskId);
-    const [showModal, setShowModal] = useState(false);
     const { user } = useContext(AuthContext);
-
-
-    const handleCreate = () => {
-        setShowModal(true);
-    }
-
-
-    const handleClose = () => {
-        setShowModal(false);
-    }
 
 
     if (loading) {
@@ -64,15 +55,7 @@ export default function TaskDetails() {
                 {/* ------------------------------------------------- */}
 
                 {/* ---------------Comments-------------- */}
-                <div id="Comment-Section" className="flex flex-col">
-                    <div id="Comment-Section-Header" className="flex items-center justify-between p-2 px-3">
-                        <div className="font-bold">Comments</div>
-                        <div><button className="border p-1 font-semibold" onClick={handleCreate}>Create Comment</button></div>
-                    </div>
-                    <div id="Comment-Cards-Box" className="flex-1">
-                        <ShowTaskComments taskId={taskId} />
-                    </div>
-                </div>
+                <Comments taskId={taskId} />
 
                 <br /><hr />
                 {/* ------------------------------------------------ */}
