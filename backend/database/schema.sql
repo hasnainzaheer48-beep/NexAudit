@@ -126,7 +126,9 @@ CREATE TABLE comments (
     content VARCHAR(300) not null,
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	is_deleted BOOLEAN DEFAULT false,
+	deleted_at TIMESTAMP
 );
 
 CREATE TABLE documents (

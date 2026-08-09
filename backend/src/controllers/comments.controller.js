@@ -5,7 +5,11 @@ const createComment = async (req, res) => {
 
     try {
         const { taskId } = req.params;
-        const { content } = req.body
+        const { content } = req.body;
+
+        if (!content) {
+            return res.send('Content Required');
+        }
         const result = await pool.query(`
             INSERT INTO 
             comments(
@@ -41,6 +45,7 @@ const getCommentsByTask = async (req, res) => {
             join users
             on comments.user_id = users.id
             WHERE task_id = $1
+            AND is_false = false
             `,
             [
                 req.task.id
@@ -67,7 +72,7 @@ const editComment = async (req, res) => {
 
         const result = await pool.query(`
             UPDATE comments
-            SET content = COALESCE($1, content);
+            SET content = $1;
             updated_at = CURRENT_TIMESTAMP
             WHERE id = $2
             RETURNING *
@@ -87,5 +92,35 @@ const editComment = async (req, res) => {
     }
 }
 
+const deleteComment = async (req, res) => {
 
-module.exports = { createComment, getCommentsByTask }
+    try {
+
+        const { commentId } = req.params;
+
+
+        const result = await pool.query(`
+            UPDATE comments
+            SET is_deleted = true,
+            deleted_at = CURRENT_TIMESTAMP
+            WHERE id = $2
+            AND is_deleted = false
+            RETURNING *
+
+            `, [commentId]);
+
+
+        res.json(result.rows[0]);
+
+
+
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could Not delete comment");
+
+    }
+}
+
+
+module.exports = { createComment, getCommentsByTask, editComment, deleteComment }
