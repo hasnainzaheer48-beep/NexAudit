@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import useTask from "../hooks/useTask";
 import UploadDocumentFormModal from "../components/documents/uploadDocumentFormModal";
 import { useState } from "react";
+import ShowTaskDocuments from "../components/documents/showTaskDocuments";
 
 
 export default function TaskDetails() {
@@ -53,7 +54,8 @@ export default function TaskDetails() {
 
 
                 {/* Documents Upload and View */}
-                <div>Docs</div>
+                <div>Documents</div>
+                <ShowTaskDocuments taskId={taskId} />
                 <button onClick={handleUpload} className="border p-1 mb-2">Add Docs</button><br />
                 <UploadDocumentFormModal isOpen={showModal} onClose={handleClose} taskId={taskId} onUploaded={getTask} />
                 <hr />
