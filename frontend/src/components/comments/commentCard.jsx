@@ -1,5 +1,6 @@
 import { useState } from "react";
 import EditCommentFormModal from "./editCommentFormModal";
+import api from "../../api/axios";
 
 
 export default function CommentCard({ comment, onDelete, getComments }) {
@@ -15,6 +16,16 @@ export default function CommentCard({ comment, onDelete, getComments }) {
 
     const handleClose = () => {
         setShowModal(false);
+    }
+
+    const handleDelete = async () => {
+        try {
+            await api.patch(`/api/comments/${comment.id}/delete`);
+            onDelete(comment.id);
+
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 
@@ -34,7 +45,7 @@ export default function CommentCard({ comment, onDelete, getComments }) {
 
             <div id="Action Buttons" className="flex flex-col gap-2 p-1">
                 <button className="border p-1 px-6" onClick={handleEdit}>Edit</button>
-                <button className="border p-1">Delete</button>
+                <button className="border p-1" onClick={handleDelete} >Delete</button>
             </div>
             <EditCommentFormModal isOpen={showModal} onClose={handleClose} comment={comment} onEdited={getComments} />
         </div>

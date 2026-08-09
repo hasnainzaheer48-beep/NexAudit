@@ -104,7 +104,7 @@ const deleteComment = async (req, res) => {
             UPDATE comments
             SET is_deleted = true,
             deleted_at = CURRENT_TIMESTAMP
-            WHERE id = $2
+            WHERE id = $1
             AND is_deleted = false
             RETURNING *
 
