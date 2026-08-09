@@ -5,6 +5,7 @@ import { useState } from "react";
 import ShowTaskDocuments from "../components/documents/showTaskDocuments";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import ShowTaskComments from "../components/comments/showTaskComments";
 
 export default function TaskDetails() {
 
@@ -62,7 +63,20 @@ export default function TaskDetails() {
                 <UploadDocumentFormModal isOpen={showModal} onClose={handleClose} taskId={taskId} onUploaded={getTask} />
                 <hr />
                 {/* ------------------------------------------------- */}
-                <div>Comments</div><br /><hr />
+
+                {/* ---------------Comments-------------- */}
+                <div id="Comment-Section" className="flex flex-col">
+                    <div id="Comment-Section-Header" className="flex items-center justify-between p-1">
+                        <div>Comments</div>
+                        <div><button className="border p-1 font-semibold">Create Comment</button></div>
+                    </div>
+                    <div id="Comment-Cards-Box" className="flex-1">
+                        <ShowTaskComments taskId={taskId} />
+                    </div>
+                </div>
+
+                <br /><hr />
+                {/* ------------------------------------------------ */}
                 <div>More Details</div><br />
                 <div>Task Id: {task.id}</div><br />
                 <div>Audit Id:  {task.audit_id}</div><br />

@@ -32,7 +32,7 @@ export default function useComements(taskId) {
     }, [taskId])
 
     return (
-        { loading, error, documents, getComments, setComments }
+        { loading, error, comments, getComments, setComments }
     );
 
 }
