@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import EditCommentFormModal from "./editCommentFormModal";
 import api from "../../api/axios";
+import { AuthContext } from "../../context/AuthContext";
 
 
 export default function CommentCard({ comment, onDelete, getComments }) {
 
     const [showModal, setShowModal] = useState(false);
+    const { user } = useContext(AuthContext);
+
 
 
 
@@ -28,10 +31,6 @@ export default function CommentCard({ comment, onDelete, getComments }) {
         }
     }
 
-
-
-
-
     return (
         <div className="bg-gray-200 shadow-lg flex p-2 rounded-lg">
             <div id="Content" className="flex-1 flex flex-col pt-0">
@@ -43,10 +42,13 @@ export default function CommentCard({ comment, onDelete, getComments }) {
                 </div>
             </div>
 
-            <div id="Action Buttons" className="flex flex-col gap-2 p-1">
-                <button className="border p-1 px-6" onClick={handleEdit}>Edit</button>
-                <button className="border p-1" onClick={handleDelete} >Delete</button>
-            </div>
+            {
+                user.id === comment.user_id && <div id="Action Buttons" className="flex flex-col gap-2 p-1">
+                    <button className="border p-1 px-6" onClick={handleEdit}>Edit</button>
+                    <button className="border p-1" onClick={handleDelete} >Delete</button>
+                </div>
+            }
+
             <EditCommentFormModal isOpen={showModal} onClose={handleClose} comment={comment} onEdited={getComments} />
         </div>
     )
