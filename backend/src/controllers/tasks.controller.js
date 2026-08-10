@@ -496,11 +496,14 @@ const getTasksByManager = async (req, res) => {
                                         select 
                                         tasks.*,
                                         audits.manager_id,
-                                        audits.client_id
+                                        audits.client_id,
+                                        clients.company_name AS company
 
                                         from tasks
                                         join audits
                                         on tasks.audit_id = audits.id
+                                        join clients
+                                        on audits.client_id = clients.id
 
                                         where manager_id = $1
 
