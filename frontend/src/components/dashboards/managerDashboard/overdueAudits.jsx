@@ -1,6 +1,6 @@
 export default function OverdueAudits() {
     return (
-        <div>
+        <div className="bg-gray-50">
             OverDue Tasks
         </div>
     )
