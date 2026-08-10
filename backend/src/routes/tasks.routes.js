@@ -21,11 +21,11 @@ router.get('/audit/:id', getTasksByAudit);
 
 router.get('/:id', getTaskById);
 
-router.post('/:taskId/documents', requireRole("AUDITOR"), validateTask, upload.single("file"), uploadDocument);
+router.post('/:taskId/documents', requireRole(["AUDITOR"]), validateTask, upload.single("file"), uploadDocument);
 router.post('/:taskId/comments', validateTask, createComment);
 
-router.patch('/:id/assign', requireRole('MANAGER'), assignAuditor);
-router.patch('/:id/status', requireRole('AUDITOR'), updateTaskStatus);
+router.patch('/:id/assign', requireRole(['MANAGER']), assignAuditor);
+router.patch('/:id/status', requireRole(['AUDITOR']), updateTaskStatus);
 router.patch('/:id', updateTask);
 
 router.delete('/:id', deleteTask);

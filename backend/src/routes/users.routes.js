@@ -2,18 +2,19 @@ const { getUsers, getUserById, createUser, updateUser, deleteUser } = require('.
 const express = require('express');
 const router = express.Router();
 const { authenticate } = require('../middlewares/auth.middleware');
+const { requireRole } = require('../middlewares/roles.middleware');
 
 router.use(authenticate);
 
 
-router.get('/', getUsers);
+router.get('/', requireRole(['ADMIN', 'AUDITOR', 'MANAGER']), getUsers);
 
-router.get('/:id', getUserById);
+router.get('/:id', requireRole(['ADMIN', 'AUDITOR', 'MANAGER']), getUserById);
 
-router.post('/', createUser);
+router.post('/', requireRole(['ADMIN']), createUser);
 
-router.patch('/:id', updateUser);
+router.patch('/:id', requireRole(['ADMIN']), updateUser);
 
-router.delete('/:id', deleteUser);
+router.delete('/:id', requireRole(['ADMIN']), deleteUser);
 
 module.exports = router; 

@@ -6,11 +6,12 @@ const {
     getActivityLogByEntityType,
     getActivityLogById
 } = require('../controllers/activity.logger.controller');
+const { requireRole } = require('../middlewares/roles.middleware');
 
 router.use(authenticate);
 
-router.get('/', getActivityLog);
-router.get('/:id', getActivityLogById);
-router.get('/entity/:entity_type', getActivityLogByEntityType);
+router.get('/', requireRole(["ADMIN", "MANAGER"]), getActivityLog);
+router.get('/:id', requireRole(["ADMIN", "MANAGER"]), getActivityLogById);
+router.get('/entity/:entity_type', requireRole(["ADMIN", "MANAGER"]), getActivityLogByEntityType);
 
 module.exports = router;
