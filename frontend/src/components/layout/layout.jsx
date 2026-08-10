@@ -13,7 +13,7 @@ export default function Layout() {
 
     return (
         <>
-            <div className=' h-screen flex p-3 gap-2  bg-[#cbcbcb]'>
+            <div className=' h-screen flex p-2 gap-2  bg-[#cbcbcb]'>
 
                 <Sidebar />
 
