@@ -1,8 +1,8 @@
-const requireRole = (role) => {
+const requireRole = (roles) => {
 
 
     return (req, res, next) => {
-        if (req.user.role === role) {
+        if (roles.includes(req.user.role)) {
             return next();
         }
 

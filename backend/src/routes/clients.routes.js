@@ -2,18 +2,19 @@ const { getClients, getClientById, createClient, updateClient, deleteClient } = 
 const express = require('express');
 const router = express.Router();
 const { authenticate } = require('../middlewares/auth.middleware');
+const { requireRole } = require('../middlewares/roles.middleware');
 
 
-router.use(authenticate)
+router.use(authenticate);
 
-router.get('/', getClients);
+router.get('/', requireRole(['ADMIN', 'MANAGER']), getClients);
 
 router.get('/:id', getClientById);
 
-router.post('/', createClient);
+router.post('/', requireRole(['ADMIN']), createClient);
 
-router.patch('/:id', updateClient);
+router.patch('/:id', requireRole(['ADMIN']), updateClient);
 
-router.delete('/:id', deleteClient);
+router.delete('/:id', requireRole(['ADMIN']), deleteClient);
 
 module.exports = router;

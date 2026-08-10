@@ -4,7 +4,7 @@ function buildChanges(oldRecord, newRecord, fields) {
     for (const field of fields) {
         if (oldRecord[field] !== newRecord[field]) {
             oldValue[field] = oldRecord[field];
-            newValue[field] = newValue[field];
+            newValue[field] = newRecord[field];
         }
     }
 

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useClients from "../hooks/useClients";
 import ClientsFormModal from "../components/clients/clientsFormModal";
+import { AuthContext } from "../context/AuthContext";
 
 
 
@@ -9,6 +10,7 @@ export default function Clients() {
     const { loading, error, clients, getClients } = useClients();
     const [showModal, setShowModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
+    const { user } = useContext(AuthContext);
 
     const handleCreateClient = () => {
         setShowModal(true);
@@ -43,7 +45,7 @@ export default function Clients() {
                         <th className="border px-4 py-3">Industry</th>
                         <th className="border px-4 py-3">Created At</th>
                         <th className="border px-4 py-3">Updated At</th>
-                        <th className="border px-4 py-3">Action</th>
+                        {user.role === "ADMIN" && <th className="border px-4 py-3">Action</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -59,10 +61,11 @@ export default function Clients() {
                                     <td className="border px-4 py-3">{client.industry}</td>
                                     <td className="border px-4 py-3">{new Date(client.created_at).toLocaleDateString()}</td>
                                     <td className="border px-4 py-3">{new Date(client.updated_at).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3"><button onClick={() => {
+                                    {user.role === "ADMIN" && <td className="border px-4 py-3"><button onClick={() => {
                                         setSelectedClient(client);
                                         setShowModal(true);
-                                    }}>Edit</button></td>
+                                    }}>Edit</button>
+                                    </td>}
                                 </tr>
                             );
                         })

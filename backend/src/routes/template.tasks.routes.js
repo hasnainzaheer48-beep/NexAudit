@@ -8,20 +8,22 @@ const {
     deleteTemplateTask,
     getTemplateTaskByAuditTemplate } = require('../controllers/template.tasks.controller');
 const { authenticate } = require('../middlewares/auth.middleware');
+const { requireRole } = require('../middlewares/roles.middleware');
+
 
 router.use(authenticate)
 
-router.get('/', getTemplateTasks);
+router.get('/', requireRole(['ADMIN', 'MANAGER']), getTemplateTasks);
 
-router.get('/template/:templateId', getTemplateTaskByAuditTemplate)
-router.get('/:id', getTemplateTaskById);
+router.get('/template/:templateId', requireRole(['ADMIN', 'MANAGER']), getTemplateTaskByAuditTemplate)
+router.get('/:id', requireRole(['ADMIN', 'MANAGER']), getTemplateTaskById);
 
 
-router.post('/', createTemplateTask);
+router.post('/', requireRole(['ADMIN', 'MANAGER']), createTemplateTask);
 
-router.patch('/:id', updateTemplateTask);
+router.patch('/:id', requireRole(['ADMIN', 'MANAGER']), updateTemplateTask);
 
-router.delete('/:id', deleteTemplateTask);
+router.delete('/:id', requireRole(['ADMIN', 'MANAGER']), deleteTemplateTask);
 
 module.exports = router;
 

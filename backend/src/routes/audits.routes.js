@@ -16,18 +16,18 @@ const router = express.Router();
 
 router.use(authenticate);
 
-router.get('/', requireRole("ADMIN"), getAudits);
+router.get('/', requireRole(["ADMIN"]), getAudits);
 
-router.get('/me', requireRole("MANAGER"), getAuditsByManager)
+router.get('/me', requireRole(["MANAGER"]), getAuditsByManager)
 
 router.get('/:id', getAuditById);
 router.get('/:id/progress', getAuditprogress);
 
-router.post('/', requireRole("MANAGER"), createAudit);
+router.post('/', requireRole(["MANAGER"]), createAudit);
 
 router.patch('/:id/complete', finishAudit);
-router.patch('/:id', requireRole("MANAGER"), updateAudit);
+router.patch('/:id', requireRole(["MANAGER"]), updateAudit);
 
-router.delete('/:id', requireRole("MANAGER"), deleteAudit);
+router.delete('/:id', requireRole(["MANAGER"]), deleteAudit);
 
 module.exports = router;
