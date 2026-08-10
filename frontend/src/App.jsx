@@ -17,6 +17,7 @@ import Modal from './components/ui/Modal'
 import TasksByAuditor from './pages/tasksByAuditor'
 import TaskDetails from './pages/taskDetails'
 import AuditsByManager from './pages/auditsByManger'
+import TasksByManager from './pages/tasksByManager'
 
 
 
@@ -51,13 +52,15 @@ function App() {
               {/* FOR ADMIN PATHS */}
               <Route path='/users' element={< Users />} />
             </Route >
+            {/* FOR AUDITOR PATHS */}
             <Route element={<RoleRoute roles={["AUDITOR"]} />}>
               <Route path='/tasks/me' element={<TasksByAuditor />} />
 
             </Route>
+            {/* FOR MANAGER PATHS */}
             <Route element={<RoleRoute roles={["MANAGER"]} />}>
               <Route path='/audits/me' element={<AuditsByManager />} />
-
+              <Route path='/tasks/me/manager' element={<TasksByManager />} />
             </Route>
           </Route>
         </Route>

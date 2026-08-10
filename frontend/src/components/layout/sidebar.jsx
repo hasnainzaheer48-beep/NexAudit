@@ -28,7 +28,7 @@ export default function Sidebar() {
             <nav className="flex-1 flex flex-col">
                 {
                     links.map((link) => {
-                        return <button className='text-center '>
+                        return <button key={link.name} className='text-center '>
                             <NavLink key={link.path} to={link.path}>{link.name}</NavLink>
                         </button>
                     })

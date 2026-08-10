@@ -487,6 +487,35 @@ const updateTaskStatus = async (req, res) => {
     }
 }
 
+const getTasksByManager = async (req, res) => {
+    try {
+
+        const managerId = req.user.id;
+
+        const result = await pool.query(`
+                                        select 
+                                        tasks.*,
+                                        audits.manager_id,
+                                        audits.client_id
+
+                                        from tasks
+                                        join audits
+                                        on tasks.audit_id = audits.id
+
+                                        where manager_id = $1
+
+
+
+                                    ORDER BY tasks.due_date ASC
+        `, [managerId]);
+        res.json(result.rows);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Could not get manager tasks");
+    }
+}
+
 
 
 module.exports = {
@@ -497,5 +526,6 @@ module.exports = {
     getTasksByAudit,
     assignAuditor,
     updateTaskStatus,
-    getTasksByAuditor
+    getTasksByAuditor,
+    getTasksByManager
 };

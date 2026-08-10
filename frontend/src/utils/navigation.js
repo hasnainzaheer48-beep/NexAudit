@@ -55,7 +55,7 @@ const navigation =
 
         {
             name: "Tasks",
-            path: "/tasks"
+            path: "/tasks/me/manager"
         },
 
         {

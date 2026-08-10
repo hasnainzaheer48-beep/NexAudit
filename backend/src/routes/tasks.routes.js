@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getTasks, getTaskById, getTasksByAudit, updateTask, deleteTask, assignAuditor, updateTaskStatus, getTasksByAuditor } = require('../controllers/tasks.controller');
+const { getTasks, getTaskById, getTasksByAudit, updateTask, deleteTask, assignAuditor, updateTaskStatus, getTasksByAuditor, getTasksByManager } = require('../controllers/tasks.controller');
 const { authenticate } = require('../middlewares/auth.middleware');
 const { requireRole } = require('../middlewares/roles.middleware');
 const upload = require('../middlewares/upload.middleware');
@@ -13,7 +13,8 @@ router.use(authenticate);
 router.get('/', getTasks);
 router.get('/:taskId/documents', validateTask, upload.single("file"), getDocumentsByTask);
 router.get('/:taskId/comments', validateTask, getCommentsByTask);
-router.get('/me', requireRole('AUDITOR'), getTasksByAuditor);
+router.get('/me', requireRole(['AUDITOR']), getTasksByAuditor);
+router.get('/me/manager', requireRole(['MANAGER']), getTasksByManager);
 
 
 router.get('/audit/:id', getTasksByAudit);
