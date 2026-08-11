@@ -4,7 +4,7 @@ import api from "../api/axios";
 
 
 export default function useRecentActivity() {
-    const [recentAcitivty, setRecentActivity] = useState({});
+    const [recentActivity, setRecentActivity] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -30,7 +30,7 @@ export default function useRecentActivity() {
     }, [])
 
     return (
-        { loading, error, recentAcitivty, getRecentActivity }
+        { loading, error, recentActivity, getRecentActivity }
     );
 
 

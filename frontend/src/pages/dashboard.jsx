@@ -33,7 +33,7 @@ export default function Dashboard() {
     if (user.role === "MANAGER") {
         return (
             <div className='flex flex-col gap-2 h-full '>
-                <div className='bg-amber-600 text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
+                <div className='bg-gray-300 text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
                 <ManagerDashboard />
             </div>
         )
