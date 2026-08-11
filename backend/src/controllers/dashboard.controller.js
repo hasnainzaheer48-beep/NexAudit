@@ -170,7 +170,27 @@ const getUpcomingTasks = async (req, res) => {
     }
 }
 
+const getUserStats = async (req, res) => {
 
+    try {
+        const result = await pool.query(`
+                                        select
+                                        COUNT(*) as total_users,
+                                        COUNT(*) FILTER(WHERE role = 'AUDITOR') as total_auditors,
+                                        COUNT(*) FILTER(WHERE role = 'MANAGER') as total_managers,
+                                        COUNT(*) FILTER(WHERE role = 'AUDITOR' AND is_active = true ) as active_auditors,
+                                        COUNT(*) FILTER(WHERE role = 'MANAGER' AND is_active = true ) as active_managers
+                                        from users
+            `,)
+
+        return res.json(result.rows[0]);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Could not get User Stats ');
+
+    }
+}
 
 
 module.exports = {
@@ -179,5 +199,6 @@ module.exports = {
     getUpcomingAudits,
     getTasksStats,
     getOverdueTasks,
-    getUpcomingTasks
+    getUpcomingTasks,
+    getUserStats
 }
