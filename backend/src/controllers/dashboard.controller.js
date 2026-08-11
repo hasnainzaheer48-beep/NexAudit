@@ -27,7 +27,16 @@ const getOverdueAudits = async (req, res) => {
 
     try {
         const result = await pool.query(`
-            select * from audits
+                                        SELECT
+                                        audits.*,
+                                        clients.company_name AS client,
+                                        audit_templates.name AS template
+                                        FROM audits
+                                        JOIN clients
+                                        ON audits.client_id = clients.id
+                                        
+                                        JOIN audit_templates
+                                        ON audits.template_id = audit_templates.id
             where due_date < NOW() 
             AND status != 'Finished'
             AND manager_id = $1
@@ -43,4 +52,38 @@ const getOverdueAudits = async (req, res) => {
     }
 }
 
-module.exports = { getAuditStats, getOverdueAudits }
+const getUpcomingAudits = async (req, res) => {
+
+    try {
+        const result = await pool.query(`
+                                        SELECT
+                                        audits.*,
+                                        clients.company_name AS client,
+                                        audit_templates.name AS template
+                                        FROM audits
+                                        JOIN clients
+                                        ON audits.client_id = clients.id
+                                        
+                                        JOIN audit_templates
+                                        ON audits.template_id = audit_templates.id
+                                        where due_date > NOW()
+                                        AND due_date <= NOW() + INTERVAL '7 days'
+                                        AND status != 'Finished'
+                                        AND manager_id =5
+
+                                        ORDER BY due_date ASC
+           
+            `, [req.user.id])
+
+        return res.json(result.rows);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Could not get Upcoming Audits ');
+
+    }
+}
+
+
+
+module.exports = { getAuditStats, getOverdueAudits, getUpcomingAudits }
