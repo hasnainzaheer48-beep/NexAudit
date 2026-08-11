@@ -12,9 +12,7 @@ export default function ManagerDashboard() {
     return (
         <div className="bg-amber-300 flex-1 flex flex-col gap-2 p-1">
             <StatGrid role={(user.role).toLowerCase()} />
-            <div id="Overdue Audits">
-                <OverdueAudits />
-            </div>
+            <OverdueAudits role={(user.role).toLowerCase()} />
             <div>
 
             </div>
