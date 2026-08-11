@@ -198,7 +198,7 @@ const unassignUser = async (req, res) => {
             WHERE id = $1
             AND is_active = true
             RETURNING *
-            `)
+            `, [id])
 
         await createActivityLog(
             {

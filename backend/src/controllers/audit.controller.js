@@ -567,7 +567,9 @@ const getAuditsByManager = async (req, res) => {
                                         ON audits.manager_id = users.id
                                         JOIN audit_templates
                                         ON audits.template_id = audit_templates.id
-                                        WHERE audits.manager_id = $1`, [req.user.id]);
+                                        WHERE audits.manager_id = $1
+                                        AND is_archived = false
+                                        `, [req.user.id]);
 
         res.json(result.rows);
     }
@@ -591,7 +593,7 @@ const archiveAudit = async (req, res) => {
             WHERE id = $1
             AND is_archived = true
             RETURNING *
-            `)
+            `, [id])
 
         await createActivityLog(
             {

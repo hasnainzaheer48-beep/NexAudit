@@ -166,4 +166,39 @@ const deleteAuditTemplate = async (req, res) => {
     }
 }
 
-module.exports = { getAuditTemplates, getAuditTemplateById, createAuditTemplate, updateAuditTemplate, deleteAuditTemplate };
+
+const deactivateAuditTemplate = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const oldRecord = await pool.query(`SELECT * FROM audit_templates id= $1`, [id]);
+        const result = await pool.query(`
+            UPDATE audits
+            SET is_active = false,
+            WHERE id = $1
+            AND is_active = true
+            RETURNING *
+            `, [id])
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Audit',
+                changedBy: req.user.id,
+                action: 'Deactivated',
+                oldValue: oldRecord.rows[0],
+
+            }
+        );
+
+        res.json(result.rows[0]);
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(`Could not deactivate Audit Template`)
+    }
+
+}
+
+module.exports = { getAuditTemplates, getAuditTemplateById, createAuditTemplate, updateAuditTemplate, deleteAuditTemplate, deactivateAuditTemplate };

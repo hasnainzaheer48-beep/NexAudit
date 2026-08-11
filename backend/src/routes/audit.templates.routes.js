@@ -2,7 +2,8 @@ const { getAuditTemplates,
     getAuditTemplateById,
     createAuditTemplate,
     updateAuditTemplate,
-    deleteAuditTemplate } = require('../controllers/audit.templates.controller');
+    deleteAuditTemplate,
+    deactivateAuditTemplate } = require('../controllers/audit.templates.controller');
 
 const express = require('express');
 const router = express.Router();
@@ -16,6 +17,7 @@ router.get('/', requireRole(["ADMIN", "MANAGER"]), getAuditTemplates);
 router.get('/:id', requireRole(["ADMIN", "MANAGER"]), getAuditTemplateById);
 router.post('/', requireRole(["ADMIN", "MANAGER"]), createAuditTemplate);
 router.patch('/:id', requireRole(["ADMIN", "MANAGER"]), updateAuditTemplate);
+router.patch('/deactivate/:id', requireRole(["ADMIN", "MANAGER"]), deactivateAuditTemplate)
 router.delete('/:id', requireRole(["ADMIN", "MANAGER"]), deleteAuditTemplate);
 
 module.exports = router;
