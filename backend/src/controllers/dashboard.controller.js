@@ -197,7 +197,7 @@ const getClientsStats = async (req, res) => {
     try {
         const result = await pool.query(`
                                         select
-                                        COUNT(*) as total_clients,
+                                        COUNT(*) as total_clients
                                         from clients
             `,)
 

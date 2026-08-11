@@ -3,10 +3,22 @@ import api from "../api/axios";
 
 
 
-export default function useStats() {
-    const [adminUserStats, setAdminStats] = useState({});
-    const [adminClientStats, setAdminClientStats] = useState({});
-    const [adminAuditStats, setAdminAuditStats] = useState({});
+export default function useAdminStats() {
+    const [adminUserStats, setAdminStats] = useState({
+        total_users: 0,
+        total_auditors: 0,
+        total_managers: 0,
+        active_auditors: 0,
+        active_managers: 0
+    });
+    const [adminClientStats, setAdminClientStats] = useState({
+        total_clients: 0
+    });
+    const [adminAuditStats, setAdminAuditStats] = useState(
+        {
+            total_audits: 0,
+            active_audits: 0
+        });
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -37,7 +49,7 @@ export default function useStats() {
     }, [])
 
     return (
-        { loading, error, adminStats, adminClientStats, adminAuditStats, getStats }
+        { loading, error, adminUserStats, adminClientStats, adminAuditStats, getStats }
     );
 
 
