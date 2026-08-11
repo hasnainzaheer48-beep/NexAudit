@@ -1,14 +1,14 @@
 import api from '../../../api/axios'
-import useOverdue from '../../../hooks/useOverdue'
+import useUpcoming from '../../../hooks/useUpcoming'
 
-export default function OverdueAudits({ role }) {
+export default function UpcomingAudits({ role }) {
 
-    const { loading, error, overdue } = useOverdue(role);
+    const { loading, error, upcoming } = useUpcoming(role);
     if (loading) return <>loading</>
     if (error) return <>{error}</>
     return (
         <div className="bg-gray-50">
-            <div>OverDue Audits</div>
+            <div>Upcoming Audits</div>
             <div>
                 <table className="mt-4">
                     <thead>
@@ -27,7 +27,7 @@ export default function OverdueAudits({ role }) {
                     </thead>
                     <tbody>
                         {
-                            overdue.map((audit) => {
+                            upcoming.map((audit) => {
                                 return (
                                     <tr key={audit.id}>
                                         <td className="border px-4 py-3">{audit.id}</td>

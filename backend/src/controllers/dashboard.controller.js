@@ -69,7 +69,7 @@ const getUpcomingAudits = async (req, res) => {
                                         where due_date > NOW()
                                         AND due_date <= NOW() + INTERVAL '7 days'
                                         AND status != 'Finished'
-                                        AND manager_id =5
+                                        AND manager_id = $1
 
                                         ORDER BY due_date ASC
            
