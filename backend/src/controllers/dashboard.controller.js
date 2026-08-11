@@ -85,5 +85,34 @@ const getUpcomingAudits = async (req, res) => {
 }
 
 
+const getTasksStats = async (req, res) => {
 
-module.exports = { getAuditStats, getOverdueAudits, getUpcomingAudits }
+    try {
+        const result = await pool.query(`
+            select
+            COUNT(*) as total_tasks,
+            COUNT(*) FILTER(WHERE status = 'In Progress' ) AS progress_tasks,
+            COUNT(*) FILTER(WHERE status = 'Finished' )AS finished_tasks
+
+            from tasks
+
+            where assigned_auditor_id = $1
+            `, [req.user.id])
+
+        return res.json(result.rows[0]);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error);
+
+    }
+}
+
+
+
+module.exports = {
+    getAuditStats,
+    getOverdueAudits,
+    getUpcomingAudits,
+    getTasksStats
+}
