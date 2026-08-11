@@ -582,18 +582,19 @@ const archiveAudit = async (req, res) => {
         const oldRecord = await pool.query(`SELECT * FROM audits id= $1`, [id]);
         const result = await pool.query(`
             UPDATE audits
-            SET is_archived = false
+            SET is_archived = false,
+            archived_at = CURRENT_TIMESTAMP
             WHERE id = $1
-            AND is_active = true
+            AND is_archived = true
             RETURNING *
             `)
 
         await createActivityLog(
             {
                 entityId: result.rows[0].id,
-                entityType: 'User',
+                entityType: 'Audit',
                 changedBy: req.user.id,
-                action: 'Unassigned',
+                action: 'Archived',
                 oldValue: oldRecord.rows[0],
 
             }
@@ -604,7 +605,7 @@ const archiveAudit = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send(`Could not unassign User`)
+        res.status(500).send(`Could not archive Audit`)
     }
 
 }
@@ -618,5 +619,6 @@ module.exports = {
     deleteAudit,
     getAuditprogress,
     finishAudit,
-    getAuditsByManager
+    getAuditsByManager,
+    archiveAudit
 }

@@ -205,7 +205,7 @@ const unassignUser = async (req, res) => {
                 entityId: result.rows[0].id,
                 entityType: 'User',
                 changedBy: req.user.id,
-                action: 'Unassigned',
+                action: 'Deactivated',
                 oldValue: oldRecord.rows[0],
 
             }
