@@ -8,14 +8,6 @@ import RecentActivity from '../recentActivity';
 export default function AuditorDashboard() {
     const { user, loading } = useContext(AuthContext);
 
-
-    const statCards = [
-        {
-            title: 'Total Tasks'
-
-        }
-    ]
-
     if (loading) return <>Loading</>
     return (
         <div className="bg-gray-300 flex-1 flex flex-col gap-2 p-1">

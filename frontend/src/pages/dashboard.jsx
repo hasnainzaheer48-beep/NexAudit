@@ -14,7 +14,7 @@ export default function Dashboard() {
     if (loading) return null;
     if (user.role === "ADMIN") {
         return (
-            <div>
+            <div className='flex flex-col gap-2 h-full '>
                 <div className='text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
                 <AdminDashboard />
             </div>
