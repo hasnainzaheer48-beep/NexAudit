@@ -165,7 +165,7 @@ CREATE TABLE activity_logs(
     changed_by INT NOT NULL REFERENCES users(id),
 
     action VARCHAR(100) NOT NULL,
-	CHECK (action IN('Created','Updated','Deleted','Assigned Auditor','Status Updated','Completed','Archived','Restored')),
+	CHECK (action IN('Created','Updated','Deleted','Assigned Auditor','Status Updated','Completed','Archived','Restored', 'Unassigned')),
 
 	old_value JSONB,
 	new_value JSONB,

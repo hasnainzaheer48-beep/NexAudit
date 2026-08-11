@@ -575,6 +575,40 @@ const getAuditsByManager = async (req, res) => {
     }
 }
 
+const archiveAudit = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const oldRecord = await pool.query(`SELECT * FROM audits id= $1`, [id]);
+        const result = await pool.query(`
+            UPDATE audits
+            SET is_archived = false
+            WHERE id = $1
+            AND is_active = true
+            RETURNING *
+            `)
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'User',
+                changedBy: req.user.id,
+                action: 'Unassigned',
+                oldValue: oldRecord.rows[0],
+
+            }
+        );
+
+        res.json(result.rows[0]);
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(`Could not unassign User`)
+    }
+
+}
+
 
 module.exports = {
     getAudits,
