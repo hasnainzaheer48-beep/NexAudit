@@ -8,5 +8,5 @@
 8. [x]   Delete document 
 9. [x] React upload UI 
 10. [x] React document list
-11. [ ] Make Comment Table
-12. [ ] Make Backend Endpoints 
+11. [x] Make Comment Table
+12. [x] Make Backend Endpoints 
