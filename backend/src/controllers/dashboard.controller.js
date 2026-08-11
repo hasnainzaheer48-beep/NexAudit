@@ -192,6 +192,43 @@ const getUserStats = async (req, res) => {
     }
 }
 
+const getClientsStats = async (req, res) => {
+
+    try {
+        const result = await pool.query(`
+                                        select
+                                        COUNT(*) as total_clients,
+                                        from clients
+            `,)
+
+        return res.json(result.rows[0]);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Could not get Clients Stats ');
+
+    }
+}
+
+
+const getTotalAuditsStats = async (req, res) => {
+
+    try {
+        const result = await pool.query(`
+                                        select
+                                        COUNT(*) as total_audits,
+                                        COUNT(*) FILTER(WHERE is_archived = false) AS active_audits
+                                        from audits
+            `,)
+
+        return res.json(result.rows[0]);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Could not get Audits Stats ');
+
+    }
+}
 
 module.exports = {
     getAuditStats,
@@ -200,5 +237,7 @@ module.exports = {
     getTasksStats,
     getOverdueTasks,
     getUpcomingTasks,
-    getUserStats
+    getUserStats,
+    getTotalAuditsStats,
+    getClientsStats
 }

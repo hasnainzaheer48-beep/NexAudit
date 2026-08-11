@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAuditStats, getOverdueAudits, getUpcomingAudits, getTasksStats, getOverdueTasks, getUpcomingTasks, getUserStats } = require('../controllers/dashboard.controller');
+const { getAuditStats, getOverdueAudits, getUpcomingAudits, getTasksStats, getOverdueTasks, getUpcomingTasks, getUserStats, getClientsStats, getTotalAuditsStats } = require('../controllers/dashboard.controller');
 const { authenticate } = require('../middlewares/auth.middleware');
 const router = express.Router();
 
@@ -15,5 +15,7 @@ router.get('/auditor/overdue', getOverdueTasks);
 router.get('/auditor/upcoming', getUpcomingTasks);
 
 router.get('/admin/stats', getUserStats);
+router.get('/admin/clients', getClientsStats);
+router.get('/admin/audits', getTotalAuditsStats);
 
 module.exports = router
