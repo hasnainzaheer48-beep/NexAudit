@@ -108,11 +108,44 @@ const getTasksStats = async (req, res) => {
     }
 }
 
+const getOverdueTasks = async (req, res) => {
+
+    try {
+        const result = await pool.query(`
+                                         select
+                                        tasks.*,
+                                        clients.company_name AS company
+                                        from
+                                        tasks
+                                        left join audits
+                                        on tasks.audit_id = audits.id
+                                        left join clients
+                                        on audits.client_id = clients.id
+        
+            where tasks.due_date < NOW() 
+            AND tasks.status != 'Finished'
+            AND tasks.assigned_auditor_id = $1
+
+            ORDER BY tasks.due_date
+           
+            `, [req.user.id])
+
+        return res.json(result.rows);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Could not get overdue Tasks ');
+
+    }
+}
+
+
 
 
 module.exports = {
     getAuditStats,
     getOverdueAudits,
     getUpcomingAudits,
-    getTasksStats
+    getTasksStats,
+    getOverdueTasks
 }
