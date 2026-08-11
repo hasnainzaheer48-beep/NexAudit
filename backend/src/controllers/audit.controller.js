@@ -18,7 +18,9 @@ const getAudits = async (req, res) => {
                                         LEFT JOIN users
                                         ON audits.manager_id = users.id
                                         LEFT JOIN audit_templates
-                                        ON audits.template_id = audit_templates.id`);
+                                        ON audits.template_id = audit_templates.id
+                                        
+                                        WHERE is_archived = false`);
         res.json(result.rows);
     }
 
@@ -45,7 +47,9 @@ const getAuditById = async (req, res) => {
                                         ON audits.manager_id = users.id
                                         JOIN audit_templates
                                         ON audits.template_id = audit_templates.id
-                                        WHERE audits.id = $1`, [id]);
+                                        WHERE audits.id = $1
+                                        AND is_archived = false
+                                        `, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send("Could not fetch Audit");
         }
