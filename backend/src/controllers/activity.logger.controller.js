@@ -132,9 +132,6 @@ const getActivityLogByUser = async (req, res) => {
             LIMIT 3
             ;`, [req.user.id]);
 
-        if (result.rows.length === 0) {
-            return res.status(404).send('Log not found');
-        }
 
         return res.json(result.rows);
     }

@@ -22,7 +22,7 @@ export default function Dashboard() {
     }
     if (user.role === "AUDITOR") {
         return (
-            <div>
+            <div className='flex flex-col gap-2 h-full '>
                 <div className='text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
                 <AuditorDashboard />
             </div>
