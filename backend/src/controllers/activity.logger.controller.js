@@ -107,6 +107,44 @@ const getActivityLogByEntityType = async (req, res) => {
 }
 
 
+const getActivityLogByUser = async (req, res) => {
+    try {
+        const { entity_type } = req.params
+        const result = await pool.query(`
+            SELECT
+        
+            activity_logs.id,
+            activity_logs.entity_id,
+            activity_logs.entity_type,
+            users.first_name||' '|| users.last_name AS changed_by,
+            activity_logs.action,
+            activity_logs.old_value,
+            activity_logs.new_value,
+            activity_logs.created_at
 
 
-module.exports = { getActivityLog, getActivityLogById, getActivityLogByEntityType };
+            FROM activity_logs
+            JOIN users
+            ON activity_logs.changed_by = users.id
+
+            WHERE activity_logs.changed_by = $1
+            ORDER BY activity_logs.created_at DESC
+            LIMIT 3
+            ;`, [req.user.id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Log not found');
+        }
+
+        return res.json(result.rows);
+    }
+
+    catch (error) {
+        console.error(error);
+        return res.status(500).send("Could not fetch activity log")
+    }
+}
+
+
+
+module.exports = { getActivityLog, getActivityLogById, getActivityLogByEntityType, getActivityLogByUser };

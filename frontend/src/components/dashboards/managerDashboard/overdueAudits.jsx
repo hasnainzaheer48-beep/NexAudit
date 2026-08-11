@@ -7,7 +7,7 @@ export default function OverdueAudits({ role }) {
     if (loading) return <>loading</>
     if (error) return <>{error}</>
     return (
-        <div className="bg-gray-50">
+        <div className="bg-gray-50 flex-1">
             <div>OverDue Audits</div>
             <div>
                 <table className="mt-4">

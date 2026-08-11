@@ -7,7 +7,7 @@ export default function UpcomingAudits({ role }) {
     if (loading) return <>loading</>
     if (error) return <>{error}</>
     return (
-        <div className="bg-gray-50">
+        <div className="bg-gray-50 w-full">
             <div>Upcoming Audits</div>
             <div>
                 <table className="mt-4">
