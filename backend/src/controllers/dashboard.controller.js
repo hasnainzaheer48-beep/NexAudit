@@ -17,9 +17,30 @@ const getAuditStats = async (req, res) => {
         return res.json(result.rows[0]);
 
     } catch (error) {
-        res.status(500).send('Could not get Audit Stats');
+        console.error(error);
+        res.status(500).send(error);
 
     }
 }
 
-module.exports = { getAuditStats }
+const getOverdueAudits = async (req, res) => {
+
+    try {
+        const result = await pool.query(`
+            select * from audits
+            where due_date < NOW() 
+            AND status != 'Finished'
+            AND manager_id = $1
+           
+            `, [req.user.id])
+
+        return res.json(result.rows);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Could not get overdue Audits ');
+
+    }
+}
+
+module.exports = { getAuditStats, getOverdueAudits }
