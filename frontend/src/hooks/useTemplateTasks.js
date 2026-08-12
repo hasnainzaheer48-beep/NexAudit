@@ -29,7 +29,7 @@ export default function useTemplateTasks(templateId) {
     }, [])
 
     return (
-        { loading, error, templateTasks, getTemplateTasks }
+        { loading, error, templateTasks, getTemplateTasks, setTemplateTasks }
     );
 
 }
