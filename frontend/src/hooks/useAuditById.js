@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 
-export default function useAudit(auditId) {
+export default function useAuditById(auditId) {
 
     const [audit, setAudit] = useState({});
     const [loading, setLoading] = useState(true);

@@ -6,7 +6,7 @@ const { buildChanges } = require('../utils/buildChanges');
 
 const getAuditTemplates = async (req, res) => {
     try {
-        const result = await pool.query(`SELECT * FROM audit_templates AND is_active = true`);
+        const result = await pool.query(`SELECT * FROM audit_templates WHERE is_active = true`);
         res.json(result.rows);
     }
 

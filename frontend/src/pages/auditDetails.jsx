@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom"
-import useAudit from "../hooks/useAudit";
 import useAuditProgress from "../hooks/useAuditProgress";
 import useTasksByAudit from "../hooks/useTasksByAudit";
 import AuditTasksTable from "../components/audits/auditTasksTable";
 import api from "../api/axios";
+import useAuditById from "../hooks/useAuditById";
 
 
 
@@ -12,7 +12,7 @@ import api from "../api/axios";
 export default function AuditDetails() {
 
     const { auditId } = useParams();
-    const { audit, getAudit, error, loading: auditLoading } = useAudit(auditId);
+    const { audit, getAudit, error, loading: auditLoading } = useAuditById(auditId);
     const { auditProgress, getAuditprogress, loading: progressLoading } = useAuditProgress(auditId);
     const { tasks, getTasksByAudit, loading: tasksLoading } = useTasksByAudit(auditId);
     console.log(auditProgress);
