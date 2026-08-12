@@ -29,7 +29,7 @@ export default function useAuditTemplates() {
     }, [])
 
     return (
-        { loading, error, auditTemplates, getAuditTemplates }
+        { loading, error, auditTemplates, getAuditTemplates, setAuditTemplates }
     );
 
 }

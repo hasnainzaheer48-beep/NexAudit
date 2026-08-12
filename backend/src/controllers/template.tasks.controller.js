@@ -210,10 +210,10 @@ const archiveTemplateTask = async (req, res) => {
 
     try {
         const { id } = req.params;
-        const oldRecord = await pool.query(`SELECT * FROM template_tasks id= $1`, [id]);
+        const oldRecord = await pool.query(`SELECT * FROM template_tasks WHERE id= $1`, [id]);
         const result = await pool.query(`
             UPDATE template_tasks
-            SET is_archived = true,
+            SET is_archived = true
             WHERE id = $1
             AND is_archived = false
             RETURNING *

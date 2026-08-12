@@ -585,7 +585,7 @@ const archiveAudit = async (req, res) => {
 
     try {
         const { id } = req.params;
-        const oldRecord = await pool.query(`SELECT * FROM audits id= $1`, [id]);
+        const oldRecord = await pool.query(`SELECT * FROM audits WHERE id= $1`, [id]);
         const result = await pool.query(`
             UPDATE audits
             SET is_archived = true,

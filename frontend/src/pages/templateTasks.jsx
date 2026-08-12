@@ -30,7 +30,7 @@ export default function TemplateTasks() {
         try {
 
             const templateTaskId = templateTask.id;
-            await api.patch(`/api/template-tasks/archive/${templateTask}`);
+            await api.patch(`/api/template-tasks/archive/${templateTaskId}`);
             setTemplateTasks((prev) => {
                 return prev.filter((templateTask) => templateTask.id !== templateTaskId);
             })

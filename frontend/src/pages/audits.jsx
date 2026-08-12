@@ -3,11 +3,12 @@ import AuditsFormModal from "../components/audits/auditsFormModal";
 import { useNavigate } from 'react-router-dom'
 import useAudits from "../hooks/useAudits";
 import { AuthContext } from "../context/AuthContext";
+import api from "../api/axios";
 
 
 export default function Audits() {
 
-    const { loading, error, audits, getAudits } = useAudits();
+    const { loading, error, audits, getAudits, setAudits } = useAudits();
     const [showModal, setShowModal] = useState(false);
     const [selectedAudit, setSelectedAudit] = useState(null);
     const { user } = useContext(AuthContext);
@@ -21,6 +22,23 @@ export default function Audits() {
 
     const handleClose = () => {
         setShowModal(false);
+    }
+
+    const handleArchive = async (audit) => {
+        try {
+
+            const auditId = audit.id;
+            await api.patch(`/api/audits/archive/${auditId}`);
+            setAudits((prev) => {
+                return prev.filter((audit) => audit.id !== auditId);
+            })
+
+
+
+        } catch (error) {
+            console.error(error);
+
+        }
     }
 
     if (loading) {
@@ -74,6 +92,9 @@ export default function Audits() {
                                             }}>Edit</button>}
 
                                         <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
+                                        <button onClick={() => {
+                                            return handleArchive(audit)
+                                        }} >Archive</button>
                                     </td>
                                 </tr>
                             );

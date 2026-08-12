@@ -171,10 +171,10 @@ const deactivateAuditTemplate = async (req, res) => {
 
     try {
         const { id } = req.params;
-        const oldRecord = await pool.query(`SELECT * FROM audit_templates id= $1`, [id]);
+        const oldRecord = await pool.query(`SELECT * FROM audit_templates WHERE id= $1`, [id]);
         const result = await pool.query(`
-            UPDATE audits
-            SET is_active = false,
+            UPDATE audit_templates
+            SET is_active = false
             WHERE id = $1
             AND is_active = true
             RETURNING *

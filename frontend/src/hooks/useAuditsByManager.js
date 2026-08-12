@@ -28,7 +28,7 @@ export default function useAuditByManager(managerId) {
     }, [])
 
     return (
-        { loading, error, audits, getAuditsByManager }
+        { loading, error, audits, getAuditsByManager, setAudits }
     );
 
 
