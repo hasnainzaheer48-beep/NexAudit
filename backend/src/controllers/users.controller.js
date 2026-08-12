@@ -7,7 +7,7 @@ const { buildChanges } = require('../utils/buildChanges.js');
 
 const getUsers = async (req, res) => {
     try {
-        let result = await pool.query('SELECT * FROM users');
+        let result = await pool.query('SELECT * FROM users WHERE is_active = true');
         res.json(result.rows);
     }
 
@@ -22,7 +22,7 @@ const getUsers = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         let { id } = req.params;
-        let result = await pool.query('SELECT * FROM users WHERE id=$1', [id]);
+        let result = await pool.query('SELECT * FROM users WHERE id=$1 AND is_active = true', [id]);
 
         if (result.rows.length === 0) {
             return res.status(404).send("User Not Found");
@@ -187,7 +187,41 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const unassignUser = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const oldRecord = await pool.query(`SELECT * FROM users WHERE id= $1`, [id]);
+        const result = await pool.query(`
+            UPDATE users
+            SET is_active = false
+            WHERE id = $1
+            AND is_active = true
+            RETURNING *
+            `, [id])
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'User',
+                changedBy: req.user.id,
+                action: 'Deactivated',
+                oldValue: oldRecord.rows[0],
+
+            }
+        );
+
+        res.json(result.rows[0]);
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(`Could not unassign User`)
+    }
+
+}
 
 
 
-module.exports = { getUsers, getUserById, createUser, updateUser, deleteUser };
+
+module.exports = { getUsers, getUserById, createUser, updateUser, deleteUser, unassignUser };

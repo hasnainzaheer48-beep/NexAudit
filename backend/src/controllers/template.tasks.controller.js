@@ -7,7 +7,7 @@ const { buildChanges } = require('../utils/buildChanges');
 
 const getTemplateTasks = async (req, res) => {
     try {
-        const result = await pool.query(`SELECT * FROM template_tasks`);
+        const result = await pool.query(`SELECT * FROM template_tasks AND is_archived = false`);
         res.json(result.rows);
     }
 
@@ -23,7 +23,7 @@ const getTemplateTasks = async (req, res) => {
 const getTemplateTaskById = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query(`SELECT * FROM template_tasks WHERE id = $1`, [id]);
+        const result = await pool.query(`SELECT * FROM template_tasks WHERE id = $1 AND is_archived = false `, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send('Could not find the Template Task');
         }
@@ -194,6 +194,7 @@ const getTemplateTaskByAuditTemplate = async (req, res) => {
             SELECT * 
             FROM template_tasks
             WHERE template_id = $1
+            AND is_archived = false
             ORDER BY order_number
             `, [templateId]);
         return res.json(result.rows);
@@ -205,12 +206,48 @@ const getTemplateTaskByAuditTemplate = async (req, res) => {
     }
 }
 
+const archiveTemplateTask = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const oldRecord = await pool.query(`SELECT * FROM template_tasks WHERE id= $1`, [id]);
+        const result = await pool.query(`
+            UPDATE template_tasks
+            SET is_archived = true
+            WHERE id = $1
+            AND is_archived = false
+            RETURNING *
+            `, [id])
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Template Task',
+                changedBy: req.user.id,
+                action: 'Archived',
+                oldValue: oldRecord.rows[0],
+
+            }
+        );
+
+        res.json(result.rows[0]);
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(`Could not archive Template Task`)
+    }
+
+}
+
+
 module.exports = {
     getTemplateTasks,
     getTemplateTaskById,
     createTemplateTask,
     updateTemplateTask,
     deleteTemplateTask,
-    getTemplateTaskByAuditTemplate
+    getTemplateTaskByAuditTemplate,
+    archiveTemplateTask
 };
 

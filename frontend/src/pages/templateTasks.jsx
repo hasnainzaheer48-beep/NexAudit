@@ -2,13 +2,15 @@ import { useParams } from "react-router-dom";
 import useTemplateTasks from "../hooks/useTemplateTasks";
 import { useState } from "react";
 import TemplateTasksFormModal from "../components/templateTasks/templateTasksFormModal";
+import api from "../api/axios";
+
 
 
 
 export default function TemplateTasks() {
 
     const { templateId } = useParams();
-    const { loading, error, templateTasks, getTemplateTasks } = useTemplateTasks(templateId);
+    const { loading, error, templateTasks, getTemplateTasks, setTemplateTasks } = useTemplateTasks(templateId);
     const [showModal, setShowModal] = useState(false);
     const [selectedTemplateTask, setSelectedTemplateTask] = useState(null);
 
@@ -21,6 +23,24 @@ export default function TemplateTasks() {
 
     const handleClose = () => {
         setShowModal(false);
+    }
+
+
+    const handleArchive = async (templateTask) => {
+        try {
+
+            const templateTaskId = templateTask.id;
+            await api.patch(`/api/template-tasks/archive/${templateTaskId}`);
+            setTemplateTasks((prev) => {
+                return prev.filter((templateTask) => templateTask.id !== templateTaskId);
+            })
+
+
+
+        } catch (error) {
+            console.error(error);
+
+        }
     }
 
     if (loading) {
@@ -64,7 +84,13 @@ export default function TemplateTasks() {
                                     <td className="border px-4 py-3"><button className="border px-2 mr-1" onClick={() => {
                                         setSelectedTemplateTask(templateTask);
                                         setShowModal(true);
-                                    }}>Edit</button></td>
+                                    }}>Edit</button>
+                                        <button onClick={() => {
+                                            return handleArchive(templateTask)
+                                        }}>
+                                            Archive
+                                        </button>
+                                    </td>
                                 </tr>
                             );
                         })

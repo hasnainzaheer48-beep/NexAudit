@@ -29,7 +29,7 @@ export default function useUsers() {
 
     }, []);
 
-    return ({ users, getUsers, loading, error })
+    return ({ users, getUsers, loading, error, setUsers })
 
 
 }

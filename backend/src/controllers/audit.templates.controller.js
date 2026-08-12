@@ -6,7 +6,7 @@ const { buildChanges } = require('../utils/buildChanges');
 
 const getAuditTemplates = async (req, res) => {
     try {
-        const result = await pool.query(`SELECT * FROM audit_templates`);
+        const result = await pool.query(`SELECT * FROM audit_templates WHERE is_active = true`);
         res.json(result.rows);
     }
 
@@ -22,7 +22,7 @@ const getAuditTemplates = async (req, res) => {
 const getAuditTemplateById = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query(`SELECT * FROM audit_templates WHERE id= $1`, [id]);
+        const result = await pool.query(`SELECT * FROM audit_templates WHERE id= $1 AND is_active = true`, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send("Could not fetch Audit Template");
         }
@@ -166,4 +166,39 @@ const deleteAuditTemplate = async (req, res) => {
     }
 }
 
-module.exports = { getAuditTemplates, getAuditTemplateById, createAuditTemplate, updateAuditTemplate, deleteAuditTemplate };
+
+const deactivateAuditTemplate = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const oldRecord = await pool.query(`SELECT * FROM audit_templates WHERE id= $1`, [id]);
+        const result = await pool.query(`
+            UPDATE audit_templates
+            SET is_active = false
+            WHERE id = $1
+            AND is_active = true
+            RETURNING *
+            `, [id])
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Audit Template',
+                changedBy: req.user.id,
+                action: 'Deactivated',
+                oldValue: oldRecord.rows[0],
+
+            }
+        );
+
+        res.json(result.rows[0]);
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(`Could not deactivate Audit Template`)
+    }
+
+}
+
+module.exports = { getAuditTemplates, getAuditTemplateById, createAuditTemplate, updateAuditTemplate, deleteAuditTemplate, deactivateAuditTemplate };

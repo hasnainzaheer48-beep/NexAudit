@@ -6,7 +6,8 @@ const {
     deleteAudit,
     getAuditprogress,
     finishAudit,
-    getAuditsByManager
+    getAuditsByManager,
+    archiveAudit
 } = require('../controllers/audit.controller')
 
 const { authenticate } = require('../middlewares/auth.middleware');
@@ -27,6 +28,7 @@ router.post('/', requireRole(["MANAGER"]), createAudit);
 
 router.patch('/:id/complete', finishAudit);
 router.patch('/:id', requireRole(["MANAGER"]), updateAudit);
+router.patch('/archive/:id', requireRole(["MANAGER", "ADMIN"]), archiveAudit);
 
 router.delete('/:id', requireRole(["MANAGER"]), deleteAudit);
 

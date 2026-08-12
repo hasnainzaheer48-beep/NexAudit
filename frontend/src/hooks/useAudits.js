@@ -29,7 +29,7 @@ export default function useAudits() {
     }, [])
 
     return (
-        { loading, error, audits, getAudits }
+        { loading, error, audits, getAudits, setAudits }
     );
 
 }

@@ -2,11 +2,12 @@ import { useState } from "react";
 import useAuditTemplates from "../hooks/useAuditTemplates";
 import AuditTemplatesFormModal from "../components/auditTemplates/auditTemplatesFormModal";
 import { useNavigate } from 'react-router-dom'
+import api from "../api/axios";
 
 
 export default function AuditTemplates() {
 
-    const { loading, error, auditTemplates, getAuditTemplates } = useAuditTemplates();
+    const { loading, error, auditTemplates, getAuditTemplates, setAuditTemplates } = useAuditTemplates();
     const [showModal, setShowModal] = useState(false);
     const [selectedAuditTemplate, setSelectedAuditTemplate] = useState(null);
 
@@ -16,6 +17,24 @@ export default function AuditTemplates() {
         setShowModal(true);
         setSelectedAuditTemplate(null);
     }
+
+    const handleDeactivate = async (auditTemplate) => {
+        try {
+
+            const auditTemplateId = auditTemplate.id;
+            await api.patch(`/api/audit-templates/deactivate/${auditTemplateId}`);
+            setAuditTemplates((prev) => {
+                return prev.filter((auditTemplate) => auditTemplate.id !== auditTemplateId);
+            })
+
+
+
+        } catch (error) {
+            console.error(error);
+
+        }
+    }
+
 
     const handleClose = () => {
         setShowModal(false);
@@ -68,6 +87,9 @@ export default function AuditTemplates() {
                                         <button className="border px-2" onClick={() => {
                                             navigate(`/audit-templates/${auditTemplate.id}/tasks`)
                                         }}>Tasks</button>
+                                        <button onClick={() => {
+                                            return handleDeactivate(auditTemplate)
+                                        }} >Deactivate</button>
 
                                     </td>
 

@@ -1,7 +1,7 @@
 import api from '../api/axios'
 import { useState, useEffect } from 'react';
 
-export default function useTask(taskId) {
+export default function useTaskById(taskId) {
 
     const [task, setTask] = useState({});
     const [loading, setLoading] = useState(true);

@@ -18,7 +18,9 @@ const getAudits = async (req, res) => {
                                         LEFT JOIN users
                                         ON audits.manager_id = users.id
                                         LEFT JOIN audit_templates
-                                        ON audits.template_id = audit_templates.id`);
+                                        ON audits.template_id = audit_templates.id
+                                        
+                                        WHERE is_archived = false`);
         res.json(result.rows);
     }
 
@@ -45,7 +47,9 @@ const getAuditById = async (req, res) => {
                                         ON audits.manager_id = users.id
                                         JOIN audit_templates
                                         ON audits.template_id = audit_templates.id
-                                        WHERE audits.id = $1`, [id]);
+                                        WHERE audits.id = $1
+                                        AND is_archived = false
+                                        `, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send("Could not fetch Audit");
         }
@@ -563,7 +567,9 @@ const getAuditsByManager = async (req, res) => {
                                         ON audits.manager_id = users.id
                                         JOIN audit_templates
                                         ON audits.template_id = audit_templates.id
-                                        WHERE audits.manager_id = $1`, [req.user.id]);
+                                        WHERE audits.manager_id = $1
+                                        AND is_archived = false
+                                        `, [req.user.id]);
 
         res.json(result.rows);
     }
@@ -575,6 +581,41 @@ const getAuditsByManager = async (req, res) => {
     }
 }
 
+const archiveAudit = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const oldRecord = await pool.query(`SELECT * FROM audits WHERE id= $1`, [id]);
+        const result = await pool.query(`
+            UPDATE audits
+            SET is_archived = true,
+            archived_at = CURRENT_TIMESTAMP
+            WHERE id = $1
+            AND is_archived = false
+            RETURNING *
+            `, [id])
+
+        await createActivityLog(
+            {
+                entityId: result.rows[0].id,
+                entityType: 'Audit',
+                changedBy: req.user.id,
+                action: 'Archived',
+                oldValue: oldRecord.rows[0],
+
+            }
+        );
+
+        res.json(result.rows[0]);
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(`Could not archive Audit`)
+    }
+
+}
+
 
 module.exports = {
     getAudits,
@@ -584,5 +625,6 @@ module.exports = {
     deleteAudit,
     getAuditprogress,
     finishAudit,
-    getAuditsByManager
+    getAuditsByManager,
+    archiveAudit
 }

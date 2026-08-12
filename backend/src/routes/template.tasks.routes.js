@@ -6,7 +6,8 @@ const {
     createTemplateTask,
     updateTemplateTask,
     deleteTemplateTask,
-    getTemplateTaskByAuditTemplate } = require('../controllers/template.tasks.controller');
+    getTemplateTaskByAuditTemplate,
+    archiveTemplateTask } = require('../controllers/template.tasks.controller');
 const { authenticate } = require('../middlewares/auth.middleware');
 const { requireRole } = require('../middlewares/roles.middleware');
 
@@ -22,6 +23,7 @@ router.get('/:id', requireRole(['ADMIN', 'MANAGER']), getTemplateTaskById);
 router.post('/', requireRole(['ADMIN', 'MANAGER']), createTemplateTask);
 
 router.patch('/:id', requireRole(['ADMIN', 'MANAGER']), updateTemplateTask);
+router.patch('/archive/:id', requireRole(['ADMIN', 'MANAGER']), archiveTemplateTask);
 
 router.delete('/:id', requireRole(['ADMIN', 'MANAGER']), deleteTemplateTask);
 

@@ -12,7 +12,7 @@ const login = async (req, res) => {
         if (!email || !password) {
             return res.status(401).send("Add both email and password");
         }
-        const result = await pool.query(`SELECT * FROM users where email = $1`, [email]);
+        const result = await pool.query(`SELECT * FROM users where email = $1 AND is_active = true`, [email]);
         const user = result.rows[0];
         if (!user) {
             return res.status(401).send("Wrong Credentials");
@@ -63,7 +63,9 @@ const getCurrentUser = async (req, res) => {
                                             is_active,
                                             created_at
                                         FROM users
-                                        WHERE id = $1`, [id]);
+                                        WHERE id = $1
+                                        AND is_active = true
+                                        `, [id]);
 
         if (result.rows.length === 0) {
             return res.status(404).send("User not found");

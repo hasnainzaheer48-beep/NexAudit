@@ -1,13 +1,14 @@
 import { useState } from "react";
 import UserFormModal from "../components/users/UserFormModal";
 import useUsers from "../hooks/useUsers";
+import api from "../api/axios";
 
 
 
 
 export default function Users() {
 
-    const { users, getUsers, loading, error } = useUsers();
+    const { users, getUsers, loading, error, setUsers } = useUsers();
     const [showModal, setShowModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -20,8 +21,20 @@ export default function Users() {
         setShowModal(false)
     }
 
+    const handleDelete = async (user) => {
+        try {
+            console.log(user)
+            const userId = user.id;
+            await api.patch(`/api/users/deactivate/${userId}`);
+            setUsers((prev) => {
+                return prev.filter((user) => user.id !== userId)
+            })
+        }
+        catch (error) {
+            console.error(error);
 
-
+        }
+    }
 
 
     if (loading) {
@@ -64,7 +77,11 @@ export default function Users() {
                                     <td className="border px-4 py-3"><button onClick={() => {
                                         setSelectedUser(user);
                                         setShowModal(true);
-                                    }}>Edit</button></td>
+                                    }}>Edit</button>
+                                        <button onClick={() => {
+                                            handleDelete(user);
+                                        }}>Deactivate</button>
+                                    </td>
                                 </tr>
 
                             );

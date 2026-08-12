@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom"
-import useTask from "../hooks/useTask";
 import UploadDocumentFormModal from "../components/documents/uploadDocumentFormModal";
 import { useState } from "react";
 import ShowTaskDocuments from "../components/documents/showTaskDocuments";
@@ -9,11 +8,12 @@ import ShowTaskComments from "../components/comments/showTaskComments";
 import Documents from "../components/documents/documents";
 import CreateCommentFormModal from "../components/comments/createCommentFormModal";
 import Comments from "../components/comments/comments";
+import useTaskById from "../hooks/useTaskById";
 
 export default function TaskDetails() {
 
     const { taskId } = useParams();
-    const { loading, error, task, getTask } = useTask(taskId);
+    const { loading, error, task, getTask } = useTaskById(taskId);
     const { user } = useContext(AuthContext);
 
 
