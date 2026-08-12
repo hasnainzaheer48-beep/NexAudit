@@ -16,7 +16,7 @@ router.post('/', requireRole(['ADMIN']), createUser);
 
 
 router.patch('/:id', requireRole(['ADMIN']), updateUser);
-router.patch('/unassign/:id', requireRole(['ADMIN']), unassignUser);
+router.patch('/deactivate/:id', requireRole(['ADMIN']), unassignUser);
 
 
 router.delete('/:id', requireRole(['ADMIN']), deleteUser);

@@ -588,10 +588,10 @@ const archiveAudit = async (req, res) => {
         const oldRecord = await pool.query(`SELECT * FROM audits id= $1`, [id]);
         const result = await pool.query(`
             UPDATE audits
-            SET is_archived = false,
+            SET is_archived = true,
             archived_at = CURRENT_TIMESTAMP
             WHERE id = $1
-            AND is_archived = true
+            AND is_archived = false
             RETURNING *
             `, [id])
 

@@ -6,7 +6,7 @@ const { buildChanges } = require('../utils/buildChanges');
 
 const getAuditTemplates = async (req, res) => {
     try {
-        const result = await pool.query(`SELECT * FROM audit_templates`);
+        const result = await pool.query(`SELECT * FROM audit_templates AND is_active = true`);
         res.json(result.rows);
     }
 
@@ -22,7 +22,7 @@ const getAuditTemplates = async (req, res) => {
 const getAuditTemplateById = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query(`SELECT * FROM audit_templates WHERE id= $1`, [id]);
+        const result = await pool.query(`SELECT * FROM audit_templates WHERE id= $1 AND is_active = true`, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send("Could not fetch Audit Template");
         }
@@ -183,7 +183,7 @@ const deactivateAuditTemplate = async (req, res) => {
         await createActivityLog(
             {
                 entityId: result.rows[0].id,
-                entityType: 'Audit',
+                entityType: 'Audit Template',
                 changedBy: req.user.id,
                 action: 'Deactivated',
                 oldValue: oldRecord.rows[0],
