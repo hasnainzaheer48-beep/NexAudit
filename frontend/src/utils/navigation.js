@@ -1,33 +1,53 @@
+import {
+    BookUser,
+    Building,
+    Building2,
+    ClipboardCheck,
+    ClipboardList,
+    FileSliders,
+    LayoutDashboard,
+    List,
+    ListTodo,
+    RotateCcwClock
+} from "lucide-react";
+
 const navigation =
 {
     ADMIN: [
         {
             name: "Dashboard",
-            path: "/dashboard"
+            path: "/dashboard",
+            icon: LayoutDashboard
         },
         {
             name: "Activity Log",
-            path: "/activity-logs"
+            path: "/activity-logs",
+            icon: RotateCcwClock
         },
         {
             name: "Audits",
-            path: "/audits"
+            path: "/audits",
+            icon: ClipboardList
         },
         {
             name: "Audit Templates",
-            path: "/audit-templates"
+            path: "/audit-templates",
+            icon: FileSliders
         },
         {
             name: "Tasks",
-            path: "/tasks"
+            path: "/tasks",
+            icon: List
         },
         {
             name: "Users",
-            path: "/users"
+            path: "/users",
+            icon: BookUser
         },
         {
             name: "Clients",
-            path: "/clients"
+            path: "/clients",
+            icon: Building2
         }
 
 
@@ -38,29 +58,35 @@ const navigation =
     MANAGER: [
         {
             name: "Dashboard",
-            path: "/dashboard"
+            path: "/dashboard",
+            icon: LayoutDashboard
         },
         {
             name: "Activity Log",
-            path: "/activity-logs"
+            path: "/activity-logs",
+            icon: RotateCcwClock
         },
         {
             name: "My Audits",
-            path: "/audits/me"
+            path: "/audits/me",
+            icon: ClipboardCheck
         },
         {
             name: "Audit Templates",
-            path: "/audit-templates"
+            path: "/audit-templates",
+            icon: FileSliders
         },
 
         {
             name: "Tasks",
-            path: "/tasks/me/manager"
+            path: "/tasks/me/manager",
+            icon: List
         },
 
         {
             name: "Clients",
-            path: "/clients"
+            path: "/clients",
+            icon: Building2
         }
 
 
@@ -70,11 +96,13 @@ const navigation =
     AUDITOR: [
         {
             name: "Dashboard",
-            path: "/dashboard"
+            path: "/dashboard",
+            icon: LayoutDashboard
         },
         {
             name: " My Tasks",
-            path: "/tasks/me"
+            path: "/tasks/me",
+            icon: ListTodo
         },
 
 
