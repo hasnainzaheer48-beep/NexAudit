@@ -4,9 +4,13 @@ import { useContext } from "react";
 import StatGrid from "../statGrid";
 import RecentActivity from '../recentActivity';
 import AdminStatGrid from "./adminStatGrid";
+import LoadingComponent from "../../ui/loadingComponent";
 
 export default function AdminDashboard() {
     const { user, loading } = useContext(AuthContext);
+    if (loading) {
+        return <LoadingComponent />
+    }
     return (
         <div className="bg-gray-300 flex-1 flex flex-col gap-2 p-1 justify-center">
             < AdminStatGrid />

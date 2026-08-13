@@ -5,10 +5,10 @@ import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 
 export default function Layout() {
-    const { loading } = useContext(AuthContext);
-    if (loading) {
-        return null
-    }
+    // const { loading } = useContext(AuthContext);
+    // if (loading) {
+    //     return null
+    // }
 
 
     return (

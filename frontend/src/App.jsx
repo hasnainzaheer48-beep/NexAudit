@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Login from './pages/loginPage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/dashboard'
@@ -18,11 +18,19 @@ import TasksByAuditor from './pages/tasksByAuditor'
 import TaskDetails from './pages/taskDetails'
 import AuditsByManager from './pages/auditsByManger'
 import TasksByManager from './pages/tasksByManager'
+import { AuthContext } from './context/AuthContext'
+import LoadingScreen from './components/ui/loadingScreen'
 
 
 
 
 function App() {
+
+  const { loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <LoadingScreen />
+  }
 
 
   return (
