@@ -3,14 +3,15 @@ export default function Table({ children }) {
     return (
 
         <div className="
+        h-full
         bg-white
         border
         border-[#cbcbcb]
         rounded-xl
-        overrflow-hidden
+        overflow-hidden
                     ">
             <div className="
-            overflow-x-auto
+            overflow-auto h-full
             ">
                 <table className="w-full text-sm">
                     {children}

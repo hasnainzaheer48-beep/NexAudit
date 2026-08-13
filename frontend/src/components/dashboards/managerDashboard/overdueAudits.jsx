@@ -5,16 +5,22 @@ import TableHeader from '../../ui/table/tableHeader'
 import TableHead from '../../ui/table/tableHead'
 import TableRow from '../../ui/table/tableRow';
 import TableCell from '../../ui/table/tableCell';
+import StatusBadge from '../../ui/table/statusBadge';
+import EmptyTable from '../../ui/table/emptyTable';
+import { useNavigate } from 'react-router-dom'
 
 export default function OverdueAudits({ role }) {
 
     const { loading, error, overdue } = useOverdue(role);
+    const navigate = useNavigate();
     if (loading) return <>loading</>
     if (error) return <>{error}</>
     return (
-        <div className="bg-gray-50 flex-1">
-            <div>OverDue Audits</div>
-            <div>
+        <div className="bg-gray-50 flex-1 h-full flex flex-col">
+            <div className='text-center tracking-wider text-xl py-2 mb-3 bg-[#982c2c] text-white rounded-2xl '>
+                Overdue Audits
+            </div>
+            <div className='flex-1 min-h-0'>
                 <Table>
 
                     <TableHeader>
@@ -34,7 +40,8 @@ export default function OverdueAudits({ role }) {
 
                     </TableHeader>
                     <tbody>
-                        {
+                        {overdue.length === 0 ? (<EmptyTable message={'No Overdue Audits'} />) : (
+
                             overdue.map((audit) => {
                                 return (
                                     <TableRow key={audit.id}>
@@ -44,7 +51,7 @@ export default function OverdueAudits({ role }) {
 
 
                                         <TableCell >{audit.priority}</TableCell>
-                                        <TableCell >{audit.status}</TableCell>
+                                        <TableCell > <StatusBadge status={audit.status} /></TableCell>
 
 
 
@@ -55,6 +62,7 @@ export default function OverdueAudits({ role }) {
                                     </TableRow>
                                 );
                             })
+                        )
                         }
                     </tbody>
                 </Table>
