@@ -1,8 +1,8 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import navigation from "../../utils/navigation";
-import { CircleUser, LogOut, PanelLeftClose } from 'lucide-react';
+import { CircleUser, LogOut, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 
 
 export default function Sidebar() {
@@ -10,6 +10,7 @@ export default function Sidebar() {
 
     const { setToken, setUser, user } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [expanded, setExpanded] = useState(true)
 
     const links = navigation[user.role] || [];
 
@@ -25,11 +26,11 @@ export default function Sidebar() {
 
     }
     return (
-        <aside className="bg-[#F9FAFB] flex flex-col w-64 h-full shrink-0 rounded-2xl shadow-lg p-2 ">
+        <aside className={` bg-[#ffffff] flex flex-col h-full  rounded-2xl shadow-2xl p-2 transition-all duration-300 ${expanded ? "w-64" : "w-20 rounded-4xl"} `}>
             <div className="p-4 pb-2 flex justify-between items-center ">
-                <img src="/logo.png" alt="Logo" className="w-34" />
-                <button>
-                    < PanelLeftClose className="text-gray-500 " />
+                <img src="/logo.png" alt="Logo" className={`overflow-hidden transition-all ${expanded ? "w-34" : "w-0"}`} />
+                <button onClick={() => setExpanded(curr => !curr)} >
+                    {expanded ? < PanelLeftClose className="text-gray-500 " /> : <img src="/logoOnly.png" className="w-7" />}
                 </button>
             </div>
             <nav className="flex-1 flex flex-col p-3 gap-2">
@@ -41,30 +42,39 @@ export default function Sidebar() {
 
                         return <NavLink key={link.path} to={link.path} className={({ isActive }) => `
                             group relative flex items-center gap-3
-                            py-2 px-3 font-medium rounded-md
+                            py-2 px-3 mb-2 font-medium rounded-md
                             transition-colors duration-200
-                                 ${isActive ? 'bg-linear-to-tr from-[#174d38] to-[#174d38] text-white'
+                                 ${isActive ? ' bg-[#174d38] text-white'
                                 : 'text-gray-600 hover:bg-[#174d38] hover:text-white'
                             }
                             `}>
-                            <Icon className='w-7 h-7' />
-                            <span>
+                            <Icon className={`w-5 h-5 shrink-0 items-center ${expanded ? "" : " group-hover:scale-120 grorup-hover:p-3 duration-150"}`} />
+                            <span className={`overflow-hidden whitespace-nowrap transition-all ${expanded ? "w-30" : "w-0"}`}>
                                 {link.name}
                             </span>
+                            {
+                                (!expanded) && <div className={`absolute left-full rounded-md px-2 py-1 ml-6
+                                bg-[#174d48] text-white text-sm
+                                -translate-x-3 invisible opacity-0 transition-all
+                                group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
+                                `}>
+                                    {link.name}
+                                </div>
+                            }
                         </NavLink>
 
                     })
                 }
 
             </nav>
-            <div className="bg-[#cbcbcb]  flex p-4 items-center rounded-lg">
-                <CircleUser className="w-10 h-10" />
-                <div className=" w-full flex justify-between items-center ml-2">
-                    <div className="leading-4">
-                        <h4 className="font-semibold">{user.first_name + ' ' + user.last_name}</h4>
-                        <span className="text-sm">{user.email}</span>
+            <div className={`bg-[#174d38] text-white flex py-2 px-2 items-center rounded-xl ${expanded ? "bg-[#174d38]" : "bg-transparent"}`}>
+                <CircleUser className={`w-9 h-9  rounded-full ${expanded ? "text-white bg-[#174d38]" : "text-[#174d38] bg-white ml-1"}`} />
+                <div className={`  flex justify-between items-center overflow-hidden transition-all ${expanded ? "flex-1 ml-3" : 'w-0'}`}>
+                    <div className="leading-4 min-w-0">
+                        <h4 className="font-semibold text-lg truncate">{user.first_name + ' ' + user.last_name}</h4>
+                        <span className="text-sm block truncate">{user.email}</span>
                     </div>
-                    <button className="bg-black text-white rounded-2xl p-2 font-semibold hover:cursor-pointer hover:scale-103 duration-300 " onClick={handleClick}>
+                    <button className="bg-[#298561] shrink-0 text-white rounded-2xl p-2 font-semibold hover:cursor-pointer hover:scale-103 duration-300 " onClick={handleClick}>
                         <LogOut />
                     </button>
                 </div>
