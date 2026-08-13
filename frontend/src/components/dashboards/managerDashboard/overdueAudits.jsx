@@ -4,6 +4,7 @@ import Table from '../../ui/table/table';
 import TableHeader from '../../ui/table/tableHeader'
 import TableHead from '../../ui/table/tableHead'
 import TableRow from '../../ui/table/tableRow';
+import TableCell from '../../ui/table/tableCell';
 
 export default function OverdueAudits({ role }) {
 
@@ -37,20 +38,20 @@ export default function OverdueAudits({ role }) {
                             overdue.map((audit) => {
                                 return (
                                     <TableRow key={audit.id}>
-                                        <td className="border px-4 py-3">{audit.id}</td>
-                                        <td className="border px-4 py-3">{audit.client}</td>
-                                        <td className="border px-4 py-3">{audit.template}</td>
+                                        <TableCell >{audit.id}</TableCell>
+                                        <TableCell >{audit.client}</TableCell>
+                                        <TableCell >{audit.template}</TableCell>
 
 
-                                        <td className="border px-4 py-3">{audit.priority}</td>
-                                        <td className="border px-4 py-3">{audit.status}</td>
+                                        <TableCell >{audit.priority}</TableCell>
+                                        <TableCell >{audit.status}</TableCell>
 
 
 
-                                        <td className="border px-4 py-3">
+                                        <TableCell >
 
                                             <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
-                                        </td>
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })
