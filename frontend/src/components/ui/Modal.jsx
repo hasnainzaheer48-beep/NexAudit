@@ -5,7 +5,7 @@ export default function Modal({ children }) {
 
         createPortal(
 
-            <div className='flex justify-center items-center fixed inset-0 bg-black/50      '>
+            <div className='flex z-30 justify-center items-center fixed inset-0 bg-black/50      '>
 
                 <div className=' bg-white p-6 rounded-xl'>
                     {children}

@@ -2,6 +2,13 @@ import { useState } from "react";
 import TasksFormModal from "../components/tasks/tasksFormModal";
 import { useNavigate } from "react-router-dom";
 import useTasksByManager from "../hooks/useTasksByManager";
+import Table from "../components/ui/table/table";
+import TableHead from "../components/ui/table/tableHead";
+import TableHeader from "../components/ui/table/tableHeader";
+import TableRow from "../components/ui/table/tableRow";
+import TableCell from "../components/ui/table/tableCell";
+import PriorityBadge from "../components/ui/table/priorityBadge";
+import StatusBadge from "../components/ui/table/statusBadge";
 
 
 export default function TasksByManager() {
@@ -28,55 +35,55 @@ export default function TasksByManager() {
         <div>
 
 
-            <table className="mt-4">
-                <thead>
-                    <tr>
-                        <th className="border px-4 py-3">Id</th>
-                        <th className="border px-4 py-3">Title</th>
-                        <th className="border px-4 py-3">Audit Id</th>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Id</TableHead>
+                        <TableHead>Title</TableHead>
+                        <TableHead>Audit Id</TableHead>
 
-                        <th className="border px-4 py-3">Company</th>
-                        <th className="border px-4 py-3">Assigned Auditor</th>
+                        <TableHead>Company</TableHead>
+                        <TableHead>Assigned Auditor</TableHead>
 
-                        <th className="border px-4 py-3">Priority</th>
-                        <th className="border px-4 py-3">Status</th>
-                        <th className="border px-4 py-3">Start Date</th>
-                        <th className="border px-4 py-3">Due Date</th>
-                        <th className="border px-4 py-3">Completed At</th>
+                        <TableHead>Priority</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Start Date</TableHead>
+                        <TableHead>Due Date</TableHead>
+                        <TableHead>Completed At</TableHead>
 
-                        <th className="border px-4 py-3">Action</th>
-                    </tr>
-                </thead>
+                        <TableHead>Action</TableHead>
+                    </TableRow>
+                </TableHeader>
                 <tbody>
                     {
                         tasks.map((task) => {
                             return (
-                                <tr key={task.id}>
-                                    <td className="border px-4 py-3">{task.id}</td>
-                                    <td className="border px-4 py-3">{task.title}</td>
-                                    <td className="border px-4 py-3">{task.audit_id}</td>
+                                <TableRow key={task.id}>
+                                    <TableCell >{task.id}</TableCell>
+                                    <TableCell >{task.title}</TableCell>
+                                    <TableCell >{task.audit_id}</TableCell>
 
-                                    <td className="border px-4 py-3">{task.company}</td>
-                                    <td className="border px-4 py-3">{task.assigned_auditor ?? 'Not Assigned'}</td>
+                                    <TableCell >{task.company}</TableCell>
+                                    <TableCell >{task.assigned_auditor ?? 'Not Assigned'}</TableCell>
 
-                                    <td className="border px-4 py-3">{task.priority}</td>
-                                    <td className="border px-4 py-3">{task.status}</td>
-                                    <td className="border px-4 py-3">{task.start_date ? new Date(task.start_date).toLocaleDateString() : 'Null'}</td>
-                                    <td className="border px-4 py-3">{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</td>
-                                    <td className="border px-4 py-3">{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</td>
+                                    <TableCell ><PriorityBadge priority={task.priority} /> </TableCell>
+                                    <TableCell ><StatusBadge status={task.status} /></TableCell>
+                                    <TableCell >{task.start_date ? new Date(task.start_date).toLocaleDateString() : 'Null'}</TableCell>
+                                    <TableCell >{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</TableCell>
+                                    <TableCell >{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
 
-                                    <td className="border px-4 py-3"><button className="border px-2 mr-1" onClick={() => {
+                                    <TableCell ><button className="border px-2 mr-1" onClick={() => {
                                         setSelectedTask(task);
                                         setShowModal(true);
                                     }}>Edit</button>
                                         <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button>
-                                    </td>
-                                </tr>
+                                    </TableCell>
+                                </TableRow>
                             );
                         })
                     }
                 </tbody>
-            </table>
+            </Table>
             <TasksFormModal
                 isOpen={showModal}
                 selectedTask={selectedTask}

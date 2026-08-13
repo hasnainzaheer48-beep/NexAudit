@@ -1,55 +1,72 @@
 import api from '../../../api/axios'
 import useOverdue from '../../../hooks/useOverdue'
+import Table from '../../ui/table/table';
+import TableHeader from '../../ui/table/tableHeader'
+import TableHead from '../../ui/table/tableHead'
+import TableRow from '../../ui/table/tableRow';
+import TableCell from '../../ui/table/tableCell';
+import StatusBadge from '../../ui/table/statusBadge';
+import EmptyTable from '../../ui/table/emptyTable';
+import { useNavigate } from 'react-router-dom'
+import PriorityBadge from '../../ui/table/priorityBadge';
 
 export default function OverdueAudits({ role }) {
 
     const { loading, error, overdue } = useOverdue(role);
+    const navigate = useNavigate();
     if (loading) return <>loading</>
     if (error) return <>{error}</>
     return (
-        <div className="bg-gray-50 flex-1">
-            <div>OverDue Audits</div>
-            <div>
-                <table className="mt-4">
-                    <thead>
-                        <tr>
-                            <th className="border px-4 py-3">Id</th>
-                            <th className="border px-4 py-3">Client Id</th>
-                            <th className="border px-4 py-3">Template Id</th>
+        <div className=" flex-1 h-full flex flex-col">
+            <div className='text-center tracking-wider text-xl font-semibold py-2 mb-3 bg-[#982c2c] text-white shadow-lg rounded-2xl '>
+                Overdue Audits
+            </div>
+            <div className='flex-1 min-h-0'>
+                <Table>
+
+                    <TableHeader>
+
+                        <TableRow>
+                            <TableHead>Id</TableHead>
+                            <TableHead>Client Id</TableHead>
+                            <TableHead>Template Id</TableHead>
 
 
 
-                            <th className="border px-4 py-3">Priority</th>
-                            <th className="border px-4 py-3">Status</th>
+                            <TableHead>Priority</TableHead>
+                            <TableHead>Status</TableHead>
 
-                            <th className="border px-4 py-3">Action</th>
-                        </tr>
-                    </thead>
+                            <TableHead>Action</TableHead>
+                        </TableRow>
+
+                    </TableHeader>
                     <tbody>
-                        {
+                        {overdue.length === 0 ? (<EmptyTable message={'No Overdue Audits'} />) : (
+
                             overdue.map((audit) => {
                                 return (
-                                    <tr key={audit.id}>
-                                        <td className="border px-4 py-3">{audit.id}</td>
-                                        <td className="border px-4 py-3">{audit.client}</td>
-                                        <td className="border px-4 py-3">{audit.template}</td>
+                                    <TableRow key={audit.id}>
+                                        <TableCell >{audit.id}</TableCell>
+                                        <TableCell >{audit.client}</TableCell>
+                                        <TableCell >{audit.template}</TableCell>
 
 
-                                        <td className="border px-4 py-3">{audit.priority}</td>
-                                        <td className="border px-4 py-3">{audit.status}</td>
+                                        <TableCell ><PriorityBadge priority={audit.priority} /></TableCell>
+                                        <TableCell > <StatusBadge status={audit.status} /></TableCell>
 
 
 
-                                        <td className="border px-4 py-3">
+                                        <TableCell >
 
                                             <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
-                                        </td>
-                                    </tr>
+                                        </TableCell>
+                                    </TableRow>
                                 );
                             })
+                        )
                         }
                     </tbody>
-                </table>
+                </Table>
             </div>
         </div>
     )
