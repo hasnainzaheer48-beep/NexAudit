@@ -15,7 +15,13 @@ export default function Dashboard() {
     if (user.role === "ADMIN") {
         return (
             <div className='flex flex-col gap-2 h-full '>
-                <div className='text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
+                <div >
+                    <div className='text-4xl font-bold'>
+
+                        Welcome Back, <span className='font-bold text-[#174d38]' >{user.first_name}</span>
+                    </div>
+                    <span className='text-lg text-gray-700'>Here's what's happening</span>
+                </div>
                 <AdminDashboard />
             </div>
         )
@@ -23,7 +29,14 @@ export default function Dashboard() {
     if (user.role === "AUDITOR") {
         return (
             <div className='flex flex-col gap-2 h-full '>
-                <div className='text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
+                <div>
+                    <div className='text-4xl font-bold'>
+                        Welcome Back, <span className='font-bold text-[#174d38]' >{user.first_name}</span>
+                    </div>
+
+                    <span className='text-lg text-gray-700'>Here's what's happening</span>
+
+                </div>
                 <AuditorDashboard />
             </div>
         )
@@ -33,7 +46,15 @@ export default function Dashboard() {
     if (user.role === "MANAGER") {
         return (
             <div className='flex flex-col gap-2 h-full '>
-                <div className='bg-gray-300 text-4xl font-bold'>Welcome Back <span className='font-bold text-[#174d38]' >{user.first_name}</span> </div>
+                <div>
+                    <div className='text-4xl font-bold'>
+
+                        Welcome Back, <span className='font-bold text-[#174d38]' >{user.first_name}</span>
+                    </div>
+
+                    <span className='text-lg text-gray-700'>Here's what's happening</span>
+
+                </div>
                 <ManagerDashboard />
             </div>
         )
