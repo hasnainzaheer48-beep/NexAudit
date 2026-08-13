@@ -1,3 +1,4 @@
+import { ClipboardCheck, ClipboardClock, ClipboardList, LayoutList, ListCheck, ListChecks, ListTodo } from "lucide-react";
 import useStats from "../../hooks/useStats"
 import StatCard from "./statCard"
 
@@ -13,15 +14,18 @@ export default function StatGrid({ role }) {
         statCards = [
             {
                 title: 'Total Audits',
-                stat: stats.total_audits
+                stat: stats.total_audits,
+                icon: ClipboardList
             },
             {
                 title: 'Audits In Progress',
-                stat: stats.progress_audits
+                stat: stats.progress_audits,
+                icon: ClipboardClock
             },
             {
                 title: 'Completed Audits',
-                stat: stats.finished_audits
+                stat: stats.finished_audits,
+                icon: ClipboardCheck
             }
         ]
     }
@@ -29,15 +33,18 @@ export default function StatGrid({ role }) {
         statCards = [
             {
                 title: 'Total Tasks',
-                stat: stats.total_tasks
+                stat: stats.total_tasks,
+                icon: LayoutList
             },
             {
                 title: 'Tasks In Progress',
-                stat: stats.progress_tasks
+                stat: stats.progress_tasks,
+                icon: ListTodo
             },
             {
                 title: 'Completed Tasks',
-                stat: stats.finished_tasks
+                stat: stats.finished_tasks,
+                icon: ListChecks
             }
         ]
     }
@@ -48,7 +55,7 @@ export default function StatGrid({ role }) {
         <div id="StatCards" className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 ">
             {
                 statCards.map((statCard) => {
-                    return <StatCard title={statCard.title} stat={statCard.stat} />
+                    return <StatCard title={statCard.title} stat={statCard.stat} Icon={statCard.icon} />
                 })
             }
 

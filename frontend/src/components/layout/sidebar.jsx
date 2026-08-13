@@ -53,7 +53,7 @@ export default function Sidebar() {
                                 {link.name}
                             </span>
                             {
-                                (!expanded) && <div className={`absolute left-full rounded-md px-2 py-1 ml-6
+                                (!expanded) && <div className={`absolute z-20 left-full rounded-md px-2 py-1 ml-6
                                 bg-[#174d48] text-white text-sm
                                 -translate-x-3 invisible opacity-0 transition-all
                                 group-hover:visible group-hover:opacity-100 group-hover:translate-x-0

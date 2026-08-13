@@ -69,7 +69,7 @@ const navigation =
         {
             name: "My Audits",
             path: "/audits/me",
-            icon: ClipboardCheck
+            icon: ClipboardList
         },
         {
             name: "Audit Templates",

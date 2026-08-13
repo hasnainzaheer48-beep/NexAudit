@@ -1,3 +1,4 @@
+import { BookUser, BriefcaseBusiness, Building2, ClipboardList, UserRoundSearch } from "lucide-react";
 import useAdminStats from "../../../hooks/useAdminStats";
 
 import StatCard from "../statCard"
@@ -19,23 +20,28 @@ export default function AdminStatGrid() {
     const statCards = [
         {
             title: 'Total Users',
-            stat: adminUserStats.total_users
+            stat: adminUserStats.total_users,
+            icon: BookUser
         },
         {
             title: 'Total Clients',
-            stat: adminClientStats.total_clients
+            stat: adminClientStats.total_clients,
+            icon: Building2
         },
         {
             title: 'Total Audits',
-            stat: adminAuditStats.total_audits
+            stat: adminAuditStats.total_audits,
+            icon: ClipboardList
         },
         {
             title: 'Active Managers',
-            stat: adminUserStats.active_managers
+            stat: adminUserStats.active_managers,
+            icon: BriefcaseBusiness
         },
         {
             title: 'Active Auditors',
-            stat: adminUserStats.active_auditors
+            stat: adminUserStats.active_auditors,
+            icon: UserRoundSearch
         }
     ]
 
@@ -45,13 +51,14 @@ export default function AdminStatGrid() {
     return (
         <div
             id="StatCards"
-            className="flex-1 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
+            className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
         >
             {statCards.slice(0, 3).map((statCard) => (
                 <StatCard
                     key={statCard.title}
                     title={statCard.title}
                     stat={statCard.stat}
+                    Icon={statCard.icon}
                 />
             ))}
 
@@ -61,6 +68,7 @@ export default function AdminStatGrid() {
                         key={statCard.title}
                         title={statCard.title}
                         stat={statCard.stat}
+                        Icon={statCard.icon}
                     />
                 ))}
             </div>
