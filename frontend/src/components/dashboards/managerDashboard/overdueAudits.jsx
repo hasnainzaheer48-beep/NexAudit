@@ -2,6 +2,7 @@ import api from '../../../api/axios'
 import useOverdue from '../../../hooks/useOverdue'
 import Table from '../../ui/table/table';
 import TableHeader from '../../ui/table/tableHeader'
+import TableHead from '../../ui/table/tableHead'
 
 export default function OverdueAudits({ role }) {
 
@@ -17,16 +18,16 @@ export default function OverdueAudits({ role }) {
                     <TableHeader>
 
                         <tr>
-                            <th className="border px-4 py-3">Id</th>
-                            <th className="border px-4 py-3">Client Id</th>
-                            <th className="border px-4 py-3">Template Id</th>
+                            <TableHead>Id</TableHead>
+                            <TableHead>Client Id</TableHead>
+                            <TableHead>Template Id</TableHead>
 
 
 
-                            <th className="border px-4 py-3">Priority</th>
-                            <th className="border px-4 py-3">Status</th>
+                            <TableHead>Priority</TableHead>
+                            <TableHead>Status</TableHead>
 
-                            <th className="border px-4 py-3">Action</th>
+                            <TableHead>Action</TableHead>
                         </tr>
 
                     </TableHeader>
