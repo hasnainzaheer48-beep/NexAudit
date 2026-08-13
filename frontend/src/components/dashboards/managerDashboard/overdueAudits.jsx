@@ -1,5 +1,6 @@
 import api from '../../../api/axios'
 import useOverdue from '../../../hooks/useOverdue'
+import Table from '../../ui/table/table';
 
 export default function OverdueAudits({ role }) {
 
@@ -10,7 +11,8 @@ export default function OverdueAudits({ role }) {
         <div className="bg-gray-50 flex-1">
             <div>OverDue Audits</div>
             <div>
-                <table className="mt-4">
+                <Table>
+
                     <thead>
                         <tr>
                             <th className="border px-4 py-3">Id</th>
@@ -49,7 +51,7 @@ export default function OverdueAudits({ role }) {
                             })
                         }
                     </tbody>
-                </table>
+                </Table>
             </div>
         </div>
     )
