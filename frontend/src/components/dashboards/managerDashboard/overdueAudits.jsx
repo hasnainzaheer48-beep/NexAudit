@@ -3,6 +3,7 @@ import useOverdue from '../../../hooks/useOverdue'
 import Table from '../../ui/table/table';
 import TableHeader from '../../ui/table/tableHeader'
 import TableHead from '../../ui/table/tableHead'
+import TableRow from '../../ui/table/tableRow';
 
 export default function OverdueAudits({ role }) {
 
@@ -17,7 +18,7 @@ export default function OverdueAudits({ role }) {
 
                     <TableHeader>
 
-                        <tr>
+                        <TableRow>
                             <TableHead>Id</TableHead>
                             <TableHead>Client Id</TableHead>
                             <TableHead>Template Id</TableHead>
@@ -28,14 +29,14 @@ export default function OverdueAudits({ role }) {
                             <TableHead>Status</TableHead>
 
                             <TableHead>Action</TableHead>
-                        </tr>
+                        </TableRow>
 
                     </TableHeader>
                     <tbody>
                         {
                             overdue.map((audit) => {
                                 return (
-                                    <tr key={audit.id}>
+                                    <TableRow key={audit.id}>
                                         <td className="border px-4 py-3">{audit.id}</td>
                                         <td className="border px-4 py-3">{audit.client}</td>
                                         <td className="border px-4 py-3">{audit.template}</td>
@@ -50,7 +51,7 @@ export default function OverdueAudits({ role }) {
 
                                             <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
                                         </td>
-                                    </tr>
+                                    </TableRow>
                                 );
                             })
                         }
