@@ -2,6 +2,8 @@ import api from '../../../api/axios'
 import useUpcoming from '../../../hooks/useUpcoming'
 import PageTitle from '../../ui/pageTitle';
 import EmptyTable from '../../ui/table/emptyTable';
+import PriorityBadge from '../../ui/table/priorityBadge';
+import StatusBadge from '../../ui/table/statusBadge';
 import Table from '../../ui/table/table';
 import TableCell from '../../ui/table/tableCell';
 import TableHead from '../../ui/table/tableHead';
@@ -42,8 +44,8 @@ export default function UpcomingAudits({ role }) {
                                         <TableCell>{audit.template}</TableCell>
 
 
-                                        <TableCell>{audit.priority}</TableCell>
-                                        <TableCell>{audit.status}</TableCell>
+                                        <TableCell><PriorityBadge priority={audit.priority} /></TableCell>
+                                        <TableCell>< StatusBadge status={audit.status} /></TableCell>
 
 
 

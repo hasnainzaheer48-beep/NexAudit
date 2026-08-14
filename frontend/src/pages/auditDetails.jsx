@@ -4,6 +4,7 @@ import useTasksByAudit from "../hooks/useTasksByAudit";
 import AuditTasksTable from "../components/audits/auditTasksTable";
 import api from "../api/axios";
 import useAuditById from "../hooks/useAuditById";
+import LoadingComponent from "../components/ui/loadingComponent";
 
 
 
@@ -33,7 +34,7 @@ export default function AuditDetails() {
 
 
     if (auditLoading || progressLoading || tasksLoading) {
-        return <div>Loading</div>
+        return <LoadingComponent />
     }
 
     if (error) {

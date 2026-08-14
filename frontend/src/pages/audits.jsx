@@ -4,6 +4,17 @@ import { useNavigate } from 'react-router-dom'
 import useAudits from "../hooks/useAudits";
 import { AuthContext } from "../context/AuthContext";
 import api from "../api/axios";
+import LoadingComponent from "../components/ui/loadingComponent";
+import Table from "../components/ui/table/table";
+import TableHeader from "../components/ui/table/tableHeader";
+import TableRow from "../components/ui/table/tableRow";
+import TableHead from "../components/ui/table/tableHead";
+import TableCell from "../components/ui/table/tableCell";
+import PriorityBadge from "../components/ui/table/priorityBadge";
+import StatusBadge from "../components/ui/table/statusBadge";
+import PageTitle from "../components/ui/pageTitle";
+import EmptyTable from "../components/ui/table/emptyTable";
+
 
 
 export default function Audits() {
@@ -42,7 +53,7 @@ export default function Audits() {
     }
 
     if (loading) {
-        return <h1>Loading</h1>
+        return <LoadingComponent />
     }
 
     if (error) {
@@ -51,62 +62,65 @@ export default function Audits() {
 
 
     return (
-        <div>
-            {(user?.role === "MANAGER") && <button className="border" onClick={handleCreateAudit}>Create Audit</button>}
+        <div className="flex flex-col h-full">
+            <PageTitle title={"Audits"} />
+            <div className="flex-1 min-h-0">
+                {(user?.role === "MANAGER") && <button className="border" onClick={handleCreateAudit}>Create Audit</button>}
 
-            <table className="mt-4">
-                <thead>
-                    <tr>
-                        <th className="border px-4 py-3">Id</th>
-                        <th className="border px-4 py-3">CLient Id</th>
-                        <th className="border px-4 py-3">Template Id</th>
-                        <th className="border px-4 py-3">Manager</th>
-
-
-                        <th className="border px-4 py-3">Priority</th>
-                        <th className="border px-4 py-3">Status</th>
-
-                        <th className="border px-4 py-3">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        audits.map((audit) => {
-                            return (
-                                <tr key={audit.id}>
-                                    <td className="border px-4 py-3">{audit.id}</td>
-                                    <td className="border px-4 py-3">{audit.client}</td>
-                                    <td className="border px-4 py-3">{audit.template}</td>
-                                    <td className="border px-4 py-3">{audit.manager}</td>
-
-                                    <td className="border px-4 py-3">{audit.priority}</td>
-                                    <td className="border px-4 py-3">{audit.status}</td>
+                <Table className="mt-4">
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Id</TableHead>
+                            <TableHead>CLient Id</TableHead>
+                            <TableHead>Template Id</TableHead>
+                            <TableHead>Manager</TableHead>
 
 
+                            <TableHead>Priority</TableHead>
+                            <TableHead>Status</TableHead>
 
-                                    <td className="border px-4 py-3">
-                                        {(user?.role === "MANAGER") &&
-                                            <button className="border px-2 mr-1" onClick={() => {
-                                                setSelectedAudit(audit);
-                                                setShowModal(true);
-                                            }}>Edit</button>}
+                            <TableHead>Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <tbody>
+                        {audits.length === 0 ? <EmptyTable /> :
+                            audits.map((audit) => {
+                                return (
+                                    <TableRow key={audit.id}>
+                                        <TableCell>{audit.id}</TableCell>
+                                        <TableCell>{audit.client}</TableCell>
+                                        <TableCell>{audit.template}</TableCell>
+                                        <TableCell>{audit.manager}</TableCell>
 
-                                        <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
-                                        <button onClick={() => {
-                                            return handleArchive(audit)
-                                        }} >Archive</button>
-                                    </td>
-                                </tr>
-                            );
-                        })
-                    }
-                </tbody>
-            </table>
-            <AuditsFormModal isOpen={showModal} selectedAudit={selectedAudit} onClose={handleClose} onAuditCreated={getAudits} />
+                                        <TableCell><PriorityBadge priority={audit.priority} /></TableCell>
+                                        <TableCell><StatusBadge status={audit.status} /></TableCell>
+
+
+
+                                        <TableCell>
+                                            {(user?.role === "MANAGER") &&
+                                                <button className="border px-2 mr-1" onClick={() => {
+                                                    setSelectedAudit(audit);
+                                                    setShowModal(true);
+                                                }}>Edit</button>}
+
+                                            <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
+                                            <button onClick={() => {
+                                                return handleArchive(audit)
+                                            }} >Archive</button>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })
+                        }
+                    </tbody>
+                </Table>
+                <AuditsFormModal isOpen={showModal} selectedAudit={selectedAudit} onClose={handleClose} onAuditCreated={getAudits} />
+            </div>
+
+
+
+
         </div>
-
-
-
-
     );
 }

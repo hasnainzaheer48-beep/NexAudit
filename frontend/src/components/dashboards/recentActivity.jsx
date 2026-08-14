@@ -1,4 +1,5 @@
 import useRecentActivity from "../../hooks/useRecentActivity"
+import PageTitle from "../ui/pageTitle";
 
 export default function RecentActivity() {
 
@@ -7,7 +8,7 @@ export default function RecentActivity() {
     if (error) return <>{error}</>
     return (
         <div className="bg-gray-100 w-full h-full p-1 rounded-lg shadow-lg">
-            <div className="text-center font-bold text-xl">Recent Activity</div>
+            <PageTitle title={'Recent Activity'} />
             <div className="flex flex-col gap-1 justify-center items-center">
                 {
                     recentActivity?.map((activity) => {
