@@ -55,7 +55,7 @@ export default function Users() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={'Users'} />
+            <PageTitle title={'Users'} subtitle="Manage users, roles, and access across your organization." />
             <div>
                 <button className="border" onClick={handleCreateUser}>Create User</button>
             </div>

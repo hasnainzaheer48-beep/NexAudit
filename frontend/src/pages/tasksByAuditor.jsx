@@ -39,7 +39,7 @@ export default function TasksByAuditor() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"My Tasks"} />
+            <PageTitle title={"My Tasks"} subtitle="View, manage, and track assigned audit tasks." />
             <div className="flex-1 min-h-0">
 
                 <Table className="mt-4">

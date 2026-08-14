@@ -62,7 +62,7 @@ export default function AuditsByManager() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"Audits"} />
+            <PageTitle title={"Audits"} subtitle="Manage ongoing and completed audits in one place." />
             <div>
                 <button className="border" onClick={handleCreateAudit}>Create Audit</button>
             </div>

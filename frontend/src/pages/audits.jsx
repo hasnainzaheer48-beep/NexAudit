@@ -63,7 +63,7 @@ export default function Audits() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"Audits"} />
+            <PageTitle title={"Audits"} subtitle="View ongoing and completed audits in one place." />
             <div className="flex-1 min-h-0">
                 {(user?.role === "MANAGER") && <button className="border" onClick={handleCreateAudit}>Create Audit</button>}
 

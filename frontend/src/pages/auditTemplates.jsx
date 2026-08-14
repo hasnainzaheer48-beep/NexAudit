@@ -11,6 +11,8 @@ import TableRow from "../components/ui/table/tableRow";
 import TableCell from "../components/ui/table/tableCell";
 import TableHead from "../components/ui/table/tableHead";
 import EmptyTable from "../components/ui/table/emptyTable";
+import Button from "../components/ui/button";
+import { Plus } from "lucide-react";
 
 export default function AuditTemplates() {
 
@@ -57,11 +59,14 @@ export default function AuditTemplates() {
 
 
     return (
-        <div className="flex flex-col h-full">
-            <PageTitle title={"Audit Templates"} />
-            <div>
+        <div className="flex flex-col h-full gap-2">
 
-                <button className="border" onClick={handleCreateAuditTemplate}>Create Audit Template</button>
+            <div className="flex justify-between items-center">
+
+                <PageTitle title={"Audit Templates"} subtitle="Create and manage reusable audit templates" />
+                <Button onClick={handleCreateAuditTemplate}>
+                    Create Template
+                </Button>
             </div>
 
             <div className="flex-1 min-h-0">

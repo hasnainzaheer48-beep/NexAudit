@@ -15,7 +15,7 @@ export default function ActivityLogs() {
     if (error) return <div>{error}</div>
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"Activity Logs"} />
+            <PageTitle title={"Activity Logs"} subtitle="Track recent changes and actions across NexAudit." />
             <div className="flex-1 min-h-0">
                 <Table>
                     <TableHeader>

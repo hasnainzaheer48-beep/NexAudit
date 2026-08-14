@@ -36,7 +36,7 @@ export default function TasksByManager() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"Tasks"} />
+            <PageTitle title={"Tasks"} subtitle="View, manage, and track your audit's tasks." />
             <div className="flex-1 min-h-0">
                 <Table>
                     <TableHeader>

@@ -40,7 +40,7 @@ export default function Clients() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"Clients"} />
+            <PageTitle title={"Clients"} subtitle="Manage your clients and View information." />
             <div>
                 <button className="border" onClick={handleCreateClient}>Create Client</button>
             </div>

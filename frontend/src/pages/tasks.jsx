@@ -40,7 +40,7 @@ export default function Tasks() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={'Tasks'} />
+            <PageTitle title={'Tasks'} subtitle="View and track all audit tasks." />
             <div className="flex-1 min-h-0">
 
                 <Table>
