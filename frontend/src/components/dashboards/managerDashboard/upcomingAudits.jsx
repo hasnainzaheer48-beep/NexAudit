@@ -16,10 +16,10 @@ export default function UpcomingAudits({ role }) {
     if (loading) return <>loading</>
     if (error) return <>{error}</>
     return (
-        <div className="bg-gray-50 w-full">
-            <PageTitle title={"Upcoming Audits"} />
-            <div>
-                <Table>
+        <div className="flex flex-col w-full border h-full border-[#cbcbcb] rounded-2xl">
+            <PageTitle title={"Upcoming Audits"} variant='Dashboard' />
+            <div className='flex-1 min-h-0'>
+                <Table variant='Dashboard'>
                     <TableHeader>
                         <TableRow>
                             <TableHead>Id</TableHead>

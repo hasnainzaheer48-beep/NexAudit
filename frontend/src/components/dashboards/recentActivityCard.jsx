@@ -22,7 +22,10 @@ export default function RecentActivityCard({ activity }) {
             </div>
             <div key={activity.id} className="leading-5.5 tracking-wider  ">
                 <div className="font-bold text-base ">{activity.entity_type} {(activity.action).toLowerCase()}</div>
-                <div className="font-medium text-sm text-gray-700 ">{activity.entity_name} • {activity.client_name}</div>
+                {
+                    activity.entity_name &&
+                    <div className="font-medium text-sm text-gray-700 ">{activity.entity_name} • {activity.client_name}</div>
+                }
                 <div className="font-medium text-sm text-gray-500">
                     {activity.changed_by} • {new Date(activity.created_at).toLocaleString()}
                 </div>

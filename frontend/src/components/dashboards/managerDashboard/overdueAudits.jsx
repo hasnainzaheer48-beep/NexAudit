@@ -18,10 +18,10 @@ export default function OverdueAudits({ role }) {
     if (loading) return <>loading</>
     if (error) return <>{error}</>
     return (
-        <div className=" flex-1 h-full flex flex-col">
-            <PageTitle title={'Overdue Audits'} color={"text-red-700"} />
+        <div className=" flex-1 h-full flex flex-col border border-[#cbcbcb] rounded-2xl">
+            <PageTitle title={'Overdue Audits'} color={"text-[#4d1717]"} variant='Dashboard' />
             <div className=' min-h-0'>
-                <Table>
+                <Table variant='Dashboard'>
 
                     <TableHeader>
 

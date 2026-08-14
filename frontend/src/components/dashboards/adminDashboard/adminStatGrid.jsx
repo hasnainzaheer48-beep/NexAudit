@@ -56,7 +56,7 @@ export default function AdminStatGrid() {
     return (
         <div
             id="StatCards"
-            className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
+            className=" h-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
         >
             {statCards.slice(0, 3).map((statCard) => (
                 <StatCard

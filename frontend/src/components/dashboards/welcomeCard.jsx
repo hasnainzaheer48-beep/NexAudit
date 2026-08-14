@@ -1,6 +1,6 @@
 export default function WelcomeCard({ name }) {
     return (
-        <div >
+        <div className="px-3" >
             <div className='text-4xl font-bold'>
 
                 Welcome Back, <span className='font-bold text-[#174d38]' >{name}</span>
