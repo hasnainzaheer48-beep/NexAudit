@@ -157,7 +157,7 @@ const getActivityLogByUser = async (req, res) => {
 			LEFT JOIN clients
     		ON audits.client_id = clients.id
 
-            WHERE activity_logs.changed_by = 5
+            WHERE activity_logs.changed_by = $1
             ORDER BY activity_logs.created_at DESC
             LIMIT 3
 

@@ -8,9 +8,9 @@ export default function RecentActivity() {
     if (loading) return <>loading</>
     if (error) return <>{error}</>
     return (
-        <div className=" w-full h-full p-1">
-            <PageTitle title={'Recent Activity'} />
-            <div className="flex-1 flex-col gap-1 justify-center items-center">
+        <div className=" w-full min-h-0 overflow-hidden h-full border border-[#cbcbcb] rounded-2xl ">
+            <PageTitle title={'Recent Activity'} variant="Dashboard" />
+            <div className="flex-1 min-h-0 flex flex-col overflow-auto">
                 {
                     recentActivity?.map((activity) => {
                         return (
