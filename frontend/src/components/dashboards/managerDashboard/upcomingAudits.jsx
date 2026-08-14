@@ -1,5 +1,12 @@
 import api from '../../../api/axios'
 import useUpcoming from '../../../hooks/useUpcoming'
+import PageTitle from '../../ui/pageTitle';
+import EmptyTable from '../../ui/table/emptyTable';
+import Table from '../../ui/table/table';
+import TableCell from '../../ui/table/tableCell';
+import TableHead from '../../ui/table/tableHead';
+import TableHeader from '../../ui/table/tableHeader';
+import TableRow from '../../ui/table/tableRow';
 
 export default function UpcomingAudits({ role }) {
 
@@ -8,48 +15,48 @@ export default function UpcomingAudits({ role }) {
     if (error) return <>{error}</>
     return (
         <div className="bg-gray-50 w-full">
-            <div>Upcoming Audits</div>
+            <PageTitle title={"Upcoming Audits"} />
             <div>
-                <table className="mt-4">
-                    <thead>
-                        <tr>
-                            <th className="border px-4 py-3">Id</th>
-                            <th className="border px-4 py-3">Client Id</th>
-                            <th className="border px-4 py-3">Template Id</th>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Id</TableHead>
+                            <TableHead>Client Id</TableHead>
+                            <TableHead>Template Id</TableHead>
 
 
 
-                            <th className="border px-4 py-3">Priority</th>
-                            <th className="border px-4 py-3">Status</th>
+                            <TableHead>Priority</TableHead>
+                            <TableHead>Status</TableHead>
 
-                            <th className="border px-4 py-3">Action</th>
-                        </tr>
-                    </thead>
+                            <TableHead>Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
                     <tbody>
-                        {
+                        {upcoming.length === 0 ? <EmptyTable message={"No Upcoming Audits"} /> :
                             upcoming.map((audit) => {
                                 return (
-                                    <tr key={audit.id}>
-                                        <td className="border px-4 py-3">{audit.id}</td>
-                                        <td className="border px-4 py-3">{audit.client}</td>
-                                        <td className="border px-4 py-3">{audit.template}</td>
+                                    <TableRow key={audit.id}>
+                                        <TableCell>{audit.id}</TableCell>
+                                        <TableCell>{audit.client}</TableCell>
+                                        <TableCell>{audit.template}</TableCell>
 
 
-                                        <td className="border px-4 py-3">{audit.priority}</td>
-                                        <td className="border px-4 py-3">{audit.status}</td>
+                                        <TableCell>{audit.priority}</TableCell>
+                                        <TableCell>{audit.status}</TableCell>
 
 
 
-                                        <td className="border px-4 py-3">
+                                        <TableCell>
 
                                             <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
-                                        </td>
-                                    </tr>
+                                        </TableCell>
+                                    </TableRow>
                                 );
                             })
                         }
                     </tbody>
-                </table>
+                </Table>
             </div>
         </div>
     )

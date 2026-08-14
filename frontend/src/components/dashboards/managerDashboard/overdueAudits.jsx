@@ -9,6 +9,7 @@ import StatusBadge from '../../ui/table/statusBadge';
 import EmptyTable from '../../ui/table/emptyTable';
 import { useNavigate } from 'react-router-dom'
 import PriorityBadge from '../../ui/table/priorityBadge';
+import PageTitle from '../../ui/pageTitle';
 
 export default function OverdueAudits({ role }) {
 
@@ -18,9 +19,7 @@ export default function OverdueAudits({ role }) {
     if (error) return <>{error}</>
     return (
         <div className=" flex-1 h-full flex flex-col">
-            <div className='text-center tracking-wider text-xl font-semibold py-2 mb-3 bg-[#982c2c] text-white shadow-lg rounded-2xl '>
-                Overdue Audits
-            </div>
+            <PageTitle title={'Overdue Audits'} color={"text-red-700"} />
             <div className='flex-1 min-h-0'>
                 <Table>
 

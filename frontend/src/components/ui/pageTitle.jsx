@@ -1,12 +1,14 @@
-export default function PageTitle({ title }) {
+export default function PageTitle({ title, color = "text-[#174d38]" }) {
     return (
-        <div className="text-center
+        <div className={`text-center
         text-3xl
         p-2 mb-2 
         tracking-wide 
         font-bold
-        text-[#174d38] bg-white border border-[#cbcbcb]
-        rounded-xl shadow-md">
+         bg-white border border-[#cbcbcb]
+        rounded-xl shadow-md
+        ${color}
+        `}>
             {title}
         </div>
     )
