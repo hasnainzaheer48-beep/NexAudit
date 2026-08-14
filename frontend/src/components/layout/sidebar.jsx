@@ -26,7 +26,7 @@ export default function Sidebar() {
 
     }
     return (
-        <aside className={` bg-[#ffffff] flex flex-col h-full  rounded-2xl shadow-2xl p-2 transition-all duration-300 ${expanded ? "w-64" : "w-20 rounded-4xl"} `}>
+        <aside className={` bg-white border border-[#cbcbcb] flex flex-col h-full  rounded-2xl shadow-lg p-2 transition-all duration-300 ${expanded ? "w-64" : "w-20 rounded-4xl"} `}>
             <div className="p-4 pb-2 flex justify-between items-center ">
                 <img src="/logo.png" alt="Logo" className={`overflow-hidden transition-all ${expanded ? "w-34" : "w-0"}`} />
                 <button onClick={() => setExpanded(curr => !curr)} >

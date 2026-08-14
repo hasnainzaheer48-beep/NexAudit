@@ -13,14 +13,14 @@ export default function Layout() {
 
     return (
         <>
-            <div className=' h-screen flex p-2 gap-2  bg-[#f5f5f5]'>
+            <div className=' h-screen flex p-2 gap-2  bg-white'>
 
                 <Sidebar />
 
 
 
 
-                <main className='flex-1 bg-[#ffffff] rounded-2xl shadow-2xl p-4 overflow-y-auto ' >
+                <main className='flex-1 bg-white border border-[#cbcbcb] rounded-2xl shadow-2xl p-4 overflow-y-auto ' >
                     <Outlet />
                 </main>
 
