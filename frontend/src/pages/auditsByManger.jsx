@@ -61,12 +61,13 @@ export default function AuditsByManager() {
 
 
     return (
-        <div>
+        <div className="flex flex-col h-full">
             <PageTitle title={"Audits"} />
             <div>
-
                 <button className="border" onClick={handleCreateAudit}>Create Audit</button>
+            </div>
 
+            <div className="flex-1 min-h-0">
                 <Table>
                     <TableHeader>
                         <TableRow>
