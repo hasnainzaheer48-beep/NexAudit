@@ -20,7 +20,7 @@ export default function OverdueAudits({ role }) {
     return (
         <div className=" flex-1 h-full flex flex-col">
             <PageTitle title={'Overdue Audits'} color={"text-red-700"} />
-            <div className='flex-1 min-h-0'>
+            <div className=' min-h-0'>
                 <Table>
 
                     <TableHeader>

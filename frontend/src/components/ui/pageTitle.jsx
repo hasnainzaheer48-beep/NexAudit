@@ -1,12 +1,13 @@
-export default function PageTitle({ title, color = "text-[#174d38]" }) {
+export default function PageTitle({ title, color = "text-[#174d38]", variant = "Page" }) {
+
+    const variants = {
+        "Page": "text-center text-3xl p-2 mb-2 tracking-wide font-bold bg-white border border-[#cbcbcb] rounded-xl shadow-md",
+        "Dashboard": "text-2xl px-2 py-3 font-bold"
+    }
+
     return (
-        <div className={`text-center
-        text-3xl
-        p-2 mb-2 
-        tracking-wide 
-        font-bold
-         bg-white border border-[#cbcbcb]
-        rounded-xl shadow-md
+        <div className={`
+        ${variants[variant]}
         ${color}
         `}>
             {title}

@@ -16,13 +16,13 @@ import { useNavigate } from 'react-router-dom';
 
 export default function OverdueTasks({ role }) {
 
-    const navigate = useNavigate();
     const { loading, error, overdue } = useOverdue(role);
+    const navigate = useNavigate();
     if (loading) return <LoadingComponent />
     if (error) return <>{error}</>
     return (
-        <div className=" flex-1 flex flex-col h-full">
-            <PageTitle title={'Overdue Tasks'} color={"text-[#4d1717]"} />
+        <div className=" flex-1 flex flex-col h-full border border-[#cbcbcb] rounded-2xl">
+            <PageTitle title={'Overdue Tasks'} color={"text-[#4d1717]"} variant='Dashboard' />
             <div className='flex-1 min-h-0'>
                 <Table>
                     <TableHeader>

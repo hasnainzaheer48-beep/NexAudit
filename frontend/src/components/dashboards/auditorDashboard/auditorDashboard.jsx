@@ -12,7 +12,10 @@ export default function AuditorDashboard() {
     return (
         <div className="flex-1 flex flex-col gap-2 p-1">
             <StatGrid role={(user.role).toLowerCase()} />
-            <OverdueTasks role={(user.role).toLowerCase()} />
+            <div className='flex-1 min-h-0'>
+
+                <OverdueTasks role={(user.role).toLowerCase()} />
+            </div>
             <div className='flex-1 grid sm:grid-cols-1 md:grid-cols-2 gap-2'>
                 <UpcomingTasks role={(user.role).toLowerCase()} />
                 <RecentActivity />
