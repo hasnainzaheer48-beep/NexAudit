@@ -12,7 +12,7 @@ export default function StatusBadge({ status }) {
             py-1
             rounded-full
             text-xs
-            font-medium
+            font-medium text-nowrap
             ${styles[status]}
         `}>
             {status}
