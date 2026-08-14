@@ -8,7 +8,7 @@ export default function RecentActivity() {
     if (loading) return <>loading</>
     if (error) return <>{error}</>
     return (
-        <div className="bg-gray-100 w-full h-full p-1 rounded-lg shadow-lg">
+        <div className=" w-full h-full p-1">
             <PageTitle title={'Recent Activity'} />
             <div className="flex-1 flex-col gap-1 justify-center items-center">
                 {

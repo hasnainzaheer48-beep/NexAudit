@@ -1,13 +1,14 @@
-export default function StatCard({ title, stat, Icon }) {
+export default function StatCard({ title, stat, Icon, subtitle = '' }) {
 
     return (
-        <div className="relative bg-white border border-[#cbcbcb] shadow-md w-full text-center flex justify-center items-center px-2 py-4 rounded-lg">
-            <div className={` absolute left-3 size-14 shrink-0 bg-[#174d38] text-white p-2 rounded-full `}>
-                <Icon className={` size-10`} />
+        <div className=" bg-white border border-[#cbcbcb] shadow-md w-full flex items-center px-5 py-4 gap-3 rounded-xl">
+            <div className={`size-14 p-2 shrink-0 bg-green-100 text-[#174d38] rounded-full flex items-center justify-center `}>
+                <Icon className={`size-8`} />
             </div>
-            <div className="ml-2 leading-4">
+            <div className=" text-left leading-tight ">
                 <div className="text-lg font-bold">{title}</div>
                 <div className="font-semibold text-4xl text-[#174d38]">{stat}</div>
+                <div className="text-sm font-md text-gray-700">{subtitle}</div>
             </div>
         </div>
     )

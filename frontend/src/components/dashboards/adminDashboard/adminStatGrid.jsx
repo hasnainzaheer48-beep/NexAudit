@@ -21,27 +21,32 @@ export default function AdminStatGrid() {
         {
             title: 'Total Users',
             stat: adminUserStats.total_users,
-            icon: BookUser
+            icon: BookUser,
+            subtitle: "All Users"
         },
         {
             title: 'Total Clients',
             stat: adminClientStats.total_clients,
-            icon: Building2
+            icon: Building2,
+            subtitle: "Total Clients Registered"
         },
         {
             title: 'Total Audits',
             stat: adminAuditStats.total_audits,
-            icon: ClipboardList
+            icon: ClipboardList,
+            subtitle: "Total Audits Made"
         },
         {
             title: 'Active Managers',
             stat: adminUserStats.active_managers,
-            icon: BriefcaseBusiness
+            icon: BriefcaseBusiness,
+            subtitle: "All Current Active Managers"
         },
         {
             title: 'Active Auditors',
             stat: adminUserStats.active_auditors,
-            icon: UserRoundSearch
+            icon: UserRoundSearch,
+            subtitle: "All Current Active Auditors"
         }
     ]
 
@@ -59,6 +64,7 @@ export default function AdminStatGrid() {
                     title={statCard.title}
                     stat={statCard.stat}
                     Icon={statCard.icon}
+                    subtitle={statCard.subtitle}
                 />
             ))}
 
@@ -69,6 +75,7 @@ export default function AdminStatGrid() {
                         title={statCard.title}
                         stat={statCard.stat}
                         Icon={statCard.icon}
+                        subtitle={statCard.subtitle}
                     />
                 ))}
             </div>
