@@ -3,6 +3,15 @@ import useTemplateTasks from "../hooks/useTemplateTasks";
 import { useState } from "react";
 import TemplateTasksFormModal from "../components/templateTasks/templateTasksFormModal";
 import api from "../api/axios";
+import LoadingComponent from "../components/ui/loadingComponent";
+import PageTitle from "../components/ui/pageTitle";
+import Table from "../components/ui/table/table";
+import TableHeader from "../components/ui/table/tableHeader";
+import TableRow from "../components/ui/table/tableRow";
+import TableHead from "../components/ui/table/tableHead";
+import TableCell from "../components/ui/table/tableCell";
+import PriorityBadge from "../components/ui/table/priorityBadge";
+import EmptyTable from "../components/ui/table/emptyTable";
 
 
 
@@ -44,7 +53,7 @@ export default function TemplateTasks() {
     }
 
     if (loading) {
-        return <h1>Loading</h1>
+        return <LoadingComponent />
     }
 
     if (error) {
@@ -53,56 +62,60 @@ export default function TemplateTasks() {
 
 
     return (
-        <div>
-            <button className="border" onClick={handleCreateTemplateTask}>Create Template Tasks</button>
-
-            <table className="mt-4">
-                <thead>
-                    <tr>
-                        <th className="border px-4 py-3">Id</th>
-                        <th className="border px-4 py-3">Title</th>
-                        <th className="border px-4 py-3">Description</th>
-                        <th className="border px-4 py-3">Priority</th>
-                        <th className="border px-4 py-3">Order Number</th>
-                        <th className="border px-4 py-3">Created At</th>
-                        <th className="border px-4 py-3">Updated At</th>
-                        <th className="border px-4 py-3">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        templateTasks.map((templateTask) => {
-                            return (
-                                <tr key={templateTask.id}>
-                                    <td className="border px-4 py-3">{templateTask.id}</td>
-                                    <td className="border px-4 py-3">{templateTask.title}</td>
-                                    <td className="border px-4 py-3">{templateTask.description}</td>
-                                    <td className="border px-4 py-3">{templateTask.priority}</td>
-                                    <td className="border px-4 py-3">{templateTask.order_number}</td>
-                                    <td className="border px-4 py-3">{new Date(templateTask.created_at).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3">{new Date(templateTask.updated_at).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3"><button className="border px-2 mr-1" onClick={() => {
-                                        setSelectedTemplateTask(templateTask);
-                                        setShowModal(true);
-                                    }}>Edit</button>
-                                        <button onClick={() => {
-                                            return handleArchive(templateTask)
-                                        }}>
-                                            Archive
-                                        </button>
-                                    </td>
-                                </tr>
-                            );
-                        })
-                    }
-                </tbody>
-            </table>
-            <TemplateTasksFormModal
-                isOpen={showModal}
-                selectedTemplateTask={selectedTemplateTask}
-                onClose={handleClose}
-                onTemplateTaskCreated={getTemplateTasks}
-                templateId={templateId} />
+        <div className="flex flex-col h-full">
+            <PageTitle title={"Template Tasks"} />
+            <div>
+                <button className="border" onClick={handleCreateTemplateTask}>Create Template Tasks</button>
+            </div>
+            <div className="flex-1 min-h-0">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Id</TableHead>
+                            <TableHead>Title</TableHead>
+                            <TableHead>Description</TableHead>
+                            <TableHead>Priority</TableHead>
+                            <TableHead>Order Number</TableHead>
+                            <TableHead>Created At</TableHead>
+                            <TableHead>Updated At</TableHead>
+                            <TableHead>Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <tbody>
+                        {templateTasks.length === 0 ? <EmptyTable /> :
+                            templateTasks.map((templateTask) => {
+                                return (
+                                    <TableRow key={templateTask.id}>
+                                        <TableCell>{templateTask.id}</TableCell>
+                                        <TableCell>{templateTask.title}</TableCell>
+                                        <TableCell>{templateTask.description}</TableCell>
+                                        <TableCell><PriorityBadge priority={templateTask.priority} /></TableCell>
+                                        <TableCell>{templateTask.order_number}</TableCell>
+                                        <TableCell>{new Date(templateTask.created_at).toLocaleDateString()}</TableCell>
+                                        <TableCell>{new Date(templateTask.updated_at).toLocaleDateString()}</TableCell>
+                                        <TableCell><button className="border px-2 mr-1" onClick={() => {
+                                            setSelectedTemplateTask(templateTask);
+                                            setShowModal(true);
+                                        }}>Edit</button>
+                                            <button onClick={() => {
+                                                return handleArchive(templateTask)
+                                            }}>
+                                                Archive
+                                            </button>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })
+                        }
+                    </tbody>
+                </Table>
+                <TemplateTasksFormModal
+                    isOpen={showModal}
+                    selectedTemplateTask={selectedTemplateTask}
+                    onClose={handleClose}
+                    onTemplateTaskCreated={getTemplateTasks}
+                    templateId={templateId} />
+            </div>
         </div>
 
 

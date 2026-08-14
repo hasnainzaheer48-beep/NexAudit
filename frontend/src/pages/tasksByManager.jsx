@@ -10,6 +10,8 @@ import TableCell from "../components/ui/table/tableCell";
 import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
 import PageTitle from "../components/ui/pageTitle";
+import LoadingComponent from "../components/ui/loadingComponent";
+import EmptyTable from "../components/ui/table/emptyTable";
 
 
 export default function TasksByManager() {
@@ -24,7 +26,7 @@ export default function TasksByManager() {
     }
 
     if (loading) {
-        return <h1>Loading</h1>
+        return <LoadingComponent />
     }
 
     if (error) {
@@ -56,7 +58,7 @@ export default function TasksByManager() {
                         </TableRow>
                     </TableHeader>
                     <tbody>
-                        {
+                        {tasks.length === 0 ? <EmptyTable /> :
                             tasks.map((task) => {
                                 return (
                                     <TableRow key={task.id}>
