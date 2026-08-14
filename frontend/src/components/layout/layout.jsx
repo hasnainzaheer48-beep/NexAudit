@@ -20,7 +20,7 @@ export default function Layout() {
 
 
 
-                <main className='flex-1 bg-[#f3f3f3] border border-[#cbcbcb] rounded-2xl shadow-2xl p-4 overflow-y-auto ' >
+                <main className='flex-1 bg-[#ffffff] border border-[#cbcbcb] rounded-2xl shadow-md p-4 overflow-y-auto ' >
                     <Outlet />
                 </main>
 

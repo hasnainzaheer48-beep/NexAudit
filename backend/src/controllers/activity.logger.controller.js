@@ -120,16 +120,50 @@ const getActivityLogByUser = async (req, res) => {
             activity_logs.action,
             activity_logs.old_value,
             activity_logs.new_value,
-            activity_logs.created_at
+            activity_logs.created_at,
+			
+			CASE
+    		WHEN activity_logs.entity_type = 'Task'
+        	THEN tasks.title
+    		WHEN activity_logs.entity_type = 'Audit'
+        	THEN audit_templates.name
+			END AS entity_name,
+			clients.company_name AS client_name
+			
 
 
             FROM activity_logs
             JOIN users
             ON activity_logs.changed_by = users.id
 
-            WHERE activity_logs.changed_by = $1
+			LEFT JOIN tasks
+			ON activity_logs.entity_type = 'Task'
+			AND activity_logs.entity_id = tasks.id
+
+			LEFT JOIN audits
+			  ON (
+        			activity_logs.entity_type = 'Audit'
+        	AND activity_logs.entity_id = audits.id
+    		)
+    		OR (
+        	activity_logs.entity_type = 'Task'
+        	AND tasks.audit_id = audits.id
+    		)
+
+
+			LEFT JOIN audit_templates
+			ON audits.template_id = audit_templates.id
+			
+			LEFT JOIN clients
+    		ON audits.client_id = clients.id
+
+            WHERE activity_logs.changed_by = 5
             ORDER BY activity_logs.created_at DESC
             LIMIT 3
+
+
+
+
             ;`, [req.user.id]);
 
 
