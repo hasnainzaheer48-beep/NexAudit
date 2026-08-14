@@ -17,10 +17,10 @@ export default function UpcomingAudits({ role }) {
     if (loading) return <LoadingComponent />
     if (error) return <>{error}</>
     return (
-        <div className='flex flex-col h-full'>
-            <PageTitle title={"Upcoming Tasks"} />
+        <div className='flex flex-col h-full border border-[#cbcbcb] rounded-2xl'>
+            <PageTitle title={"Upcoming Tasks"} variant='Dashboard' />
             <div className='flex-1 min-h-0'>
-                <Table >
+                <Table variant='Dashboard' >
                     <TableHeader>
                         <TableRow>
 
