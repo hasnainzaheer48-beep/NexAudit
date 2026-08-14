@@ -83,7 +83,7 @@ export default function Audits() {
                         </TableRow>
                     </TableHeader>
                     <tbody>
-                        {audits.length === 0 ? <EmptyTable /> :
+                        {audits.length === 0 ? <EmptyTable message={"No Audits"} /> :
                             audits.map((audit) => {
                                 return (
                                     <TableRow key={audit.id}>

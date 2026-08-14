@@ -31,7 +31,7 @@ export default function ActivityLogs() {
                         </TableRow>
                     </TableHeader>
                     <tbody>
-                        {activityLogs.length === 0 ? <EmptyTable /> :
+                        {activityLogs.length === 0 ? <EmptyTable message={"No Activity Logs"} /> :
                             activityLogs.map((activityLog) => {
                                 return (
                                     <TableRow key={activityLog.id}>
