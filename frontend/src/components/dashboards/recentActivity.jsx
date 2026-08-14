@@ -1,5 +1,6 @@
 import useRecentActivity from "../../hooks/useRecentActivity"
 import PageTitle from "../ui/pageTitle";
+import RecentActivityCard from './recentActivityCard'
 
 export default function RecentActivity() {
 
@@ -9,13 +10,11 @@ export default function RecentActivity() {
     return (
         <div className="bg-gray-100 w-full h-full p-1 rounded-lg shadow-lg">
             <PageTitle title={'Recent Activity'} />
-            <div className="flex flex-col gap-1 justify-center items-center">
+            <div className="flex-1 flex-col gap-1 justify-center items-center">
                 {
                     recentActivity?.map((activity) => {
                         return (
-                            <div key={activity.id} className="bg-gray-100 shadow-lg p-1 rounded-lg">
-                                {activity.changed_by} {(activity.action).toLowerCase()} {activity.entity_type} At {new Date(activity.created_at).toLocaleString()}
-                            </div>
+                            <RecentActivityCard activity={activity} />
                         )
                     })
                 }

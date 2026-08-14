@@ -10,7 +10,7 @@ export default function AuditorDashboard() {
 
     if (loading) return <>Loading</>
     return (
-        <div className="bg-gray-300 flex-1 flex flex-col gap-2 p-1">
+        <div className="flex-1 flex flex-col gap-2 p-1">
             <StatGrid role={(user.role).toLowerCase()} />
             <OverdueTasks role={(user.role).toLowerCase()} />
             <div className='flex-1 grid sm:grid-cols-1 md:grid-cols-2 gap-2'>

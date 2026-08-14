@@ -1,56 +1,66 @@
+import { useNavigate } from 'react-router-dom';
 import api from '../../../api/axios'
 import useUpcoming from '../../../hooks/useUpcoming'
+import LoadingComponent from '../../ui/loadingComponent';
+import PageTitle from '../../ui/pageTitle';
+import EmptyTable from '../../ui/table/emptyTable';
+import Table from '../../ui/table/table';
+import TableCell from '../../ui/table/tableCell';
+import TableHead from '../../ui/table/tableHead';
+import TableHeader from '../../ui/table/tableHeader';
+import TableRow from '../../ui/table/tableRow';
 
 export default function UpcomingAudits({ role }) {
 
+    const navigate = useNavigate();
     const { loading, error, upcoming } = useUpcoming(role);
-    if (loading) return <>loading</>
+    if (loading) return <LoadingComponent />
     if (error) return <>{error}</>
     return (
-        <div className="bg-gray-50 w-full">
-            <div>Upcoming Audits</div>
-            <div>
-                <table className="mt-4">
-                    <thead>
-                        <tr>
+        <div className='flex flex-col h-full'>
+            <PageTitle title={"Upcoming Tasks"} />
+            <div className='flex-1 min-h-0'>
+                <Table >
+                    <TableHeader>
+                        <TableRow>
 
-                            <th className="border px-4 py-3">Title</th>
-                            <th className="border px-4 py-3">Audit Id</th>
-                            <th className="border px-4 py-3">Company</th>
-                            <th className="border px-4 py-3">Priority</th>
-                            <th className="border px-4 py-3">Status</th>
-                            <th className="border px-4 py-3">Start Date</th>
-                            <th className="border px-4 py-3">Due Date</th>
+                            <TableHead>Title</TableHead>
+                            <TableHead>Audit Id</TableHead>
+                            <TableHead>Company</TableHead>
+                            <TableHead>Priority</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Start Date</TableHead>
+                            <TableHead>Due Date</TableHead>
 
-                            <th className="border px-4 py-3">Action</th>
-                        </tr>
-                    </thead>
+                            <TableHead>Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
                     <tbody>
-                        {
+                        {upcoming.length === 0 ? <EmptyTable message={'No Upcoming Tasks'} /> :
                             upcoming.map((task) => {
                                 return (
-                                    <tr key={task.id}>
+                                    <TableRow key={task.id}>
 
-                                        <td className="border px-4 py-3">{task.title}</td>
-                                        <td className="border px-4 py-3">{task.audit_id}</td>
+                                        <TableCell>{task.title}</TableCell>
+                                        <TableCell>{task.audit_id}</TableCell>
 
-                                        <td className="border px-4 py-3">{task.company}</td>
-
-
-                                        <td className="border px-4 py-3">{task.priority}</td>
-                                        <td className="border px-4 py-3">{task.status}</td>
-                                        <td className="border px-4 py-3">{task.start_date ? new Date(task.start_date).toLocaleDateString() : 'Null'}</td>
-                                        <td className="border px-4 py-3">{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</td>
+                                        <TableCell>{task.company}</TableCell>
 
 
-                                        <td className="border px-4 py-3">
-                                            <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button></td>
-                                    </tr>
+                                        <TableCell>{task.priority}</TableCell>
+                                        <TableCell>{task.status}</TableCell>
+                                        <TableCell>{task.start_date ? new Date(task.start_date).toLocaleDateString() : 'Null'}</TableCell>
+                                        <TableCell>{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</TableCell>
+
+
+                                        <TableCell>
+                                            <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button></TableCell>
+                                    </TableRow>
                                 );
                             })
                         }
                     </tbody>
-                </table>
+                </Table>
             </div>
         </div>
     )
