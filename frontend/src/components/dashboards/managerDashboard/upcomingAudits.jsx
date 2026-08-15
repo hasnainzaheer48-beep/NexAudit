@@ -1,5 +1,6 @@
 import api from '../../../api/axios'
 import useUpcoming from '../../../hooks/useUpcoming'
+import Button from '../../ui/button';
 import PageTitle from '../../ui/pageTitle';
 import EmptyTable from '../../ui/table/emptyTable';
 import PriorityBadge from '../../ui/table/priorityBadge';
@@ -51,7 +52,7 @@ export default function UpcomingAudits({ role }) {
 
                                         <TableCell>
 
-                                            <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
+                                            <Button variant='Details' icon='Details' iconSize='Small' onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</Button>
                                         </TableCell>
                                     </TableRow>
                                 );

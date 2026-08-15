@@ -8,6 +8,7 @@ import TableHead from "../ui/table/tableHead";
 import TableCell from "../ui/table/tableCell";
 import PriorityBadge from "../ui/table/priorityBadge";
 import StatusBadge from "../ui/table/statusBadge";
+import Button from "../ui/button";
 
 
 
@@ -57,11 +58,11 @@ export default function AuditTasksTable({ tasks, getTasks }) {
                                     <TableCell>{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
                                     <TableCell>{new Date(task.created_at).toLocaleDateString()}</TableCell>
                                     <TableCell>{new Date(task.updated_at).toLocaleDateString()}</TableCell>
-                                    <TableCell><button className="border px-2 mr-1" onClick={() => {
+                                    <TableCell><Button variant="Edit" icon="Edit" iconSize="Small" onClick={() => {
                                         setSelectedTask(task);
                                         setShowModal(true);
-                                    }}>Edit</button>
-                                        <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button>
+                                    }}>Edit</Button>
+                                        <Button variant="Details" icon="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
                                     </TableCell>
                                 </TableRow>
                             );

@@ -101,9 +101,9 @@ export default function AuditTemplates() {
                                             setSelectedAuditTemplate(auditTemplate);
                                             setShowModal(true);
                                         }}>Edit</Button>
-                                            <button className="border px-2" onClick={() => {
+                                            <Button icon="Task" iconSize="Small" variant="Details" onClick={() => {
                                                 navigate(`/audit-templates/${auditTemplate.id}/tasks`)
-                                            }}>Tasks</button>
+                                            }}>Tasks</Button>
                                             <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
                                                 return handleDeactivate(auditTemplate)
                                             }} >Deactivate</Button>

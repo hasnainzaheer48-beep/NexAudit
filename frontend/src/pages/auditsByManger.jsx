@@ -109,7 +109,7 @@ export default function AuditsByManager() {
                                                 setShowModal(true);
                                             }}>Edit</Button>
 
-                                            <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
+                                            <Button icon="Details" iconSize="Small" variant="Details" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</Button>
                                             <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
                                                 return handleArchive(audit)
                                             }} >Archive</Button>

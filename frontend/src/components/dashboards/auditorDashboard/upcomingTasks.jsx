@@ -9,6 +9,7 @@ import TableCell from '../../ui/table/tableCell';
 import TableHead from '../../ui/table/tableHead';
 import TableHeader from '../../ui/table/tableHeader';
 import TableRow from '../../ui/table/tableRow';
+import Button from '../../ui/button';
 
 export default function UpcomingAudits({ role }) {
 
@@ -54,7 +55,7 @@ export default function UpcomingAudits({ role }) {
 
 
                                         <TableCell>
-                                            <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button></TableCell>
+                                            <Button variant='Details' icon='Details' iconSize='Small' onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button></TableCell>
                                     </TableRow>
                                 );
                             })

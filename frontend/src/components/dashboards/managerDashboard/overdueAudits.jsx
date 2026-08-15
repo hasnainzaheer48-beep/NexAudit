@@ -10,6 +10,7 @@ import EmptyTable from '../../ui/table/emptyTable';
 import { useNavigate } from 'react-router-dom'
 import PriorityBadge from '../../ui/table/priorityBadge';
 import PageTitle from '../../ui/pageTitle';
+import Button from '../../ui/button';
 
 export default function OverdueAudits({ role }) {
 
@@ -57,7 +58,7 @@ export default function OverdueAudits({ role }) {
 
                                         <TableCell >
 
-                                            <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
+                                            <Button variant='Details' icon='Details' iconSize='Small' onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</Button>
                                         </TableCell>
                                     </TableRow>
                                 );

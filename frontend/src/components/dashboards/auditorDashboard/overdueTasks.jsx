@@ -12,6 +12,7 @@ import PriorityBadge from '../../ui/table/priorityBadge';
 import StatusBadge from '../../ui/table/statusBadge';
 import EmptyTable from '../../ui/table/emptyTable';
 import { useNavigate } from 'react-router-dom';
+import Button from '../../ui/button';
 
 
 export default function OverdueTasks({ role }) {
@@ -58,7 +59,7 @@ export default function OverdueTasks({ role }) {
 
 
                                         <TableCell>
-                                            <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button></TableCell>
+                                            <Button variant='Details' icon='Details' iconSize='Small' onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button></TableCell>
                                     </TableRow>
                                 );
                             })

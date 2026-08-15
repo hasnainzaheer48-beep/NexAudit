@@ -86,7 +86,7 @@ export default function TasksByAuditor() {
 
 
 
-                                            <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button></TableCell>
+                                            <Button icon="Details" variant="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button></TableCell>
                                     </TableRow>
                                 );
                             })

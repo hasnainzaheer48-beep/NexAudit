@@ -80,7 +80,7 @@ export default function TasksByManager() {
                                             setSelectedTask(task);
                                             setShowModal(true);
                                         }}>Edit</Button>
-                                            <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button>
+                                            <Button icon="Details" variant="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
                                         </TableCell>
                                     </TableRow>
                                 );
