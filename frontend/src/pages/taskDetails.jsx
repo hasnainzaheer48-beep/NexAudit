@@ -9,6 +9,7 @@ import Documents from "../components/documents/documents";
 import CreateCommentFormModal from "../components/comments/createCommentFormModal";
 import Comments from "../components/comments/comments";
 import useTaskById from "../hooks/useTaskById";
+import TaskTitle from "../components/taskDetails/taskTitle";
 
 export default function TaskDetails() {
 
@@ -31,7 +32,7 @@ export default function TaskDetails() {
             <div>
                 <button onClick={() => navigate(-1)} className="font-bold text-xs hover:cursor-pointer hover:underline text-[#174d38] tracking-wide ">Go Back</button>
             </div>
-            <div>Task Details</div><hr />
+            <TaskTitle title={task.title} status={task.status} />
             <div>
 
                 {/* Basic Info */}
