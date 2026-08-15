@@ -74,10 +74,13 @@ export default function Clients() {
                                         <TableCell>{client.industry}</TableCell>
                                         <TableCell>{new Date(client.created_at).toLocaleDateString()}</TableCell>
                                         <TableCell>{new Date(client.updated_at).toLocaleDateString()}</TableCell>
-                                        {user.role === "ADMIN" && <TableCell><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
-                                            setSelectedClient(client);
-                                            setShowModal(true);
-                                        }}>Edit</Button>
+                                        {user.role === "ADMIN" && <TableCell>
+                                            <div className="flex gap-2">
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedClient(client);
+                                                    setShowModal(true);
+                                                }}>Edit</Button>
+                                            </div>
                                         </TableCell>}
                                     </TableRow>
                                 );

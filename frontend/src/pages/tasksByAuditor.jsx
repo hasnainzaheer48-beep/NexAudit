@@ -77,16 +77,16 @@ export default function TasksByAuditor() {
                                         <TableCell>{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
 
                                         <TableCell>
+                                            <div className="flex gap-2">
 
 
-                                            <Button variant="Edit" icon="Edit" iconSize="Small" onClick={() => {
-                                                setSelectedTask(task);
-                                                setShowModal(true);
-                                            }}>Status</Button>
-
-
-
-                                            <Button icon="Details" variant="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button></TableCell>
+                                                <Button variant="Edit" icon="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedTask(task);
+                                                    setShowModal(true);
+                                                }}>Status</Button>
+                                                <Button icon="Details" variant="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
+                                            </div>
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })
@@ -100,7 +100,7 @@ export default function TasksByAuditor() {
                     onTaskUpdated={getTasksByAuditor}
                 />
             </div>
-        </div>
+        </div >
 
 
 

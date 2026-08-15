@@ -97,17 +97,20 @@ export default function AuditTemplates() {
                                         <TableCell>{String(auditTemplate.is_active)}</TableCell>
                                         <TableCell>{new Date(auditTemplate.created_at).toLocaleDateString()}</TableCell>
                                         <TableCell>{new Date(auditTemplate.updated_at).toLocaleDateString()}</TableCell>
-                                        <TableCell><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
-                                            setSelectedAuditTemplate(auditTemplate);
-                                            setShowModal(true);
-                                        }}>Edit</Button>
-                                            <Button icon="Task" iconSize="Small" variant="Details" onClick={() => {
-                                                navigate(`/audit-templates/${auditTemplate.id}/tasks`)
-                                            }}>Tasks</Button>
-                                            <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                return handleDeactivate(auditTemplate)
-                                            }} >Deactivate</Button>
+                                        <TableCell>
+                                            <div className="flex gap-2">
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedAuditTemplate(auditTemplate);
+                                                    setShowModal(true);
+                                                }}>Edit</Button>
+                                                <Button icon="Task" iconSize="Small" variant="Details" onClick={() => {
+                                                    navigate(`/audit-templates/${auditTemplate.id}/tasks`)
+                                                }}>Tasks</Button>
+                                                <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
+                                                    return handleDeactivate(auditTemplate)
+                                                }} >Deactivate</Button>
 
+                                            </div>
                                         </TableCell>
 
                                     </TableRow>

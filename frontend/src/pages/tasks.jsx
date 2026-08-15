@@ -83,11 +83,14 @@ export default function Tasks() {
                                         <TableCell >{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
                                         <TableCell >{new Date(task.created_at).toLocaleDateString()}</TableCell>
                                         <TableCell >{new Date(task.updated_at).toLocaleDateString()}</TableCell>
-                                        <TableCell ><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
-                                            setSelectedTask(task);
-                                            setShowModal(true);
-                                        }}>Edit</Button>
-                                            <Button icon="Details" iconSize="Small" variant="Details" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
+                                        <TableCell >
+                                            <div className="flex gap-2">
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedTask(task);
+                                                    setShowModal(true);
+                                                }}>Edit</Button>
+                                                <Button icon="Details" iconSize="Small" variant="Details" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 );

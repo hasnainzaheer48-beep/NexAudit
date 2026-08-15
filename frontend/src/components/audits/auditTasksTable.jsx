@@ -58,11 +58,14 @@ export default function AuditTasksTable({ tasks, getTasks }) {
                                     <TableCell>{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
                                     <TableCell>{new Date(task.created_at).toLocaleDateString()}</TableCell>
                                     <TableCell>{new Date(task.updated_at).toLocaleDateString()}</TableCell>
-                                    <TableCell><Button variant="Edit" icon="Edit" iconSize="Small" onClick={() => {
-                                        setSelectedTask(task);
-                                        setShowModal(true);
-                                    }}>Edit</Button>
-                                        <Button variant="Details" icon="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
+                                    <TableCell>
+                                        <div className="flex gap-2">
+                                            <Button variant="Edit" icon="Edit" iconSize="Small" onClick={() => {
+                                                setSelectedTask(task);
+                                                setShowModal(true);
+                                            }}>Edit</Button>
+                                            <Button variant="Details" icon="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             );

@@ -76,11 +76,14 @@ export default function TasksByManager() {
                                         <TableCell >{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</TableCell>
                                         <TableCell >{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
 
-                                        <TableCell ><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
-                                            setSelectedTask(task);
-                                            setShowModal(true);
-                                        }}>Edit</Button>
-                                            <Button icon="Details" variant="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
+                                        <TableCell >
+                                            <div className="flex gap-2">
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedTask(task);
+                                                    setShowModal(true);
+                                                }}>Edit</Button>
+                                                <Button icon="Details" variant="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 );

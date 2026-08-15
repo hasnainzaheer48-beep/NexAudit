@@ -94,15 +94,18 @@ export default function TemplateTasks() {
                                         <TableCell>{templateTask.order_number}</TableCell>
                                         <TableCell>{new Date(templateTask.created_at).toLocaleDateString()}</TableCell>
                                         <TableCell>{new Date(templateTask.updated_at).toLocaleDateString()}</TableCell>
-                                        <TableCell><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
-                                            setSelectedTemplateTask(templateTask);
-                                            setShowModal(true);
-                                        }}>Edit</Button>
-                                            <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                return handleArchive(templateTask)
-                                            }}>
-                                                Archive
-                                            </Button>
+                                        <TableCell>
+                                            <div className="flex gap-2">
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedTemplateTask(templateTask);
+                                                    setShowModal(true);
+                                                }}>Edit</Button>
+                                                <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
+                                                    return handleArchive(templateTask)
+                                                }}>
+                                                    Archive
+                                                </Button>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 );

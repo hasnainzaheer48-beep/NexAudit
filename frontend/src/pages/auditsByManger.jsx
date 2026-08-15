@@ -103,16 +103,18 @@ export default function AuditsByManager() {
 
 
                                         <TableCell>
+                                            <div className="flex gap-2">
 
-                                            <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
-                                                setSelectedAudit(audit);
-                                                setShowModal(true);
-                                            }}>Edit</Button>
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedAudit(audit);
+                                                    setShowModal(true);
+                                                }}>Edit</Button>
 
-                                            <Button icon="Details" iconSize="Small" variant="Details" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</Button>
-                                            <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                return handleArchive(audit)
-                                            }} >Archive</Button>
+                                                <Button icon="Details" iconSize="Small" variant="Details" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</Button>
+                                                <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
+                                                    return handleArchive(audit)
+                                                }} >Archive</Button>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 );

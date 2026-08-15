@@ -87,11 +87,12 @@ export default function Audits() {
 
 
                                         <TableCell>
-
-                                            <Button variant="Details" icon="Details" iconSize="Small" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</Button>
-                                            <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                return handleArchive(audit)
-                                            }} >Archive</Button>
+                                            <div className="flex gap-2">
+                                                <Button variant="Details" icon="Details" iconSize="Small" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</Button>
+                                                <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
+                                                    return handleArchive(audit)
+                                                }} >Archive</Button>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 );

@@ -88,13 +88,16 @@ export default function Users() {
                                         <TableCell >{user.email}</TableCell>
                                         <TableCell >{user.phone_number}</TableCell>
                                         <TableCell >{new Date(user.created_at).toLocaleDateString()} </TableCell>
-                                        <TableCell ><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
-                                            setSelectedUser(user);
-                                            setShowModal(true);
-                                        }}>Edit</Button >
-                                            <Button icon="Deactivate User" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                handleDelete(user);
-                                            }}>Deactivate</Button>
+                                        <TableCell >
+                                            <div className="flex gap-2">
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedUser(user);
+                                                    setShowModal(true);
+                                                }}>Edit</Button >
+                                                <Button icon="Deactivate User" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
+                                                    handleDelete(user);
+                                                }}>Deactivate</Button>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
 
