@@ -92,9 +92,9 @@ export default function Users() {
                                             setSelectedUser(user);
                                             setShowModal(true);
                                         }}>Edit</Button >
-                                            <button onClick={() => {
+                                            <Button icon="Deactivate User" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
                                                 handleDelete(user);
-                                            }}>Deactivate</button>
+                                            }}>Deactivate</Button>
                                         </TableCell>
                                     </TableRow>
 

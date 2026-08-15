@@ -110,9 +110,9 @@ export default function AuditsByManager() {
                                             }}>Edit</Button>
 
                                             <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
-                                            <button onClick={() => {
+                                            <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
                                                 return handleArchive(audit)
-                                            }} >Archive</button>
+                                            }} >Archive</Button>
                                         </TableCell>
                                     </TableRow>
                                 );

@@ -104,9 +104,9 @@ export default function AuditTemplates() {
                                             <button className="border px-2" onClick={() => {
                                                 navigate(`/audit-templates/${auditTemplate.id}/tasks`)
                                             }}>Tasks</button>
-                                            <button onClick={() => {
+                                            <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
                                                 return handleDeactivate(auditTemplate)
-                                            }} >Deactivate</button>
+                                            }} >Deactivate</Button>
 
                                         </TableCell>
 

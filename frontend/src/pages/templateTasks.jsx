@@ -98,11 +98,11 @@ export default function TemplateTasks() {
                                             setSelectedTemplateTask(templateTask);
                                             setShowModal(true);
                                         }}>Edit</Button>
-                                            <button onClick={() => {
+                                            <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
                                                 return handleArchive(templateTask)
                                             }}>
                                                 Archive
-                                            </button>
+                                            </Button>
                                         </TableCell>
                                     </TableRow>
                                 );
