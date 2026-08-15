@@ -7,6 +7,7 @@ import useAuditById from "../hooks/useAuditById";
 import LoadingComponent from "../components/ui/loadingComponent";
 import AuditInfo from "../components/auditDetails/auditInfo";
 import PageTitle from "../components/ui/pageTitle";
+import ProgressCard from "../components/auditDetails/ProgressCard";
 
 
 
@@ -53,13 +54,8 @@ export default function AuditDetails() {
                 <PageTitle title={"Tasks"} variant="Details" color="text-black" />
                 <AuditTasksTable tasks={tasks} getTasks={getTasksByAudit} />
             </div>
-            <br />
-            <div>
-                <div>Progress</div>
-                <hr />
-                <div>{auditProgress.finished_task} / {auditProgress.total_task} <br />
-                    {auditProgress.progress} </div>
-            </div>
+            <ProgressCard progress={auditProgress.progress} finished_task={auditProgress.finished_task} total_task={auditProgress.total_task} />
+
             <br />
             <button
                 disabled={auditProgress.progress !== 100 || audit.status === "Finished"}
