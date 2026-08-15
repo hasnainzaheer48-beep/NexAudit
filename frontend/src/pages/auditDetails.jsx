@@ -47,22 +47,16 @@ export default function AuditDetails() {
 
     return (
 
-        <div>
-            <button onClick={() => navigate(-1)} className="font-bold text-xs hover:cursor-pointer hover:underline text-[#174d38] tracking-wide ">Back to Audits</button>
+        <div className="flex flex-col gap-10 h-full">
+            <div>
+                <button onClick={() => navigate(-1)} className="font-bold text-xs hover:cursor-pointer hover:underline text-[#174d38] tracking-wide ">Back to Audits</button>
+            </div>
             <AuditInfo audit={audit} progress={auditProgress.progress} />
-            <div className="border border-[#cbcbcb] rounded-2xl mt-10">
+            <div className="border border-[#cbcbcb] rounded-2xl">
                 <PageTitle title={"Tasks"} variant="Details" color="text-black" />
                 <AuditTasksTable tasks={tasks} getTasks={getTasksByAudit} />
             </div>
-            <ProgressCard progress={auditProgress.progress} finished_task={auditProgress.finished_task} total_task={auditProgress.total_task} />
-
-            <br />
-            <button
-                disabled={auditProgress.progress !== 100 || audit.status === "Finished"}
-                className="border"
-                onClick={handleFinishAudit}
-            >{audit.status === "Finished" ? "Audit Completed" : "Finish Audit"}</button>
-
+            <ProgressCard progress={auditProgress.progress} finished_task={auditProgress.finished_task} total_task={auditProgress.total_task} onClick={handleFinishAudit} auditStatus={audit.status} />
         </div>
     )
 }
