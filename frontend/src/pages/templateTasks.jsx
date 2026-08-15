@@ -12,6 +12,7 @@ import TableHead from "../components/ui/table/tableHead";
 import TableCell from "../components/ui/table/tableCell";
 import PriorityBadge from "../components/ui/table/priorityBadge";
 import EmptyTable from "../components/ui/table/emptyTable";
+import Button from "../components/ui/button";
 
 
 
@@ -63,9 +64,9 @@ export default function TemplateTasks() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"Template Tasks"} />
-            <div>
-                <button className="border" onClick={handleCreateTemplateTask}>Create Template Tasks</button>
+            <div className="flex justify-between items-center">
+                <PageTitle title={"Template Tasks"} />
+                <Button onClick={handleCreateTemplateTask}>Create Template Tasks</Button>
             </div>
             <div className="flex-1 min-h-0">
                 <Table>

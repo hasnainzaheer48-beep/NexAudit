@@ -10,6 +10,7 @@ import TableHead from "../components/ui/table/tableHead";
 import TableCell from "../components/ui/table/tableCell";
 import EmptyTable from "../components/ui/table/emptyTable";
 import LoadingComponent from "../components/ui/loadingComponent";
+import Button from "../components/ui/button";
 
 
 
@@ -40,9 +41,9 @@ export default function Clients() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"Clients"} subtitle="Manage your clients and View information." />
-            <div>
-                <button className="border" onClick={handleCreateClient}>Create Client</button>
+            <div className="flex justify-between items-center">
+                <PageTitle title={"Clients"} subtitle="Manage your clients and View information." />
+                <Button onClick={handleCreateClient}>Create Client</Button>
             </div>
             <div className="flex-1 min-h-0">
 

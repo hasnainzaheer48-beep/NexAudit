@@ -13,6 +13,7 @@ import EmptyTable from "../components/ui/table/emptyTable";
 import TableCell from "../components/ui/table/tableCell";
 import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
+import Button from "../components/ui/button";
 
 
 
@@ -62,9 +63,12 @@ export default function AuditsByManager() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"Audits"} subtitle="Manage ongoing and completed audits in one place." />
-            <div>
-                <button className="border" onClick={handleCreateAudit}>Create Audit</button>
+            <div className="flex justify-between items-center">
+                <PageTitle title={"Audits"} subtitle="Manage ongoing and completed audits in one place." />
+                <Button onClick={handleCreateAudit}>
+                    Create Audit
+                </Button>
+
             </div>
 
             <div className="flex-1 min-h-0">

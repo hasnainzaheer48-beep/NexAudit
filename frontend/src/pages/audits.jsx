@@ -1,8 +1,6 @@
 import { useContext, useState } from "react";
-import AuditsFormModal from "../components/audits/auditsFormModal";
 import { useNavigate } from 'react-router-dom'
 import useAudits from "../hooks/useAudits";
-import { AuthContext } from "../context/AuthContext";
 import api from "../api/axios";
 import LoadingComponent from "../components/ui/loadingComponent";
 import Table from "../components/ui/table/table";
@@ -14,26 +12,18 @@ import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
 import PageTitle from "../components/ui/pageTitle";
 import EmptyTable from "../components/ui/table/emptyTable";
+import Button from "../components/ui/button";
 
 
 
 export default function Audits() {
 
     const { loading, error, audits, getAudits, setAudits } = useAudits();
-    const [showModal, setShowModal] = useState(false);
+
     const [selectedAudit, setSelectedAudit] = useState(null);
-    const { user } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
-    const handleCreateAudit = () => {
-        setShowModal(true);
-        setSelectedAudit(null);
-    }
-
-    const handleClose = () => {
-        setShowModal(false);
-    }
 
     const handleArchive = async (audit) => {
         try {
@@ -64,9 +54,8 @@ export default function Audits() {
     return (
         <div className="flex flex-col h-full">
             <PageTitle title={"Audits"} subtitle="View ongoing and completed audits in one place." />
-            <div className="flex-1 min-h-0">
-                {(user?.role === "MANAGER") && <button className="border" onClick={handleCreateAudit}>Create Audit</button>}
 
+            <div className="flex-1 min-h-0">
                 <Table className="mt-4">
                     <TableHeader>
                         <TableRow>
@@ -98,11 +87,6 @@ export default function Audits() {
 
 
                                         <TableCell>
-                                            {(user?.role === "MANAGER") &&
-                                                <button className="border px-2 mr-1" onClick={() => {
-                                                    setSelectedAudit(audit);
-                                                    setShowModal(true);
-                                                }}>Edit</button>}
 
                                             <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
                                             <button onClick={() => {
@@ -115,7 +99,7 @@ export default function Audits() {
                         }
                     </tbody>
                 </Table>
-                <AuditsFormModal isOpen={showModal} selectedAudit={selectedAudit} onClose={handleClose} onAuditCreated={getAudits} />
+
             </div>
 
 
