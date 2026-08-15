@@ -1,8 +1,8 @@
 export default function Table({ children, variant = "Page" }) {
 
     const variants = {
-        "Page": "rounded-xl",
-        "Dashboard": "rounded-b-xl"
+        "Page": "rounded-xl border border-[#cbcbcb]",
+        "Dashboard": "rounded-b-xl border-y border-[#cbcbcb]"
     }
 
     return (
@@ -10,8 +10,7 @@ export default function Table({ children, variant = "Page" }) {
         <div className={`
         h-full
         bg-white
-        border
-        border-[#cbcbcb]
+
         ${variants[variant]}
         overflow-hidden
                     `}>

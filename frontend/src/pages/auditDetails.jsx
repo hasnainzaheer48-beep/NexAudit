@@ -6,6 +6,7 @@ import api from "../api/axios";
 import useAuditById from "../hooks/useAuditById";
 import LoadingComponent from "../components/ui/loadingComponent";
 import AuditInfo from "../components/auditDetails/auditInfo";
+import PageTitle from "../components/ui/pageTitle";
 
 
 
@@ -46,13 +47,10 @@ export default function AuditDetails() {
     return (
 
         <div>
-            <button onClick={() => navigate(-1)}>Back to Audits</button>
-            <hr />
+            <button onClick={() => navigate(-1)} className="font-bold text-xs hover:cursor-pointer hover:underline text-[#174d38] tracking-wide ">Back to Audits</button>
             <AuditInfo audit={audit} progress={auditProgress.progress} />
-            <br />
-            <div>
-                <div>Tasks</div>
-                <hr />
+            <div className="border border-[#cbcbcb] rounded-2xl mt-10">
+                <PageTitle title={"Tasks"} variant="Details" color="text-black" />
                 <AuditTasksTable tasks={tasks} getTasks={getTasksByAudit} />
             </div>
             <br />

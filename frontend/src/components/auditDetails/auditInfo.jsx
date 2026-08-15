@@ -5,7 +5,7 @@ import AuditInfoCard from "./auditInfoCard";
 export default function AuditInfo({ audit, progress }) {
     return (
         <div className="flex items-center gap-6 p-2">
-            <div className="bg-green-100 size-22 text-[#174d38] p-1 rounded-lg flex justify-center items-center ">
+            <div className="bg-green-50 size-22 text-[#174d38] p-1 rounded-lg flex justify-center items-center ">
                 <FileChartColumnIncreasing className="size-15" />
             </div>
             <div className="flex-1 gap-2 flex flex-col min-h-0">
