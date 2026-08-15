@@ -12,6 +12,7 @@ import TableCell from "../components/ui/table/tableCell";
 import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
 import EmptyTable from "../components/ui/table/emptyTable";
+import Button from "../components/ui/button";
 
 
 export default function TasksByAuditor() {
@@ -75,10 +76,16 @@ export default function TasksByAuditor() {
                                         <TableCell>{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</TableCell>
                                         <TableCell>{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
 
-                                        <TableCell><button className="border px-2 mr-1" onClick={() => {
-                                            setSelectedTask(task);
-                                            setShowModal(true);
-                                        }}>Edit Status</button>
+                                        <TableCell>
+
+
+                                            <Button variant="Edit" icon="Edit" iconSize="Small" onClick={() => {
+                                                setSelectedTask(task);
+                                                setShowModal(true);
+                                            }}>Status</Button>
+
+
+
                                             <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button></TableCell>
                                     </TableRow>
                                 );

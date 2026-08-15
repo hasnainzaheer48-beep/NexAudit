@@ -10,6 +10,7 @@ import TableRow from "../components/ui/table/tableRow";
 import TableHead from "../components/ui/table/tableHead";
 import TableCell from "../components/ui/table/tableCell";
 import EmptyTable from "../components/ui/table/emptyTable";
+import Button from "../components/ui/button";
 
 
 
@@ -55,9 +56,9 @@ export default function Users() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={'Users'} subtitle="Manage users, roles, and access across your organization." />
-            <div>
-                <button className="border" onClick={handleCreateUser}>Create User</button>
+            <div className="flex justify-between items-center">
+                <PageTitle title={'Users'} subtitle="Manage users, roles, and access across your organization." />
+                <Button onClick={handleCreateUser}>Create User</Button>
             </div>
             <div className="flex-1 min-h-0 ">
 

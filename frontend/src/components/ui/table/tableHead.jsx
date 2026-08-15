@@ -5,7 +5,7 @@ export default function TableHead({ children }) {
         py-4
         text-left
         text-xs
-        font-semibold
+        font-bold
         uppercase
         tracking-wide
          text-gray-600

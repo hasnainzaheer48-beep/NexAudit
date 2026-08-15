@@ -1,31 +1,40 @@
-import { Plus } from "lucide-react";
+import { Pen, Plus } from "lucide-react";
 
-export default function Button({ children, onClick, variant = "Create" }) {
+export default function Button({ children, onClick, variant = "Create", icon = "Create", iconSize = "Normal" }) {
 
     const variants = {
-        "Create": " text-lg border-[#174d38] text-[#174d38] hover:bg-[#174d38] hover:text-white transition"
+        "Create": "px-3 rounded-md font-bold py-1 text-lg border-[#174d38] text-[#174d38] hover:bg-[#174d38] hover:text-white transition",
+        "Edit": "px-2 py-1 text-xs font-medium rounded-sm border-black bg-white text-black hover:bg-black hover:text-white transition "
     }
 
     const Icons = {
         "Create": Plus,
+        "Edit": Pen
 
     }
+
+    const iconSizes = {
+        "Normal": "stroke-3",
+        "Small": "stroke-2 size-5"
+    }
+
+    let Icon = Icons[icon];
 
     return (
         <button className={`
                     flex
                     gap-1
                     items-center
-                    px-3 py-1
-                    rounded-md
+                    
+                    
                     border
-                    font-bold
+                    
                     hover:cursor-pointer
                     ${variants[variant]}
                     `} onClick={onClick}>
 
             <div className="flex justify-center items-center">
-                <Plus className="stroke-3" />
+                <Icon className={`${iconSizes[iconSize]}`} />
             </div>
             <span>{children}</span>
 
