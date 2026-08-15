@@ -2,6 +2,15 @@ import { useContext, useState } from "react";
 import useClients from "../hooks/useClients";
 import ClientsFormModal from "../components/clients/clientsFormModal";
 import { AuthContext } from "../context/AuthContext";
+import PageTitle from "../components/ui/pageTitle";
+import Table from "../components/ui/table/table";
+import TableHeader from "../components/ui/table/tableHeader";
+import TableRow from "../components/ui/table/tableRow";
+import TableHead from "../components/ui/table/tableHead";
+import TableCell from "../components/ui/table/tableCell";
+import EmptyTable from "../components/ui/table/emptyTable";
+import LoadingComponent from "../components/ui/loadingComponent";
+import Button from "../components/ui/button";
 
 
 
@@ -22,7 +31,7 @@ export default function Clients() {
     }
 
     if (loading) {
-        return <h1>Loading</h1>
+        return <LoadingComponent />
     }
 
     if (error) {
@@ -31,48 +40,56 @@ export default function Clients() {
 
 
     return (
-        <div>
-            <button className="border" onClick={handleCreateClient}>Create Client</button>
+        <div className="flex flex-col h-full">
+            <div className="flex justify-between items-center">
+                <PageTitle title={"Clients"} subtitle="Manage your clients and View information." />
+                <Button size="Large" onClick={handleCreateClient}>Create Client</Button>
+            </div>
+            <div className="flex-1 min-h-0">
 
-            <table className="mt-4">
-                <thead>
-                    <tr>
-                        <th className="border px-4 py-3">Id</th>
-                        <th className="border px-4 py-3">Company Name</th>
-                        <th className="border px-4 py-3">Email</th>
-                        <th className="border px-4 py-3">Location</th>
-                        <th className="border px-4 py-3">Phone Number</th>
-                        <th className="border px-4 py-3">Industry</th>
-                        <th className="border px-4 py-3">Created At</th>
-                        <th className="border px-4 py-3">Updated At</th>
-                        {user.role === "ADMIN" && <th className="border px-4 py-3">Action</th>}
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        clients.map((client) => {
-                            return (
-                                <tr key={client.id}>
-                                    <td className="border px-4 py-3">{client.id}</td>
-                                    <td className="border px-4 py-3">{client.company_name}</td>
-                                    <td className="border px-4 py-3">{client.email}</td>
-                                    <td className="border px-4 py-3">{client.location}</td>
-                                    <td className="border px-4 py-3">{client.phone_number}</td>
-                                    <td className="border px-4 py-3">{client.industry}</td>
-                                    <td className="border px-4 py-3">{new Date(client.created_at).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3">{new Date(client.updated_at).toLocaleDateString()}</td>
-                                    {user.role === "ADMIN" && <td className="border px-4 py-3"><button onClick={() => {
-                                        setSelectedClient(client);
-                                        setShowModal(true);
-                                    }}>Edit</button>
-                                    </td>}
-                                </tr>
-                            );
-                        })
-                    }
-                </tbody>
-            </table>
-            <ClientsFormModal isOpen={showModal} selectedClient={selectedClient} onClose={handleClose} onClientCreated={getClients} />
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Id</TableHead>
+                            <TableHead>Company Name</TableHead>
+                            <TableHead>Email</TableHead>
+                            <TableHead>Location</TableHead>
+                            <TableHead>Phone Number</TableHead>
+                            <TableHead>Industry</TableHead>
+                            <TableHead>Created At</TableHead>
+                            <TableHead>Updated At</TableHead>
+                            {user.role === "ADMIN" && <TableHead>Action</TableHead>}
+                        </TableRow>
+                    </TableHeader>
+                    <tbody>
+                        {clients.length === 0 ? <EmptyTable /> :
+                            clients.map((client) => {
+                                return (
+                                    <TableRow key={client.id}>
+                                        <TableCell>{client.id}</TableCell>
+                                        <TableCell>{client.company_name}</TableCell>
+                                        <TableCell>{client.email}</TableCell>
+                                        <TableCell>{client.location}</TableCell>
+                                        <TableCell>{client.phone_number}</TableCell>
+                                        <TableCell>{client.industry}</TableCell>
+                                        <TableCell>{new Date(client.created_at).toLocaleDateString()}</TableCell>
+                                        <TableCell>{new Date(client.updated_at).toLocaleDateString()}</TableCell>
+                                        {user.role === "ADMIN" && <TableCell>
+                                            <div className="flex gap-2">
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedClient(client);
+                                                    setShowModal(true);
+                                                }}>Edit</Button>
+                                            </div>
+                                        </TableCell>}
+                                    </TableRow>
+                                );
+                            })
+                        }
+                    </tbody>
+                </Table>
+                <ClientsFormModal isOpen={showModal} selectedClient={selectedClient} onClose={handleClose} onClientCreated={getClients} />
+            </div>
         </div>
 
 

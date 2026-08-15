@@ -5,6 +5,7 @@ import AdminDashboard from '../components/dashboards/adminDashboard/adminDashboa
 import AuditorDashboard from '../components/dashboards/auditorDashboard/auditorDashboard';
 import ManagerDashboard from '../components/dashboards/managerDashboard/managerDashboard';
 import LoadingScreen from '../components/ui/loadingScreen';
+import WelcomeCard from '../components/dashboards/welcomeCard';
 
 
 export default function Dashboard() {
@@ -16,13 +17,7 @@ export default function Dashboard() {
     if (user.role === "ADMIN") {
         return (
             <div className='flex flex-col gap-2 h-full '>
-                <div >
-                    <div className='text-4xl font-bold'>
-
-                        Welcome Back, <span className='font-bold text-[#174d38]' >{user.first_name}</span>
-                    </div>
-                    <span className='text-lg text-gray-700'>Here's what's happening</span>
-                </div>
+                <WelcomeCard name={user.first_name} />
                 <AdminDashboard />
             </div>
         )
@@ -30,14 +25,7 @@ export default function Dashboard() {
     if (user.role === "AUDITOR") {
         return (
             <div className='flex flex-col gap-2 h-full '>
-                <div>
-                    <div className='text-4xl font-bold'>
-                        Welcome Back, <span className='font-bold text-[#174d38]' >{user.first_name}</span>
-                    </div>
-
-                    <span className='text-lg text-gray-700'>Here's what's happening</span>
-
-                </div>
+                <WelcomeCard name={user.first_name} />
                 <AuditorDashboard />
             </div>
         )
@@ -47,15 +35,7 @@ export default function Dashboard() {
     if (user.role === "MANAGER") {
         return (
             <div className='flex flex-col gap-2 h-full '>
-                <div>
-                    <div className='text-4xl font-bold'>
-
-                        Welcome Back, <span className='font-bold text-[#174d38]' >{user.first_name}</span>
-                    </div>
-
-                    <span className='text-lg text-gray-700'>Here's what's happening</span>
-
-                </div>
+                <WelcomeCard name={user.first_name} />
                 <ManagerDashboard />
             </div>
         )

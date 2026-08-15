@@ -3,7 +3,16 @@ import useAuditTemplates from "../hooks/useAuditTemplates";
 import AuditTemplatesFormModal from "../components/auditTemplates/auditTemplatesFormModal";
 import { useNavigate } from 'react-router-dom'
 import api from "../api/axios";
-
+import LoadingComponent from '../components/ui/loadingComponent'
+import PageTitle from "../components/ui/pageTitle";
+import Table from "../components/ui/table/table";
+import TableHeader from "../components/ui/table/tableHeader";
+import TableRow from "../components/ui/table/tableRow";
+import TableCell from "../components/ui/table/tableCell";
+import TableHead from "../components/ui/table/tableHead";
+import EmptyTable from "../components/ui/table/emptyTable";
+import Button from "../components/ui/button";
+import { Plus } from "lucide-react";
 
 export default function AuditTemplates() {
 
@@ -41,7 +50,7 @@ export default function AuditTemplates() {
     }
 
     if (loading) {
-        return <h1>Loading</h1>
+        return <LoadingComponent />
     }
 
     if (error) {
@@ -50,58 +59,70 @@ export default function AuditTemplates() {
 
 
     return (
-        <div>
-            <button className="border" onClick={handleCreateAuditTemplate}>Create Audit Template</button>
+        <div className="flex flex-col h-full gap-2">
 
-            <table className="mt-4">
-                <thead>
-                    <tr>
-                        <th className="border px-4 py-3">Id</th>
-                        <th className="border px-4 py-3">Name</th>
-                        <th className="border px-4 py-3">Description</th>
-                        <th className="border px-4 py-3">Audit Type</th>
-                        <th className="border px-4 py-3">Version</th>
-                        <th className="border px-4 py-3">Is Active</th>
-                        <th className="border px-4 py-3">Created At</th>
-                        <th className="border px-4 py-3">Updated At</th>
-                        <th className="border px-4 py-3">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        auditTemplates.map((auditTemplate) => {
-                            return (
-                                <tr key={auditTemplate.id}>
-                                    <td className="border px-4 py-3">{auditTemplate.id}</td>
-                                    <td className="border px-4 py-3">{auditTemplate.name}</td>
-                                    <td className="border px-4 py-3">{auditTemplate.description}</td>
-                                    <td className="border px-4 py-3">{auditTemplate.audit_type}</td>
-                                    <td className="border px-4 py-3">{auditTemplate.version}</td>
-                                    <td className="border px-4 py-3">{String(auditTemplate.is_active)}</td>
-                                    <td className="border px-4 py-3">{new Date(auditTemplate.created_at).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3">{new Date(auditTemplate.updated_at).toLocaleDateString()}</td>
-                                    <td className="border px-4 py-3"><button className="border px-2 mr-1" onClick={() => {
-                                        setSelectedAuditTemplate(auditTemplate);
-                                        setShowModal(true);
-                                    }}>Edit</button>
-                                        <button className="border px-2" onClick={() => {
-                                            navigate(`/audit-templates/${auditTemplate.id}/tasks`)
-                                        }}>Tasks</button>
-                                        <button onClick={() => {
-                                            return handleDeactivate(auditTemplate)
-                                        }} >Deactivate</button>
+            <div className="flex justify-between items-center">
 
-                                    </td>
+                <PageTitle title={"Audit Templates"} subtitle="Create and manage reusable audit templates" />
+                <Button size="Large" onClick={handleCreateAuditTemplate}>
+                    Create Template
+                </Button>
+            </div>
 
-                                </tr>
-                            );
-                        })
-                    }
-                </tbody>
-            </table>
-            <AuditTemplatesFormModal isOpen={showModal} selectedAuditTemplate={selectedAuditTemplate} onClose={handleClose} onAuditTemplateCreated={getAuditTemplates} />
+            <div className="flex-1 min-h-0">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Id</TableHead>
+                            <TableHead>Name</TableHead>
+                            <TableHead>Description</TableHead>
+                            <TableHead>Audit Type</TableHead>
+                            <TableHead>Version</TableHead>
+                            <TableHead>Is Active</TableHead>
+                            <TableHead>Created At</TableHead>
+                            <TableHead>Updated At</TableHead>
+                            <TableHead>Action</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <tbody>
+                        {auditTemplates.length === 0 ? <EmptyTable /> :
+                            auditTemplates.map((auditTemplate) => {
+                                return (
+                                    <TableRow key={auditTemplate.id}>
+                                        <TableCell>{auditTemplate.id}</TableCell>
+                                        <TableCell>{auditTemplate.name}</TableCell>
+                                        <TableCell>{auditTemplate.description}</TableCell>
+                                        <TableCell>{auditTemplate.audit_type}</TableCell>
+                                        <TableCell>{auditTemplate.version}</TableCell>
+                                        <TableCell>{String(auditTemplate.is_active)}</TableCell>
+                                        <TableCell>{new Date(auditTemplate.created_at).toLocaleDateString()}</TableCell>
+                                        <TableCell>{new Date(auditTemplate.updated_at).toLocaleDateString()}</TableCell>
+                                        <TableCell>
+                                            <div className="flex gap-2">
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedAuditTemplate(auditTemplate);
+                                                    setShowModal(true);
+                                                }}>Edit</Button>
+                                                <Button icon="Task" iconSize="Small" variant="Details" onClick={() => {
+                                                    navigate(`/audit-templates/${auditTemplate.id}/tasks`)
+                                                }}>Tasks</Button>
+                                                <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
+                                                    return handleDeactivate(auditTemplate)
+                                                }} >Deactivate</Button>
+
+                                            </div>
+                                        </TableCell>
+
+                                    </TableRow>
+                                );
+                            })
+                        }
+                    </tbody>
+                </Table>
+                <AuditTemplatesFormModal isOpen={showModal} selectedAuditTemplate={selectedAuditTemplate} onClose={handleClose} onAuditTemplateCreated={getAuditTemplates} />
+            </div>
+
         </div>
-
 
 
 

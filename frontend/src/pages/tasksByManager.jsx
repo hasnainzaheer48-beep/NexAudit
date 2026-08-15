@@ -10,6 +10,9 @@ import TableCell from "../components/ui/table/tableCell";
 import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
 import PageTitle from "../components/ui/pageTitle";
+import LoadingComponent from "../components/ui/loadingComponent";
+import EmptyTable from "../components/ui/table/emptyTable";
+import Button from "../components/ui/button";
 
 
 export default function TasksByManager() {
@@ -24,7 +27,7 @@ export default function TasksByManager() {
     }
 
     if (loading) {
-        return <h1>Loading</h1>
+        return <LoadingComponent />
     }
 
     if (error) {
@@ -34,7 +37,7 @@ export default function TasksByManager() {
 
     return (
         <div className="flex flex-col h-full">
-            <PageTitle title={"Tasks"} />
+            <PageTitle title={"Tasks"} subtitle="View, manage, and track your audit's tasks." />
             <div className="flex-1 min-h-0">
                 <Table>
                     <TableHeader>
@@ -56,7 +59,7 @@ export default function TasksByManager() {
                         </TableRow>
                     </TableHeader>
                     <tbody>
-                        {
+                        {tasks.length === 0 ? <EmptyTable /> :
                             tasks.map((task) => {
                                 return (
                                     <TableRow key={task.id}>
@@ -73,11 +76,14 @@ export default function TasksByManager() {
                                         <TableCell >{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</TableCell>
                                         <TableCell >{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
 
-                                        <TableCell ><button className="border px-2 mr-1" onClick={() => {
-                                            setSelectedTask(task);
-                                            setShowModal(true);
-                                        }}>Edit</button>
-                                            <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button>
+                                        <TableCell >
+                                            <div className="flex gap-2">
+                                                <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
+                                                    setSelectedTask(task);
+                                                    setShowModal(true);
+                                                }}>Edit</Button>
+                                                <Button icon="Details" variant="Details" iconSize="Small" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</Button>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 );

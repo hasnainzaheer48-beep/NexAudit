@@ -12,8 +12,11 @@ export default function AdminDashboard() {
         return <LoadingComponent />
     }
     return (
-        <div className="bg-gray-300 flex-1 flex flex-col gap-2 p-1 justify-center">
-            < AdminStatGrid />
+        <div className=" flex-1 flex flex-col gap-2 p-1 justify-center">
+            <div className="flex-1">
+
+                < AdminStatGrid />
+            </div>
             <div className='flex-1'>
                 <RecentActivity />
             </div>
