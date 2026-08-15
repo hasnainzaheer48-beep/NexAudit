@@ -64,7 +64,7 @@ export default function AuditTemplates() {
             <div className="flex justify-between items-center">
 
                 <PageTitle title={"Audit Templates"} subtitle="Create and manage reusable audit templates" />
-                <Button onClick={handleCreateAuditTemplate}>
+                <Button size="Large" onClick={handleCreateAuditTemplate}>
                     Create Template
                 </Button>
             </div>

@@ -66,7 +66,7 @@ export default function TemplateTasks() {
         <div className="flex flex-col h-full">
             <div className="flex justify-between items-center">
                 <PageTitle title={"Template Tasks"} />
-                <Button onClick={handleCreateTemplateTask}>Create Template Tasks</Button>
+                <Button size="Large" onClick={handleCreateTemplateTask}>Create Template Tasks</Button>
             </div>
             <div className="flex-1 min-h-0">
                 <Table>

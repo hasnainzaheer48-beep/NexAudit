@@ -43,7 +43,7 @@ export default function Clients() {
         <div className="flex flex-col h-full">
             <div className="flex justify-between items-center">
                 <PageTitle title={"Clients"} subtitle="Manage your clients and View information." />
-                <Button onClick={handleCreateClient}>Create Client</Button>
+                <Button size="Large" onClick={handleCreateClient}>Create Client</Button>
             </div>
             <div className="flex-1 min-h-0">
 

@@ -58,7 +58,7 @@ export default function Users() {
         <div className="flex flex-col h-full">
             <div className="flex justify-between items-center">
                 <PageTitle title={'Users'} subtitle="Manage users, roles, and access across your organization." />
-                <Button onClick={handleCreateUser}>Create User</Button>
+                <Button size="Large" onClick={handleCreateUser}>Create User</Button>
             </div>
             <div className="flex-1 min-h-0 ">
 
