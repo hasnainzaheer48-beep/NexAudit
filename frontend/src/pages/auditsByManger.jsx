@@ -104,10 +104,10 @@ export default function AuditsByManager() {
 
                                         <TableCell>
 
-                                            <button className="border px-2 mr-1" onClick={() => {
+                                            <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
                                                 setSelectedAudit(audit);
                                                 setShowModal(true);
-                                            }}>Edit</button>
+                                            }}>Edit</Button>
 
                                             <button className="border px-2 mr-1" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</button>
                                             <button onClick={() => {

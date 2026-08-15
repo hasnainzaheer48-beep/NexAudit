@@ -88,10 +88,10 @@ export default function Users() {
                                         <TableCell >{user.email}</TableCell>
                                         <TableCell >{user.phone_number}</TableCell>
                                         <TableCell >{new Date(user.created_at).toLocaleDateString()} </TableCell>
-                                        <TableCell ><button onClick={() => {
+                                        <TableCell ><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
                                             setSelectedUser(user);
                                             setShowModal(true);
-                                        }}>Edit</button>
+                                        }}>Edit</Button >
                                             <button onClick={() => {
                                                 handleDelete(user);
                                             }}>Deactivate</button>

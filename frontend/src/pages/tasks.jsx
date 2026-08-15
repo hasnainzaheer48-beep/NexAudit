@@ -13,6 +13,7 @@ import TableCell from "../components/ui/table/tableCell";
 import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
 import EmptyTable from "../components/ui/table/emptyTable";
+import Button from "../components/ui/button";
 
 
 
@@ -82,10 +83,10 @@ export default function Tasks() {
                                         <TableCell >{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
                                         <TableCell >{new Date(task.created_at).toLocaleDateString()}</TableCell>
                                         <TableCell >{new Date(task.updated_at).toLocaleDateString()}</TableCell>
-                                        <TableCell ><button className="border px-2 mr-1" onClick={() => {
+                                        <TableCell ><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
                                             setSelectedTask(task);
                                             setShowModal(true);
-                                        }}>Edit</button>
+                                        }}>Edit</Button>
                                             <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button>
                                         </TableCell>
                                     </TableRow>

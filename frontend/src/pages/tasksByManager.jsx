@@ -12,6 +12,7 @@ import StatusBadge from "../components/ui/table/statusBadge";
 import PageTitle from "../components/ui/pageTitle";
 import LoadingComponent from "../components/ui/loadingComponent";
 import EmptyTable from "../components/ui/table/emptyTable";
+import Button from "../components/ui/button";
 
 
 export default function TasksByManager() {
@@ -75,10 +76,10 @@ export default function TasksByManager() {
                                         <TableCell >{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</TableCell>
                                         <TableCell >{task.completed_at ? new Date(task.completed_at).toLocaleDateString() : 'Null'}</TableCell>
 
-                                        <TableCell ><button className="border px-2 mr-1" onClick={() => {
+                                        <TableCell ><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
                                             setSelectedTask(task);
                                             setShowModal(true);
-                                        }}>Edit</button>
+                                        }}>Edit</Button>
                                             <button className="border px-2 mr-1" onClick={() => navigate(`/tasks/task-details/${task.id}`)}>View</button>
                                         </TableCell>
                                     </TableRow>

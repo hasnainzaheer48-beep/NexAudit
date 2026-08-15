@@ -94,10 +94,10 @@ export default function TemplateTasks() {
                                         <TableCell>{templateTask.order_number}</TableCell>
                                         <TableCell>{new Date(templateTask.created_at).toLocaleDateString()}</TableCell>
                                         <TableCell>{new Date(templateTask.updated_at).toLocaleDateString()}</TableCell>
-                                        <TableCell><button className="border px-2 mr-1" onClick={() => {
+                                        <TableCell><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
                                             setSelectedTemplateTask(templateTask);
                                             setShowModal(true);
-                                        }}>Edit</button>
+                                        }}>Edit</Button>
                                             <button onClick={() => {
                                                 return handleArchive(templateTask)
                                             }}>

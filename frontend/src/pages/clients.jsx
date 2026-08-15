@@ -74,10 +74,10 @@ export default function Clients() {
                                         <TableCell>{client.industry}</TableCell>
                                         <TableCell>{new Date(client.created_at).toLocaleDateString()}</TableCell>
                                         <TableCell>{new Date(client.updated_at).toLocaleDateString()}</TableCell>
-                                        {user.role === "ADMIN" && <TableCell><button onClick={() => {
+                                        {user.role === "ADMIN" && <TableCell><Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
                                             setSelectedClient(client);
                                             setShowModal(true);
-                                        }}>Edit</button>
+                                        }}>Edit</Button>
                                         </TableCell>}
                                     </TableRow>
                                 );
