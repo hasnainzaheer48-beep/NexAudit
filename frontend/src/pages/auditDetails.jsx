@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import useAuditProgress from "../hooks/useAuditProgress";
 import useTasksByAudit from "../hooks/useTasksByAudit";
 import AuditTasksTable from "../components/audits/auditTasksTable";
 import api from "../api/axios";
 import useAuditById from "../hooks/useAuditById";
 import LoadingComponent from "../components/ui/loadingComponent";
+import AuditInfo from "../components/auditDetails/auditInfo";
 
 
 
@@ -12,6 +13,7 @@ import LoadingComponent from "../components/ui/loadingComponent";
 
 export default function AuditDetails() {
 
+    const navigate = useNavigate();
     const { auditId } = useParams();
     const { audit, getAudit, error, loading: auditLoading } = useAuditById(auditId);
     const { auditProgress, getAuditprogress, loading: progressLoading } = useAuditProgress(auditId);
@@ -42,20 +44,11 @@ export default function AuditDetails() {
     }
 
     return (
-        <div>
-            <div>
-                <div>{audit.client}</div>
-                <hr />
-                <div>
-                    Status: {audit.status} <br />
-                    Manager: {audit.manager} <br />
-                    Template: {audit.template} <br />
-                    Year: {audit.audit_year} <br />
-                    Priority: {audit.priority}  <br />
-                    Progress: {auditProgress.progress} <br />
 
-                </div>
-            </div>
+        <div>
+            <button onClick={() => navigate(-1)}>Back to Audits</button>
+            <hr />
+            <AuditInfo audit={audit} progress={auditProgress.progress} />
             <br />
             <div>
                 <div>Tasks</div>
