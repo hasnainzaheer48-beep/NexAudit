@@ -24,7 +24,7 @@ export default function AuditTasksTable({ tasks, getTasks }) {
 
     return (
         <div>
-            <Table className="mt-4">
+            <Table variant="Dashboard">
                 <TableHeader>
                     <TableRow>
                         <TableHead>Id</TableHead>

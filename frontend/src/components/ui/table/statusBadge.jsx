@@ -1,6 +1,6 @@
 export default function StatusBadge({ status }) {
     const styles = {
-        Draft: "bg-gray-100 text-gray-700",
+        Draft: "bg-blue-100 text-blue-700",
         "In Progress": "bg-green-100 text-[#174d38]",
         Finished: "bg-green-100 text-[#174d38]",
     }

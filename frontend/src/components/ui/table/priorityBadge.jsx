@@ -11,7 +11,7 @@ export default function PriorityBadge({ priority }) {
             {` px-3
             py-1
             rounded-full
-            text-sm
+            text-xs
             font-medium
             ${styles[priority]}
             `}
