@@ -59,7 +59,7 @@ export default function DocumentRow({ document: doc, onDelete }) {
             <TableCell><span className='font-semibold'>{doc.original_name}</span></TableCell>
             <TableCell><DocTypeBadge type={doc.mime_type} /> </TableCell>
             <TableCell>{doc.uploaded_by_name}</TableCell>
-            <TableCell>{new Date(doc.uploaded_at).toLocaleDateString()}</TableCell>
+            <TableCell>{new Date(doc.uploaded_at).toLocaleString()}</TableCell>
             <TableCell><span className='font-semibold'>{((doc.file_size) / (1024 * 1024)).toFixed(2)} MB</span></TableCell>
             <TableCell>
                 <div className='flex gap-3'>

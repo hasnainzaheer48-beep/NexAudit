@@ -29,38 +29,38 @@ export default function TaskDetails() {
     }
 
     return (
-        <>
+        <div className="flex flex-col gap-4">
             <div>
                 <button onClick={() => navigate(-1)} className="font-bold text-xs hover:cursor-pointer hover:underline text-[#174d38] tracking-wide ">Go Back</button>
             </div>
             <TaskTitle title={task.title} status={task.status} />
+
             <div>
-                <div>
-                    <TaskInfoCard task={task} />
-                </div>
-
-
-
-
-                {/* Documents Upload and View */}
-                <div>
-                    <Documents user={user} taskId={taskId} getTask={getTask} />
-                </div>
-
-                {/* ------------------------------------------------- */}
-
-                {/* ---------------Comments-------------- */}
-                <Comments taskId={taskId} />
-
-                <br /><hr />
-                {/* ------------------------------------------------ */}
-                <div>More Details</div><br />
-                <div>Task Id: {task.id}</div><br />
-                <div>Audit Id:  {task.audit_id}</div><br />
-                <div>Template Task Id: {task.template_task_id} </div><br />
-                <div>Assigned Auditor Id:  {task.assigned_auditor_id}</div><br />
-
+                <TaskInfoCard task={task} />
             </div>
-        </>
+
+
+
+
+            {/* Documents Upload and View */}
+            <div>
+                <Documents user={user} taskId={taskId} getTask={getTask} />
+            </div>
+
+            {/* ------------------------------------------------- */}
+
+            {/* ---------------Comments-------------- */}
+            <Comments taskId={taskId} />
+
+            <br /><hr />
+            {/* ------------------------------------------------ */}
+            <div>More Details</div><br />
+            <div>Task Id: {task.id}</div><br />
+            <div>Audit Id:  {task.audit_id}</div><br />
+            <div>Template Task Id: {task.template_task_id} </div><br />
+            <div>Assigned Auditor Id:  {task.assigned_auditor_id}</div><br />
+
+
+        </div>
     )
 }
