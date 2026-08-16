@@ -6,6 +6,7 @@ import TableRow from "../ui/table/tableRow";
 import TableHead from "../ui/table/tableHead";
 import TableCell from "../ui/table/tableCell";
 import DocumentRow from "./documentRow";
+import EmptyTable from "../ui/table/emptyTable";
 
 export default function ShowTaskDocuments({ taskId }) {
 
@@ -36,7 +37,7 @@ export default function ShowTaskDocuments({ taskId }) {
                 </TableRow>
             </TableHeader>
             <tbody>
-                {
+                {documents.length === 0 ? <EmptyTable message="No Documents Uploaded Yet" /> :
                     documents.map((document) => {
                         return (
                             <DocumentRow key={document.id} onDelete={onDelete} document={document} />
