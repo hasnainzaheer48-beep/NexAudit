@@ -58,8 +58,14 @@ const getDocumentsByTask = async (req, res) => {
     const { taskId } = req.params;
     try {
         const result = await pool.query(`
-            SELECT * 
-            FROM documents
+            SELECT
+            documents.*,
+            users.first_name || ' ' || users.last_name as uploaded_by_name
+
+            from documents
+            join users
+            on documents.uploaded_by = users.id
+
             WHERE task_id = $1
             AND is_deleted = false`,
             [

@@ -1,5 +1,12 @@
 import useDocuments from "../../hooks/useDocuments";
-import DocumentCard from "./documentCard";
+import DocumentCard from "./documentRow";
+import Table from '../ui/table/table'
+import TableHeader from "../ui/table/tableHeader";
+import TableRow from "../ui/table/tableRow";
+import TableHead from "../ui/table/tableHead";
+import TableCell from "../ui/table/tableCell";
+import DocumentRow from "./documentRow";
+import EmptyTable from "../ui/table/emptyTable";
 
 export default function ShowTaskDocuments({ taskId }) {
 
@@ -18,13 +25,26 @@ export default function ShowTaskDocuments({ taskId }) {
     console.log(documents)
 
     return (
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
-            {
-                documents.map((document) => {
-                    return < DocumentCard key={document.id} onDelete={onDelete} document={document} />
-                })
-            }
-
-        </div>
+        <Table >
+            <TableHeader>
+                <TableRow>
+                    <TableHead>File Name</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Uploaded By</TableHead>
+                    <TableHead>Uploaded At</TableHead>
+                    <TableHead>Size</TableHead>
+                    <TableHead>Actions</TableHead>
+                </TableRow>
+            </TableHeader>
+            <tbody>
+                {documents.length === 0 ? <EmptyTable message="No Documents Uploaded Yet" /> :
+                    documents.map((document) => {
+                        return (
+                            <DocumentRow key={document.id} onDelete={onDelete} document={document} />
+                        )
+                    })
+                }
+            </tbody>
+        </Table>
     )
 }

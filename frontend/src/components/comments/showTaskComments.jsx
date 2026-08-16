@@ -13,16 +13,14 @@ export default function ShowTaskComments({ taskId, comments, setComments, getCom
         });
     }
 
-
-
-
     return (
-        <div className="p-2 flex flex-col gap-3">
+        <div className=" flex flex-col border-[#cbcbcb] overflow-auto ">
             {
                 comments.map((comment) => {
                     return <CommentCard key={comment.id} onDelete={onDelete} comment={comment} getComments={getComments} />
                 })
             }
+
         </div>
     )
 }
