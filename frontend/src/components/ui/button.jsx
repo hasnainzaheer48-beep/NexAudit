@@ -42,11 +42,8 @@ export default function Button({ children, isChildren = true, onClick, variant =
         <button className={`
                     flex
                     gap-1
-                    items-center
-                    
-                    
+                    items-center   
                     border
-                    
                     hover:cursor-pointer
                     ${variants[variant]}
                     ${sizes[size]}

@@ -27,7 +27,6 @@ export default function Documents({ user, taskId, getTask }) {
                 <PageTitle title={"Documents"} color="text-gray-800" variant="Details" titleIcon={true} />
                 {(user.role === "AUDITOR") && <Button onClick={handleUpload} variant="Upload" icon="Upload" size="Normal" iconSize="Small">Upload Document</Button>}
             </div>
-            <hr className="text-[#cbcbcb]" />
             <ShowTaskDocuments taskId={taskId} />
             <UploadDocumentFormModal isOpen={showModal} onClose={handleClose} taskId={taskId} onUploaded={getTask} />
         </div>

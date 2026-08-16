@@ -2,6 +2,8 @@ import { useState } from "react";
 import CreateCommentFormModal from "./createCommentFormModal";
 import ShowTaskComments from "./showTaskComments";
 import useComements from "../../hooks/useComments";
+import PageTitle from "../ui/pageTitle";
+import Button from "../ui/button";
 
 
 export default function Comments({ taskId, }) {
@@ -27,12 +29,12 @@ export default function Comments({ taskId, }) {
     if (error) return console.log(error);
 
     return (
-        <div id="Comment-Section" className="flex flex-col">
-            <div id="Comment-Section-Header" className="flex items-center justify-between p-2 px-3">
-                <div className="font-bold">Comments</div>
-                <div><button className="border p-1 font-semibold" onClick={handleCreate}>Create Comment</button></div>
+        <div id="Comment-Section" className="flex flex-col p-2 rounded-2xl border border-[#cbcbcb] gap-4">
+            <div id="Comment-Section-Header" className="flex  justify-between">
+                <PageTitle title={"Comments"} titleIcon={true} color="text-gray-800" variant="Details" />
+                <Button iconSize="Small" size="Normal" variant="Upload" onClick={handleCreate}> Comment</Button >
             </div>
-            <div id="Comment-Cards-Box" className="flex-1">
+            <div id="Comment-Cards-Box" className="flex-1 border border-[#cbcbcb]  rounded-2xl">
                 <ShowTaskComments taskId={taskId} comments={comments} setComments={setComments} getComments={getComments} />
             </div>
             <CreateCommentFormModal isOpen={showModal} onClose={handleClose} taskId={taskId} onCreated={getComments} />

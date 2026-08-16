@@ -32,7 +32,7 @@ export default function CommentCard({ comment, onDelete, getComments }) {
     }
 
     return (
-        <div className="bg-gray-200 shadow-lg flex p-2 rounded-lg">
+        <div className="flex p-2 border-b border-[#cbcbcb] last:border-b-0 ">
             <div id="Content" className="flex-1 flex flex-col pt-0">
                 <div id="Commenter Info" className="font-light text-sm">
                     {comment.user} • {comment.role.toLowerCase()} • {new Date(comment.created_at).toLocaleString()}
