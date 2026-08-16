@@ -1,6 +1,8 @@
 import { useState } from "react";
 import ShowTaskDocuments from "./showTaskDocuments"
 import UploadDocumentFormModal from "./uploadDocumentFormModal"
+import PageTitle from '../ui/pageTitle'
+import { Folder } from "lucide-react";
 
 
 
@@ -19,10 +21,13 @@ export default function Documents({ user, taskId, getTask }) {
 
 
     return (
-        <div>
-
+        <div className="flex flex-col border border-[#cbcbcb] rounded-2xl p-2">
+            <div className="flex justify-between">
+                <PageTitle title={"Documents"} color="text-gray-700" variant="Details" titleIcon={true} />
+                {(user.role === "AUDITOR") && <button onClick={handleUpload} className="border p-1 mb-2">Add Docs</button>}
+            </div>
+            <hr className="text-[#cbcbcb]" />
             <ShowTaskDocuments taskId={taskId} />
-            {(user.role === "AUDITOR") && <button onClick={handleUpload} className="border p-1 mb-2">Add Docs</button>}<br />
             <UploadDocumentFormModal isOpen={showModal} onClose={handleClose} taskId={taskId} onUploaded={getTask} />
         </div>
 

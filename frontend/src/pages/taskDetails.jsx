@@ -35,7 +35,6 @@ export default function TaskDetails() {
             </div>
             <TaskTitle title={task.title} status={task.status} />
             <div>
-
                 <div>
                     <TaskInfoCard task={task} />
                 </div>
@@ -44,9 +43,10 @@ export default function TaskDetails() {
 
 
                 {/* Documents Upload and View */}
-                <div>Documents</div>
-                <Documents user={user} taskId={taskId} getTask={getTask} />
-                <hr />
+                <div>
+                    <Documents user={user} taskId={taskId} getTask={getTask} />
+                </div>
+
                 {/* ------------------------------------------------- */}
 
                 {/* ---------------Comments-------------- */}
