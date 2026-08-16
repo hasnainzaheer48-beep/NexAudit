@@ -1,5 +1,6 @@
 import api from '../../api/axios'
 import Button from '../ui/button';
+import DocTypeBadge from '../ui/table/docTypeBadge';
 import TableCell from '../ui/table/tableCell';
 import TableRow from '../ui/table/tableRow';
 
@@ -55,11 +56,11 @@ export default function DocumentRow({ document: doc, onDelete }) {
 
     return (
         <TableRow key={doc.id}>
-            <TableCell>{doc.original_name}</TableCell>
-            <TableCell>{((doc.mime_type).split('/')[1]).toUpperCase()} </TableCell>
+            <TableCell><span className='font-semibold'>{doc.original_name}</span></TableCell>
+            <TableCell><DocTypeBadge type={doc.mime_type} /> </TableCell>
             <TableCell>{doc.uploaded_by_name}</TableCell>
             <TableCell>{new Date(doc.uploaded_at).toLocaleDateString()}</TableCell>
-            <TableCell>{((doc.file_size) / (1024 * 1024)).toFixed(2)} MB</TableCell>
+            <TableCell><span className='font-semibold'>{((doc.file_size) / (1024 * 1024)).toFixed(2)} MB</span></TableCell>
             <TableCell>
                 <div className='flex gap-3'>
                     <Button onClick={handleOpen} variant='Details' icon='View' iconSize='Small' isChildren={false} />

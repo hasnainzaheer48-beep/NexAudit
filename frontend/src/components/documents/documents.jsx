@@ -23,7 +23,7 @@ export default function Documents({ user, taskId, getTask }) {
     return (
         <div className="flex flex-col border border-[#cbcbcb] rounded-2xl p-2">
             <div className="flex justify-between">
-                <PageTitle title={"Documents"} color="text-gray-700" variant="Details" titleIcon={true} />
+                <PageTitle title={"Documents"} color="text-gray-800" variant="Details" titleIcon={true} />
                 {(user.role === "AUDITOR") && <button onClick={handleUpload} className="border p-1 mb-2">Add Docs</button>}
             </div>
             <hr className="text-[#cbcbcb]" />
