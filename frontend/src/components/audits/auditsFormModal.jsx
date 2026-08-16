@@ -133,10 +133,6 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
 
                     </select>
                 </label>
-
-
-
-
                 <label>
                     Template
                     <select name="template_id" type="text" value={formData.template_id} onChange={handleChange} required >
