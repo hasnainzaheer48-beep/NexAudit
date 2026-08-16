@@ -1,6 +1,6 @@
-import { Archive, Info, List, Pen, Plus, UserRoundMinus } from "lucide-react";
+import { Archive, Download, Eye, Info, List, Pen, Plus, Trash2, UserRoundMinus } from "lucide-react";
 
-export default function Button({ children, onClick, variant = "Create", icon = "Create", iconSize = "Normal", size = "Small" }) {
+export default function Button({ children, isChildren = true, onClick, variant = "Create", icon = "Create", iconSize = "Normal", size = "Small" }) {
 
     const variants = {
         "Create": " border-[#174d38] text-[#174d38] hover:bg-[#174d38] hover:text-white transition",
@@ -20,7 +20,10 @@ export default function Button({ children, onClick, variant = "Create", icon = "
         "Archive": Archive,
         "Deactivate User": UserRoundMinus,
         "Details": Info,
-        "Task": List
+        "Task": List,
+        "View": Eye,
+        "Download": Download,
+        "Delete": Trash2
 
     }
 
@@ -48,7 +51,7 @@ export default function Button({ children, onClick, variant = "Create", icon = "
             <div className="flex justify-center items-center">
                 <Icon className={`${iconSizes[iconSize]}`} />
             </div>
-            <span>{children}</span>
+            {isChildren && <span>{children}</span>}
 
         </button>
     )

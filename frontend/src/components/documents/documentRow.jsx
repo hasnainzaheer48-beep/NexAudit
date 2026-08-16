@@ -1,5 +1,10 @@
 import api from '../../api/axios'
-export default function DocumentCard({ document: doc, onDelete }) {
+import Button from '../ui/button';
+import TableCell from '../ui/table/tableCell';
+import TableRow from '../ui/table/tableRow';
+
+
+export default function DocumentRow({ document: doc, onDelete }) {
 
 
 
@@ -49,13 +54,19 @@ export default function DocumentCard({ document: doc, onDelete }) {
 
 
     return (
-        <div className="bg-gray-200 shadow-lg p-2 rounded-lg flex flex-col w-full  ">
-            <div className="text-md font-semibold ">{doc.original_name}</div>
-            <div>{((doc.mime_type).split('/')[1]).toUpperCase()} • {((doc.file_size) / (1024 * 1024)).toFixed(2)} MB</div>
-            <button className="border p-1 rounded-lg bg-white font-semibold mb-1" onClick={handleOpen}>Open</button>
-            <button className="border p-1 rounded-lg bg-white font-semibold " onClick={handleDownload} >Download</button>
-            <button className="border p-1 rounded-lg bg-white font-semibold " onClick={handleDelete} >Delete</button>
-
-        </div>
+        <TableRow key={doc.id}>
+            <TableCell>{doc.original_name}</TableCell>
+            <TableCell>{((doc.mime_type).split('/')[1]).toUpperCase()} </TableCell>
+            <TableCell>{doc.uploaded_by_name}</TableCell>
+            <TableCell>{new Date(doc.uploaded_at).toLocaleDateString()}</TableCell>
+            <TableCell>{((doc.file_size) / (1024 * 1024)).toFixed(2)} MB</TableCell>
+            <TableCell>
+                <div className='flex gap-3'>
+                    <Button onClick={handleOpen} variant='Details' icon='View' iconSize='Small' isChildren={false} />
+                    <Button variant='Edit' icon='Download' iconSize='Small' onClick={handleDownload} isChildren={false} />
+                    <Button onClick={handleDelete} variant='Archive/Deactivate' icon='Delete' iconSize='Smalll' isChildren={false} />
+                </div>
+            </TableCell>
+        </TableRow>
     )
 }
