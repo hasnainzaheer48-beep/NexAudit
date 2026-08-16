@@ -1,16 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom"
-import UploadDocumentFormModal from "../components/documents/uploadDocumentFormModal";
-import { useState } from "react";
-import ShowTaskDocuments from "../components/documents/showTaskDocuments";
+
+
+
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import ShowTaskComments from "../components/comments/showTaskComments";
+
 import Documents from "../components/documents/documents";
-import CreateCommentFormModal from "../components/comments/createCommentFormModal";
+
 import Comments from "../components/comments/comments";
 import useTaskById from "../hooks/useTaskById";
 import TaskTitle from "../components/taskDetails/taskTitle";
 import TaskInfoCard from "../components/taskDetails/taskInfoCard";
+import ExtraDetails from "../components/taskDetails/extraDetails";
 
 export default function TaskDetails() {
 
@@ -29,7 +30,7 @@ export default function TaskDetails() {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-5 pb-6  min-h-full">
             <div>
                 <button onClick={() => navigate(-1)} className="font-bold text-xs hover:cursor-pointer hover:underline text-[#174d38] tracking-wide ">Go Back</button>
             </div>
@@ -41,18 +42,14 @@ export default function TaskDetails() {
             <div>
                 <Documents user={user} taskId={taskId} getTask={getTask} />
             </div>
+            <div>
+                <Comments taskId={taskId} />
+            </div>
 
 
-            {/* ---------------Comments-------------- */}
-            <Comments taskId={taskId} />
-
-            <br /><hr />
-            {/* ------------------------------------------------ */}
-            <div>More Details</div><br />
-            <div>Task Id: {task.id}</div><br />
-            <div>Audit Id:  {task.audit_id}</div><br />
-            <div>Template Task Id: {task.template_task_id} </div><br />
-            <div>Assigned Auditor Id:  {task.assigned_auditor_id}</div><br />
+            <div>
+                <ExtraDetails task={task} />
+            </div>
 
 
         </div>

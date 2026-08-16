@@ -1,4 +1,4 @@
-import { Folder, MessageSquare } from "lucide-react"
+import { EllipsisVertical, Folder, MessageSquare } from "lucide-react"
 
 export default function PageTitle({ title, color = "text-[#174d38]", variant = "Page", subtitle = "", titleIcon = false }) {
 
@@ -11,7 +11,8 @@ export default function PageTitle({ title, color = "text-[#174d38]", variant = "
 
     const icons = {
         "Documents": Folder,
-        "Comments": MessageSquare
+        "Comments": MessageSquare,
+        "Extra Details": EllipsisVertical
     }
 
     let Icon;
