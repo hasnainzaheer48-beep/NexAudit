@@ -10,6 +10,7 @@ import CreateCommentFormModal from "../components/comments/createCommentFormModa
 import Comments from "../components/comments/comments";
 import useTaskById from "../hooks/useTaskById";
 import TaskTitle from "../components/taskDetails/taskTitle";
+import TaskInfoCard from "../components/taskDetails/taskInfoCard";
 
 export default function TaskDetails() {
 
@@ -35,21 +36,10 @@ export default function TaskDetails() {
             <TaskTitle title={task.title} status={task.status} />
             <div>
 
-                {/* Basic Info */}
-                <div>Title: {task.title}</div><br />
-                <div>Company: {task.company}</div><br />
-                <div>Assigned Auditor: {task.assigned_auditor}</div><br />
-                <div>Description: {task.description}</div><br />
-                <div>Start Date: {task.start_date ? new Date(task.start_date).toLocaleDateString() : '-'}</div><br />
-                <div>Due Date: {task.due_date ? new Date(task.due_date).toLocaleDateString() : '-'}</div><br />
-                <div>Completed At: {task.completed ? new Date(task.completed_at).toLocaleDateString() : "-"}</div><br />
-                <div>Created At: {new Date(task.created_at).toLocaleDateString()}</div><br />
-                <div>Updated At: {task.updated_at ? new Date(task.updated_at).toLocaleDateString() : '-'}</div><br />
-                <hr />
-                <div>Status: {task.status} </div><br />
-                <div>Priority: {task.priority}</div><br />
-                <hr />
-                {/* --------------------------------- */}
+                <div>
+                    <TaskInfoCard task={task} />
+                </div>
+
 
 
 
