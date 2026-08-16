@@ -85,7 +85,9 @@ export default function TemplateTasksFormModal({ isOpen, onClose, onTemplateTask
 
     if (!isOpen) return null;
     return (
-        <Modal>
+        <Modal title={isEditing ? "Edit Template Task" : "Add Template Task"}
+            subtitle={isEditing ? "Update this template task's details" : "Add a task to this audit template"}
+            onClose={onClose} size="xl">
             <form onSubmit={handleSubmit} >
                 <label>Title<input name="title" type="text" value={formData.title} onChange={handleChange} required /></label>
                 <label>Description<input name="description" type="text" value={formData.description} onChange={handleChange} required /></label>
@@ -94,7 +96,6 @@ export default function TemplateTasksFormModal({ isOpen, onClose, onTemplateTask
 
                 <button className="border">{isEditing ? "Update" : "Create"}</button>
             </form>
-            <button className="border" onClick={onClose} >Close</button>
         </Modal>
     );
 }

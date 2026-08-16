@@ -50,7 +50,9 @@ export default function UploadDocumentFormModal({ isOpen, onClose, taskId, onUpl
     if (!isOpen) return null;
 
     return (
-        <Modal>
+        <Modal title={"Upload Document"}
+            subtitle={"Attach a document to this task"}
+            onClose={onClose} size="xl">
             <form onSubmit={handleSubmit}>
                 <label>
                     <input className='border' type="file" name='file' onChange={handleFile} required />
@@ -61,7 +63,7 @@ export default function UploadDocumentFormModal({ isOpen, onClose, taskId, onUpl
                 <button>Upload</button>
             </form>
 
-            <button onClick={onClose} className='Close'>Close</button>
+
         </Modal>
     )
 }

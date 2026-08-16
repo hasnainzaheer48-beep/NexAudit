@@ -119,7 +119,7 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
 
     if (!isOpen) return null;
     return (
-        <Modal>
+        <Modal title={isEditing ? "Edit Audit" : "Create Audit"} subtitle={isEditing ? "Update this audit's details and schedule" : "Set up a new audit for a client"} onClose={onClose} size="xl">
             <form onSubmit={handleSubmit} >
                 <label>
                     Client
@@ -187,7 +187,6 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
                 </select></label>}
                 <button className="border">{isEditing ? "Update" : "Create"}</button>
             </form>
-            <button className="border" onClick={onClose} >Close</button>
         </Modal>
     );
 }

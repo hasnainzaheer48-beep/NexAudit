@@ -73,7 +73,9 @@ export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated
 
     if (!isOpen) return null;
     return (
-        <Modal>
+        <Modal title={"Update Task Status"}
+            subtitle={"Change the current status of this task"}
+            onClose={onClose} size="xl">
             <form onSubmit={handleSubmit} >
                 <label>Task Status
                     <select name="status" value={formData.status} onChange={handleChange}>
@@ -93,7 +95,7 @@ export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated
 
                 <button className="border">Update Status</button>
             </form>
-            <button className="border" onClick={onClose} >Close</button>
+
         </Modal>
     );
 }

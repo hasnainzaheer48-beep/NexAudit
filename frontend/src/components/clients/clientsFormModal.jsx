@@ -77,7 +77,7 @@ export default function ClientsFormModal({ isOpen, onClose, onClientCreated, sel
 
     if (!isOpen) return null;
     return (
-        <Modal>
+        <Modal title={isEditing ? "Edit Client" : "Create Audit"} subtitle={isEditing ? "Update this client's information" : "Add a new client to your organization"} onClose={onClose} size="xl">
             <form onSubmit={handleSubmit} >
                 <label>Company Name<input name="company_name" type="text" value={formData.company_name} onChange={handleChange} required /></label>
                 <label>Email<input name="email" type="text" value={formData.email} onChange={handleChange} required /></label>
@@ -86,7 +86,6 @@ export default function ClientsFormModal({ isOpen, onClose, onClientCreated, sel
                 <label>Industry<input name="industry" type="text" value={formData.industry} onChange={handleChange} required /></label>
                 <button className="border">{isEditing ? "Update" : "Create"}</button>
             </form>
-            <button className="border" onClick={onClose} >Close</button>
         </Modal>
     );
 }

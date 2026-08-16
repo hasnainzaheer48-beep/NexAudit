@@ -29,14 +29,14 @@ export default function CreateCommentFormModal({ isOpen, onClose, taskId, onCrea
 
     if (!isOpen) return null;
     return (
-        <Modal>
+        <Modal title="Add Comment" subtitle="Leave a note about this task or audit" onClose={onClose} size="xl">
             <form onSubmit={handleSubmit} >
                 <label>Comment
                     <input type="text" placeholder="Add Comment" value={content} onChange={handleChange} />
                 </label>
                 <button className="border">Submit</button>
             </form>
-            <button onClick={onClose} className="border">Close</button>
+
         </Modal>
     )
 }

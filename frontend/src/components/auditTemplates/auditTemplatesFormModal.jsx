@@ -86,7 +86,7 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
 
     if (!isOpen) return null;
     return (
-        <Modal>
+        <Modal subtitle={isEditing ? "Update the template and its task structure" : "Define a reusable structure for your audits"} title={isEditing ? "Edit Audit Template" : "Create Audit Template"} onClose={onClose} size="xl">
             <form onSubmit={handleSubmit} >
                 <label>Name<input name="name" type="text" value={formData.name} onChange={handleChange} required /></label>
                 <label>Description<input name="description" type="text" value={formData.description} onChange={handleChange} required /></label>
@@ -98,7 +98,7 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
                 </select></label>
                 <button className="border">{isEditing ? "Update" : "Create"}</button>
             </form>
-            <button className="border" onClick={onClose} >Close</button>
+
         </Modal>
     );
 }

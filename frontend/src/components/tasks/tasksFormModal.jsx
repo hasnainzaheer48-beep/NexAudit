@@ -85,7 +85,9 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
 
     if (!isOpen) return null;
     return (
-        <Modal>
+        <Modal title={"Edit Task"}
+            subtitle={"Update this task's details and deadline"}
+            onClose={onClose} size="xl">
             <form onSubmit={handleSubmit} >
 
                 <label>Description<input name="description" type="text" value={formData.description} onChange={handleChange} required /></label>
@@ -121,7 +123,7 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
 
                 <button className="border">Update</button>
             </form>
-            <button className="border" onClick={onClose} >Close</button>
+
         </Modal>
     );
 }

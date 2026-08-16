@@ -34,14 +34,14 @@ export default function EditCommentFormModal({ isOpen, onClose, comment, onEdite
 
     if (!isOpen) return null;
     return (
-        <Modal>
+        <Modal title="Edit Comment" subtitle="Update your comment" onClose={onClose} size="xl">
             <form onSubmit={handleSubmit} >
                 <label>Edit Comment
                     <input type="text" placeholder="Edit Comment" value={content} onChange={handleChange} required />
                 </label>
                 <button className="border">Save Changes</button>
             </form>
-            <button onClick={onClose} className="border">Close</button>
+
         </Modal>
     )
 }
