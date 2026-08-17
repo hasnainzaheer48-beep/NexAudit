@@ -3,6 +3,10 @@ import Modal from "../ui/Modal";
 import api from '../../api/axios'
 import useClients from '../../hooks/useClients'
 import useAuditTemplates from '../../hooks/useAuditTemplates';
+import FormField from "../ui/form/formField";
+import FormSelect from "../ui/form/formSelect";
+import FormInput from "../ui/form/formInput";
+import FormActions from "../ui/form/formActions";
 
 export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selectedAudit }) {
 
@@ -119,75 +123,72 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
 
     if (!isOpen) return null;
     return (
-        <Modal>
-            <form onSubmit={handleSubmit} >
-                <label>
-                    Client
-                    <select name="client_id" type="text" value={formData.client_id} onChange={handleChange} required >
-                        <option value="">Select Client</option>
-                        {
-                            clients.map((client) => {
-                                return <option key={client.id} value={client.id}>{client.company_name}</option>
-                            })
-                        }
+        <Modal title={isEditing ? "Edit Audit" : "Create Audit"} subtitle={isEditing ? "Update this audit's details and schedule" : "Set up a new audit for a client"} onClose={onClose} size="xl">
+            <form onSubmit={handleSubmit} className="space-y-4 py-3" >
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 ">
 
-                    </select>
-                </label>
+                    <FormField label={"Client"} required={true}>
 
+                        <FormSelect name="client_id" type="text" value={formData.client_id} onChange={handleChange} required >
+                            <option value="">Select Client</option>
+                            {
+                                clients.map((client) => {
+                                    return <option key={client.id} value={client.id}>{client.company_name}</option>
+                                })
+                            }
 
+                        </FormSelect>
+                    </FormField>
+                    <FormField label={"Template"} required={true}>
 
+                        <FormSelect name="template_id" type="text" value={formData.template_id} onChange={handleChange} required >
+                            <option value="">Select Template</option>
+                            {
+                                auditTemplates.map((auditTemplate) => {
+                                    return <option key={auditTemplate.id} value={auditTemplate.id}>{auditTemplate.name}</option>
+                                })
+                            }
 
-                <label>
-                    Template
-                    <select name="template_id" type="text" value={formData.template_id} onChange={handleChange} required >
-                        <option value="">Select Template</option>
-                        {
-                            auditTemplates.map((auditTemplate) => {
-                                return <option key={auditTemplate.id} value={auditTemplate.id}>{auditTemplate.name}</option>
-                            })
-                        }
+                        </FormSelect>
+                    </FormField>
+                    <FormField label={"Audit Year"} required={true}><FormInput name="audit_year" type="number" value={formData.audit_year} onChange={handleChange} required /></FormField>
+                    <FormField label={"Audit Type"} required={true}><FormInput name="audit_type" type="text" value={formData.audit_type} onChange={handleChange} required /></FormField>
+                    <FormField label={"Start Date"} required={true}><FormInput name="start_date" type="date" value={formData.start_date} onChange={handleChange} required /></FormField>
+                    <FormField label={"Due Date"} required={true}><FormInput name="due_date" type="date" value={formData.due_date} onChange={handleChange} required /></FormField>
 
-                    </select>
-                </label>
-                <label>Audit Year<input name="audit_year" type="number" value={formData.audit_year} onChange={handleChange} required /></label>
-                <label>Audit Type<input name="audit_type" type="text" value={formData.audit_type} onChange={handleChange} required /></label>
-                <label>Start Date<input name="start_date" type="date" value={formData.start_date} onChange={handleChange} required /></label>
-                <label>Due Date<input name="due_date" type="date" value={formData.due_date} onChange={handleChange} required /></label>
+                    <FormField label={"Priority"} required={true}>
+                        <FormSelect name="priority" type="text" value={formData.priority} onChange={handleChange} required >
+                            <option value="">Select Priority</option>
+                            {
+                                priorities.map((priority) => {
+                                    return <option key={priority} value={priority}>{priority}</option>
+                                })
+                            }
 
-                <label>
-                    Priority
-                    <select name="priority" type="text" value={formData.priority} onChange={handleChange} required >
-                        <option value="">Select Priority</option>
-                        {
-                            priorities.map((priority) => {
-                                return <option key={priority} value={priority}>{priority}</option>
-                            })
-                        }
+                        </FormSelect>
 
-                    </select>
+                    </FormField>
 
-                </label>
+                    {isEditing && <FormField label={"Status"} required={true}>
 
-                {isEditing && <label>
-                    Status
-                    <select name="status" type="text" value={formData.status} onChange={handleChange} required >
-                        <option value="">Select Status</option>
-                        {
-                            statuses.map((status) => {
-                                return <option key={status} value={status}>{status}</option>
-                            })
-                        }
-                    </select>
-                </label>}
-                <label>Description<input name="description" type="text" value={formData.description} onChange={handleChange} required /></label>
+                        <FormSelect name="status" type="text" value={formData.status} onChange={handleChange} required >
+                            <option value="">Select Status</option>
+                            {
+                                statuses.map((status) => {
+                                    return <option key={status} value={status}>{status}</option>
+                                })
+                            }
+                        </FormSelect>
+                    </FormField>}
+                    <FormField label={"Description"}><FormInput name="description" type="text" value={formData.description} onChange={handleChange} required /></FormField>
 
-                {isEditing && <label>Archived<select name="is_archived" value={formData.is_archived} onChange={handleChange} required>
-                    <option key={true} value={true}>TRUE</option>
-                    <option key={false} value={false}>FALSE</option>
-                </select></label>}
-                <button className="border">{isEditing ? "Update" : "Create"}</button>
+                    {isEditing && <FormField label={"Archive"} required={true}><FormSelect name="is_archived" value={formData.is_archived} onChange={handleChange} required>
+                        <option key={true} value={true}>TRUE</option>
+                        <option key={false} value={false}>FALSE</option>
+                    </FormSelect></FormField>}
+                </div>
+                <FormActions onClose={onClose} />
             </form>
-            <button className="border" onClick={onClose} >Close</button>
         </Modal>
     );
 }

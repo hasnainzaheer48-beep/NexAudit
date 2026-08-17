@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Modal from "../ui/Modal";
 import api from "../../api/axios";
+import FormField from "../ui/form/formField";
+import FormInput from "../ui/form/formInput";
+import FormActions from "../ui/form/formActions";
 
 
 
@@ -29,14 +32,14 @@ export default function CreateCommentFormModal({ isOpen, onClose, taskId, onCrea
 
     if (!isOpen) return null;
     return (
-        <Modal>
-            <form onSubmit={handleSubmit} >
-                <label>Comment
-                    <input type="text" placeholder="Add Comment" value={content} onChange={handleChange} />
-                </label>
-                <button className="border">Submit</button>
+        <Modal title="Add Comment" subtitle="Leave a note about this task or audit" onClose={onClose} size="xl">
+            <form onSubmit={handleSubmit} className="space-y-4 py-3" >
+                <FormField label={"Comment"}>
+                    <FormInput type="text" placeholder="Add Comment" value={content} onChange={handleChange} />
+                </FormField>
+                <FormActions onClose={onClose} />
             </form>
-            <button onClick={onClose} className="border">Close</button>
+
         </Modal>
     )
 }

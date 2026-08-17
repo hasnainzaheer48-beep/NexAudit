@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import Modal from '../ui/Modal'
 import api from '../../api/axios';
+import FormInput from '../ui/form/formInput';
+import FormActions from '../ui/form/formActions';
+import FormField from '../ui/form/formField';
+
 
 
 export default function UploadDocumentFormModal({ isOpen, onClose, taskId, onUploaded }) {
@@ -50,18 +54,20 @@ export default function UploadDocumentFormModal({ isOpen, onClose, taskId, onUpl
     if (!isOpen) return null;
 
     return (
-        <Modal>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    <input className='border' type="file" name='file' onChange={handleFile} required />
-                </label>
-                <label>
-                    Description <input type="text" name="description" value={description} onChange={handleDescription} />
-                </label>
-                <button>Upload</button>
+        <Modal title={"Upload Document"}
+            subtitle={"Attach a document to this task"}
+            onClose={onClose} size="xl">
+            <form onSubmit={handleSubmit} className="space-y-4 py-3">
+                <FormField label={"Upload Document"}>
+                    <FormInput className='border' type="file" name='file' onChange={handleFile} required />
+                </FormField>
+                <FormField label="Description">
+                    <FormInput type="text" name="description" value={description} onChange={handleDescription} />
+                </FormField>
+                <FormActions submitText='Upload Document' onClose={onClose} />
             </form>
 
-            <button onClick={onClose} className='Close'>Close</button>
+
         </Modal>
     )
 }

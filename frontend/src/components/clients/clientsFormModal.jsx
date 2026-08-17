@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Modal from "../ui/Modal";
 import api from '../../api/axios'
+import FormField from "../ui/form/formField";
+import FormActions from "../ui/form/formActions";
+import FormInput from "../ui/form/formInput";
 
 export default function ClientsFormModal({ isOpen, onClose, onClientCreated, selectedClient }) {
 
@@ -77,16 +80,15 @@ export default function ClientsFormModal({ isOpen, onClose, onClientCreated, sel
 
     if (!isOpen) return null;
     return (
-        <Modal>
-            <form onSubmit={handleSubmit} >
-                <label>Company Name<input name="company_name" type="text" value={formData.company_name} onChange={handleChange} required /></label>
-                <label>Email<input name="email" type="text" value={formData.email} onChange={handleChange} required /></label>
-                <label>Location<input name="location" type="text" value={formData.location} onChange={handleChange} required /></label>
-                <label>Phone Number<input name="phone_number" type="text" value={formData.phone_number} onChange={handleChange} required /></label>
-                <label>Industry<input name="industry" type="text" value={formData.industry} onChange={handleChange} required /></label>
-                <button className="border">{isEditing ? "Update" : "Create"}</button>
+        <Modal title={isEditing ? "Edit Client" : "Create Audit"} subtitle={isEditing ? "Update this client's information" : "Add a new client to your organization"} onClose={onClose} size="xl">
+            <form onSubmit={handleSubmit} className="space-y-4 py-3" >
+                <FormField label={"Company Name"}><FormInput name="company_name" type="text" value={formData.company_name} onChange={handleChange} required /></FormField>
+                <FormField label={"Email"}><FormInput name="email" type="text" value={formData.email} onChange={handleChange} required /></FormField>
+                <FormField label={"Location"}><FormInput name="location" type="text" value={formData.location} onChange={handleChange} required /></FormField>
+                <FormField label={"Phone Number"}><FormInput name="phone_number" type="text" value={formData.phone_number} onChange={handleChange} required /></FormField>
+                <FormField label={"Industry"}><FormInput name="industry" type="text" value={formData.industry} onChange={handleChange} required /></FormField>
+                <FormActions onClose={onClose} />
             </form>
-            <button className="border" onClick={onClose} >Close</button>
         </Modal>
     );
 }

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Modal from "../ui/Modal";
 import api from "../../api/axios";
+import FormField from "../ui/form/formField";
+import FormInput from "../ui/form/formInput";
+import FormActions from "../ui/form/formActions";
 
 
 
@@ -34,14 +37,14 @@ export default function EditCommentFormModal({ isOpen, onClose, comment, onEdite
 
     if (!isOpen) return null;
     return (
-        <Modal>
-            <form onSubmit={handleSubmit} >
-                <label>Edit Comment
-                    <input type="text" placeholder="Edit Comment" value={content} onChange={handleChange} required />
-                </label>
-                <button className="border">Save Changes</button>
+        <Modal title="Edit Comment" subtitle="Update your comment" onClose={onClose} size="xl">
+            <form onSubmit={handleSubmit} className="space-y-4 py-3" >
+                <FormField label={"Edit Comment"}>
+                    <FormInput type="text" placeholder="Edit Comment" value={content} onChange={handleChange} required />
+                </FormField>
+                <FormActions onClose={onClose} submitText="Save Changes" />
             </form>
-            <button onClick={onClose} className="border">Close</button>
+
         </Modal>
     )
 }
