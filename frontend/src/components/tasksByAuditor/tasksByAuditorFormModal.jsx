@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import Modal from "../ui/Modal";
 import api from "../../api/axios";
+import FormField from "../ui/form/formField";
+import FormSelect from "../ui/form/formSelect";
+import FormActions from "../ui/form/formActions";
 
 
 export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated, selectedTask }) {
@@ -77,8 +80,8 @@ export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated
             subtitle={"Change the current status of this task"}
             onClose={onClose} size="xl">
             <form onSubmit={handleSubmit} className="space-y-4 py-3" >
-                <>Task Status
-                    <select name="status" value={formData.status} onChange={handleChange}>
+                <FormField label={"Task Status"}>
+                    <FormSelect name="status" value={formData.status} onChange={handleChange}>
 
                         {
                             statuses.map((status) => {
@@ -87,13 +90,13 @@ export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated
                                 )
                             })
                         }
-                    </select>
-                </label>
+                    </FormSelect>
+                </FormField>
 
 
 
 
-                <button className="border">Update Status</button>
+                <FormActions submitText="Update Status" onClose={onClose} />
             </form>
 
         </Modal>
