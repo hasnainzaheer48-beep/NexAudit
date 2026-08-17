@@ -11,6 +11,8 @@ import TableHead from "../components/ui/table/tableHead";
 import TableCell from "../components/ui/table/tableCell";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
+import DateCell from "../components/ui/table/dateCell";
+import RoleBadge from "../components/ui/roleBadge";
 
 
 
@@ -84,10 +86,10 @@ export default function Users() {
                                         <TableCell className="border  px-4 py-3">{user.id}</TableCell>
                                         <TableCell >{user.first_name}</TableCell>
                                         <TableCell >{user.last_name}</TableCell>
-                                        <TableCell >{user.role}</TableCell>
+                                        <TableCell ><RoleBadge role={user.role} /></TableCell>
                                         <TableCell >{user.email}</TableCell>
                                         <TableCell >{user.phone_number}</TableCell>
-                                        <TableCell >{new Date(user.created_at).toLocaleDateString()} </TableCell>
+                                        <TableCell ><DateCell date={new Date(user.created_at).toLocaleDateString()} /> </TableCell>
                                         <TableCell >
                                             <div className="flex gap-2">
                                                 <Button icon="Edit" variant="Edit" iconSize="Small" onClick={() => {
