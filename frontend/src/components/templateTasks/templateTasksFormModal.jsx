@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import Modal from "../ui/Modal";
 import api from '../../api/axios'
+import FormField from "../ui/form/formField";
+import FormInput from "../ui/form/formInput";
+import FormActions from "../ui/form/formActions";
+import FormSelect from "../ui/form/formSelect";
 
 export default function TemplateTasksFormModal({ isOpen, onClose, onTemplateTaskCreated, selectedTemplateTask, templateId }) {
 
@@ -12,6 +16,8 @@ export default function TemplateTasksFormModal({ isOpen, onClose, onTemplateTask
         template_id: templateId
 
     });
+
+    const priorities = ['Low', 'Medium', 'High', 'Critical'];
 
 
 
@@ -88,13 +94,25 @@ export default function TemplateTasksFormModal({ isOpen, onClose, onTemplateTask
         <Modal title={isEditing ? "Edit Template Task" : "Add Template Task"}
             subtitle={isEditing ? "Update this template task's details" : "Add a task to this audit template"}
             onClose={onClose} size="xl">
-            <form onSubmit={handleSubmit} >
-                <label>Title<input name="title" type="text" value={formData.title} onChange={handleChange} required /></label>
-                <label>Description<input name="description" type="text" value={formData.description} onChange={handleChange} required /></label>
-                <label>Priority<input name="priority" type="text" value={formData.priority} onChange={handleChange} required /></label>
-                <label>Order Number<input name="order_number" type="text" value={formData.order_number} onChange={handleChange} required /></label>
+            <form onSubmit={handleSubmit} className="space-y-4 py-3">
+                <FormField label={"Title"}><FormInput name="title" type="text" value={formData.title} onChange={handleChange} required /></FormField>
+                <FormField label={"Description"}><FormInput name="description" type="text" value={formData.description} onChange={handleChange} required /></FormField>
+                <FormField label={"Priority"}>
 
-                <button className="border">{isEditing ? "Update" : "Create"}</button>
+                    <FormSelect name="priority" type="text" value={formData.priority} onChange={handleChange} required >
+                        <option value="">Select Priority</option>
+                        {
+                            priorities.map((priority) => {
+                                return <option key={priority} value={priority}>{priority}</option>
+                            })
+                        }
+
+                    </FormSelect>
+
+                </FormField>
+                <FormField label={"Order Number"}><FormInput name="order_number" type="text" value={formData.order_number} onChange={handleChange} required /></FormField>
+
+                <FormActions submitText={isEditing ? "Update" : "Create"} onClose={onClose} />
             </form>
         </Modal>
     );
