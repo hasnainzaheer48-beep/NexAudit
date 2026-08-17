@@ -16,6 +16,7 @@ export default function TemplateTasksFormModal({ isOpen, onClose, onTemplateTask
         template_id: templateId
 
     });
+    const [originalData, setOriginalData] = useState(null)
 
     const priorities = ['Low', 'Medium', 'High', 'Critical'];
 
@@ -40,8 +41,18 @@ export default function TemplateTasksFormModal({ isOpen, onClose, onTemplateTask
 
         try {
 
-            isEditing ? await api.patch(`/api/template-tasks/${selectedTemplateTask.id}`, formData) :
+            if (isEditing) {
+                const changes = {}
+                for (const key of Object.keys(formData)) {
+                    if (originalData[key] !== formData[key]) {
+                        changes[key] = formData[key]
+                    }
+                }
+                await api.patch(`/api/template-tasks/${selectedTemplateTask.id}`, changes)
+            }
+            else {
                 await api.post(`/api/template-tasks`, formData);
+            }
 
             setFormData({
                 title: '',
@@ -65,13 +76,15 @@ export default function TemplateTasksFormModal({ isOpen, onClose, onTemplateTask
     useEffect(() => {
 
         if (isEditing) {
-            setFormData({
+            const templateTaskData = {
                 title: selectedTemplateTask.title,
                 description: selectedTemplateTask.description,
                 priority: selectedTemplateTask.priority,
                 order_number: selectedTemplateTask.order_number,
                 template_id: templateId
-            });
+            }
+            setFormData(templateTaskData);
+            setOriginalData(templateTaskData);
 
         }
         else {
@@ -83,6 +96,7 @@ export default function TemplateTasksFormModal({ isOpen, onClose, onTemplateTask
                 template_id: templateId
 
             });
+            setOriginalData(null)
 
         }
     }, [selectedTemplateTask, templateId])
