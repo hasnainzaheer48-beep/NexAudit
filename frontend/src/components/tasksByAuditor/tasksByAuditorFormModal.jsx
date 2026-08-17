@@ -76,8 +76,8 @@ export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated
         <Modal title={"Update Task Status"}
             subtitle={"Change the current status of this task"}
             onClose={onClose} size="xl">
-            <form onSubmit={handleSubmit} >
-                <label>Task Status
+            <form onSubmit={handleSubmit} className="space-y-4 py-3" >
+                <>Task Status
                     <select name="status" value={formData.status} onChange={handleChange}>
 
                         {

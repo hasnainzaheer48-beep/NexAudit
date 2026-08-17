@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import Modal from "../ui/Modal";
 import api from '../../api/axios'
 import useUsers from '../../hooks/useUsers';
+import FormField from "../ui/form/formField";
+import FormInput from "../ui/form/formInput";
+import FormSelect from "../ui/form/formSelect";
+import FormActions from "../ui/form/formActions";
 
 export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selectedTask }) {
 
@@ -88,11 +92,11 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
         <Modal title={"Edit Task"}
             subtitle={"Update this task's details and deadline"}
             onClose={onClose} size="xl">
-            <form onSubmit={handleSubmit} >
+            <form onSubmit={handleSubmit} className="space-y-4 py-3">
 
-                <label>Description<input name="description" type="text" value={formData.description} onChange={handleChange} required /></label>
-                <label>Assigned Auditor
-                    <select name="assigned_auditor_id" value={formData.assigned_auditor_id} onChange={handleChange}>
+                <FormField label={"Description"}><FormInput name="description" type="text" value={formData.description} onChange={handleChange} required /></FormField>
+                <FormField label={"Assigned Auditor"}>
+                    <FormSelect name="assigned_auditor_id" value={formData.assigned_auditor_id} onChange={handleChange}>
                         <option value="">Not Assigned</option>
                         {
                             users.filter(user => user.role === "AUDITOR").map((user) => {
@@ -101,11 +105,11 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
 
                             })
                         }
-                    </select>
-                </label>
-                <label>
-                    Priority
-                    <select name="priority" type="text" value={formData.priority} onChange={handleChange} required >
+                    </FormSelect>
+                </FormField>
+                <FormField label={"Priority"}>
+
+                    <FormSelect name="priority" type="text" value={formData.priority} onChange={handleChange} required >
                         <option value="">Select Priority</option>
                         {
                             priorities.map((priority) => {
@@ -113,15 +117,15 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
                             })
                         }
 
-                    </select>
+                    </FormSelect>
 
-                </label>
-                <label>Start Date<input name="start_date" type="date" value={formData.start_date} onChange={handleChange} required /></label>
-                <label>Due Date<input name="due_date" type="date" value={formData.due_date} onChange={handleChange} required /></label>
+                </FormField>
+                <FormField label={"Start Date"}><FormInput name="start_date" type="date" value={formData.start_date} onChange={handleChange} required /></FormField>
+                <FormField label={"Due Date"}><FormInput name="due_date" type="date" value={formData.due_date} onChange={handleChange} required /></FormField>
 
 
 
-                <button className="border">Update</button>
+                <FormActions onClose={onClose} submitText="Update" />
             </form>
 
         </Modal>
@@ -132,7 +136,7 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
 
 
 
-{/* <label>
+{/* <FormField>
     <select name="assigned_auditor_id" value={formData.assigned_auditor_id} onChange={handleChange}>
     </select>
-</label> */}
+</FormField> */}
