@@ -497,6 +497,7 @@ const getTasksByManager = async (req, res) => {
                                         tasks.*,
                                         audits.manager_id,
                                         audits.client_id,
+                                        users.first_name || ' ' || users.last_name AS assigned_auditor, 
                                         clients.company_name AS company
 
                                         from tasks
@@ -504,7 +505,8 @@ const getTasksByManager = async (req, res) => {
                                         on tasks.audit_id = audits.id
                                         join clients
                                         on audits.client_id = clients.id
-
+                                        join users
+                                        on tasks.assigned_auditor_id = users.id
                                         where manager_id = $1
 
 

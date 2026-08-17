@@ -16,7 +16,7 @@ import Button from "../components/ui/button";
 
 
 export default function TasksByManager() {
-    const { loading, error, tasks, getTasks } = useTasksByManager();
+    const { loading, error, tasks, getTasksByManager } = useTasksByManager();
     const [showModal, setShowModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const navigate = useNavigate();
@@ -24,6 +24,7 @@ export default function TasksByManager() {
 
     const handleClose = () => {
         setShowModal(false);
+        setSelectedTask(null)
     }
 
     if (loading) {
@@ -95,7 +96,7 @@ export default function TasksByManager() {
                     isOpen={showModal}
                     selectedTask={selectedTask}
                     onClose={handleClose}
-                    onTaskCreated={getTasks}
+                    onTaskCreated={getTasksByManager}
                 />
             </div>
 

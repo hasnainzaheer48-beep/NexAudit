@@ -57,8 +57,8 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
 
             });
 
-            onTaskCreated();
             onClose();
+            onTaskCreated();
         }
         catch (error) {
             console.error(error);
