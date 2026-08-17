@@ -19,7 +19,7 @@ import Button from "../components/ui/button";
 
 export default function AuditsByManager() {
 
-    const { loading, error, audits, getAuditsByManager } = useAuditByManager();
+    const { loading, error, audits, getAuditsByManager, setAudits } = useAuditByManager();
     const [showModal, setShowModal] = useState(false);
     const [selectedAudit, setSelectedAudit] = useState(null);
     const navigate = useNavigate();
