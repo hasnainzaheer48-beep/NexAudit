@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import Modal from '../ui/Modal';
 import api from '../../api/axios'
+import FormField from '../ui/form/formField';
+import FormInput from '../ui/form/formInput';
+import FormSelect from '../ui/form/formSelect';
+import FormActions from '../ui/form/formActions';
 
 export default function UserFormModal({ isOpen, onClose, onUserCreated, selectedUser }) {
 
@@ -99,26 +103,26 @@ export default function UserFormModal({ isOpen, onClose, onUserCreated, selected
 
 
     return (
-        <Modal>
-            <form onSubmit={handleSubmit}>
-                <label >First Name<input name='first_name' type="text" value={formData.first_name} onChange={handleChange} required /></label>
-                <label >Last Name<input name='last_name' type="text" value={formData.last_name} onChange={handleChange} required /></label>
-                <label >Email<input name='email' type="text" value={formData.email} onChange={handleChange} required /></label>
-                <label >Password<input name='password' type="text" value={formData.password} onChange={handleChange} required={!isEditing} /></label>
-                <label >Role
-                    <select name='role' value={formData.role} onChange={handleChange} required>
+        <Modal title={isEditing ? "Edit User" : "Create User"} subtitle={isEditing ? "Update this user's details and role" : "Set up a new user for a organization"} onClose={onClose} size="xl">
+            <form onSubmit={handleSubmit} className="space-y-4 py-3">
+                <FormField label={"First Name"}><FormInput name='first_name' type="text" value={formData.first_name} onChange={handleChange} required /></FormField>
+                <FormField label={"Last Name"}><FormInput name='last_name' type="text" value={formData.last_name} onChange={handleChange} required /></FormField>
+                <FormField label={"Email"}><FormInput name='email' type="text" value={formData.email} onChange={handleChange} required /></FormField>
+                <FormField label={"Password"}><FormInput name='password' type="text" value={formData.password} onChange={handleChange} required={!isEditing} /></FormField>
+                <FormField label={"Role"}>
+                    <FormSelect name='role' value={formData.role} onChange={handleChange} required>
                         {
                             roles.map((role) => {
                                 return <option key={role} value={role}>{role}</option>
                             })
                         }
-                    </select>
+                    </FormSelect>
 
-                </label>
-                <label >Phone Number<input name='phone_number' type="text" value={formData.phone_number} onChange={handleChange} required /></label>
-                <button>{isEditing ? "Update" : "Create"}</button>
-            </form>
-            <button onClick={onClose}>Close</button>
+                </FormField>
+                <FormField label={"Phone Number"}><FormInput name='phone_number' type="text" value={formData.phone_number} onChange={handleChange} required /></FormField>
+                <FormActions onClose={onClose} submitText={isEditing ? "Update" : "Create"} />
+            </form >
+
         </Modal >
     )
 }
