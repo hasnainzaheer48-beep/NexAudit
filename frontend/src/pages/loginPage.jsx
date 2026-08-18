@@ -50,11 +50,15 @@ export default function Login() {
 
 
     return (
-        <div className="bg-[#cbcbcb] min-h-screen flex items-center justify-center">
+        <div className="bg-white min-h-screen flex items-center justify-center">
             {/* Login Box */}
-            <div className="bg-[#f2f2f2] max-w-7xl flex rounded-2xl p-4 shadow-xl ">
+            <div className="bg-white border border-[#cbcbcb] max-w-7xl flex rounded-2xl shadow-md ">
+                {/* image */}
+                <div className="w-1/2 sm:block hidden border-r border-[#cbcbcb] ">
+                    <img className="rounded-2xl " src="/loginPagefinal.png" />
+                </div>
                 {/* form */}
-                <div className="sm:w-1/2">
+                <div className="sm:w-1/2 p-4">
                     <h1 className="font-bold text-5xl mb-5 text-center ">
                         Welcome To NexAudit
                     </h1>
@@ -66,10 +70,6 @@ export default function Login() {
                         <input className="border bg-white border-gray-500 text-2xl rounded-xl p-2 focus:outline-none focus:border-gray-700  " type="password" placeholder="Password" value={password} onChange={handlePassword} />
                         <button className=" bg-[#4d1717] text-white text-2xl rounded-xl p-2 hover:scale-102 duration-300 ">Sign In</button>
                     </form>
-                </div>
-                {/* image */}
-                <div className="w-1/2 sm:block hidden ">
-                    <img className="rounded-2xl " src="/loginPage2.jpg" />
                 </div>
             </div>
         </div>
