@@ -13,11 +13,14 @@ import TableHead from "../components/ui/table/tableHead";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
 import { Plus } from "lucide-react";
+import ConfirmModal from "../components/ui/ConfirmModal";
+
 
 export default function AuditTemplates() {
 
     const { loading, error, auditTemplates, getAuditTemplates, setAuditTemplates } = useAuditTemplates();
     const [showModal, setShowModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedAuditTemplate, setSelectedAuditTemplate] = useState(null);
 
     const navigate = useNavigate();
@@ -35,6 +38,7 @@ export default function AuditTemplates() {
             setAuditTemplates((prev) => {
                 return prev.filter((auditTemplate) => auditTemplate.id !== auditTemplateId);
             })
+            setShowModal(false);
 
 
 
@@ -47,6 +51,7 @@ export default function AuditTemplates() {
 
     const handleClose = () => {
         setShowModal(false);
+        setShowDeleteModal(false)
     }
 
     if (loading) {
@@ -107,7 +112,8 @@ export default function AuditTemplates() {
                                                     navigate(`/audit-templates/${auditTemplate.id}/tasks`)
                                                 }}>Tasks</Button>
                                                 <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                    return handleDeactivate(auditTemplate)
+                                                    setShowDeleteModal(true)
+                                                    setSelectedAuditTemplate(auditTemplate)
                                                 }} >Deactivate</Button>
 
                                             </div>
@@ -120,6 +126,15 @@ export default function AuditTemplates() {
                     </tbody>
                 </Table>
                 <AuditTemplatesFormModal isOpen={showModal} selectedAuditTemplate={selectedAuditTemplate} onClose={handleClose} onAuditTemplateCreated={getAuditTemplates} />
+                <ConfirmModal
+                    isOpen={showDeleteModal}
+                    onClose={handleClose}
+                    onConfirm={() => { return handleDeactivate(selectedAuditTemplate) }}
+
+                    title="Deactivate Audit Template"
+                    message="Are you sure you want to deactivate this Audit Template?"
+                    action="Deactivate"
+                />
             </div>
 
         </div>

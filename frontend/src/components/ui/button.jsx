@@ -35,6 +35,7 @@ export default function Button({
         "Create": Plus,
         "Edit": Pen,
         "Archive": Archive,
+        "Deactivate": Archive,
         "Deactivate User": UserRoundMinus,
         "Details": Info,
         "Task": List,

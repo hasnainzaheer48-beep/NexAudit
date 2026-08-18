@@ -4,7 +4,6 @@ import Modal from "./Modal";
 export default function ConfirmModal({ isOpen,
     onClose,
     onConfirm,
-    selectedEntity,
     title = "Are You Sure",
     message = "These changes are irreversable",
     action = "Delete",
@@ -16,7 +15,7 @@ export default function ConfirmModal({ isOpen,
             <div className="py-3">
                 <div className="font-medium px-2">{message}</div>
                 <div className="pt-6 flex justify-end gap-3">
-                    <Button variant={(action === "Delete" || action === "Archive" || action === "Deactivate") ? "Create" : "Cancel"} icon="Cancel" iconSize="Small" onClick={onClose}>cancel</Button>
+                    <Button variant={(action === "Delete" || action === "Archive" || action === "Deactivate") ? "Create" : "Cancel"} icon="Cancel" iconSize="Small" onClick={onClose}>Cancel</Button>
                     <Button variant={action} icon={action} iconSize="Small" onClick={onConfirm}>{action}</Button>
                 </div>
             </div>

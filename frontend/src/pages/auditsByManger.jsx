@@ -131,7 +131,7 @@ export default function AuditsByManager() {
                     isOpen={showDeleteModal}
                     onClose={handleClose}
                     onConfirm={() => { return handleArchive(selectedAudit) }}
-                    selectedEntity={selectedAudit}
+
                     title="Archive Audit"
                     message="Are you sure you want to Archive this Audit ?"
                     action="Archive"
