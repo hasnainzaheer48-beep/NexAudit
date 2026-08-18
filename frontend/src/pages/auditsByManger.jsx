@@ -127,7 +127,15 @@ export default function AuditsByManager() {
                     </tbody>
                 </Table>
                 <AuditsFormModal isOpen={showModal} selectedAudit={selectedAudit} onClose={handleClose} onAuditCreated={getAuditsByManager} />
-                <ConfirmModal isOpen={showDeleteModal} onClose={handleClose} onConfirm={() => { return handleArchive(selectedAudit) }} selectedEntity={selectedAudit} />
+                <ConfirmModal
+                    isOpen={showDeleteModal}
+                    onClose={handleClose}
+                    onConfirm={() => { return handleArchive(selectedAudit) }}
+                    selectedEntity={selectedAudit}
+                    title="Archive Audit"
+                    message="Are you sure you want to Archive this Audit ?"
+                    action="Archive"
+                />
             </div>
         </div>
 

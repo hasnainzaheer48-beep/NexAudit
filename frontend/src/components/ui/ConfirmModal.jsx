@@ -1,15 +1,23 @@
 import Button from "./button";
 import Modal from "./Modal";
 
-export default function ConfirmModal({ isOpen, onClose, onConfirm, selectedEntity }) {
+export default function ConfirmModal({ isOpen,
+    onClose,
+    onConfirm,
+    selectedEntity,
+    title = "Are You Sure",
+    message = "These changes are irreversable",
+    action = "Delete",
+    entity = ''
+}) {
     if (!isOpen) return null;
     return (
-        <Modal onClose={onClose} title="Are Your Sure?">
-            <div className="py-5">
-                <div className="bg-red-100 text-red-600">Are you sure u want to delete this audit</div>
-                <div>
-                    <Button variant="Cancel" icon="Cancel" iconSize="Small" onClick={onClose}>cancel</Button>
-                    <Button variant="Create" icon="Done" iconSize="Small" onClick={onConfirm}>Confirm</Button>
+        <Modal onClose={onClose} title={title}>
+            <div className="py-3">
+                <div className="font-medium px-2">{message}</div>
+                <div className="pt-6 flex justify-end gap-3">
+                    <Button variant={(action === "Delete" || action === "Archive" || action === "Deactivate") ? "Create" : "Cancel"} icon="Cancel" iconSize="Small" onClick={onClose}>cancel</Button>
+                    <Button variant={action} icon={action} iconSize="Small" onClick={onConfirm}>{action}</Button>
                 </div>
             </div>
         </Modal>

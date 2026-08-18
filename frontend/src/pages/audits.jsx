@@ -13,17 +13,21 @@ import StatusBadge from "../components/ui/table/statusBadge";
 import PageTitle from "../components/ui/pageTitle";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
+import ConfirmModal from "../components/ui/ConfirmModal";
 
 
 
 export default function Audits() {
 
     const { loading, error, audits, getAudits, setAudits } = useAudits();
-
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedAudit, setSelectedAudit] = useState(null);
 
     const navigate = useNavigate();
 
+    const handleClose = () => {
+        setShowDeleteModal(false)
+    }
 
     const handleArchive = async (audit) => {
         try {
@@ -33,6 +37,7 @@ export default function Audits() {
             setAudits((prev) => {
                 return prev.filter((audit) => audit.id !== auditId);
             })
+            setShowDeleteModal(false);
 
 
 
@@ -90,7 +95,8 @@ export default function Audits() {
                                             <div className="flex gap-2">
                                                 <Button variant="Details" icon="Details" iconSize="Small" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</Button>
                                                 <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                    return handleArchive(audit)
+                                                    setShowDeleteModal(true)
+                                                    setSelectedAudit(audit)
                                                 }} >Archive</Button>
                                             </div>
                                         </TableCell>
@@ -100,7 +106,15 @@ export default function Audits() {
                         }
                     </tbody>
                 </Table>
-
+                <ConfirmModal
+                    isOpen={showDeleteModal}
+                    onClose={handleClose}
+                    onConfirm={() => { return handleArchive(selectedAudit) }}
+                    selectedEntity={selectedAudit}
+                    title="Archive Audit"
+                    message="Are you sure you want to Archive this Audit ?"
+                    action="Archive"
+                />
             </div>
 
 
