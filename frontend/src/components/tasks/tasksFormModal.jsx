@@ -17,6 +17,8 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
         due_date: '',
 
     });
+    const [originalData, setOriginalData] = useState(null)
+
     const { users } = useUsers();
     const priorities = ['Low', 'Medium', 'High', 'Critical'];
 
@@ -43,8 +45,13 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
         }
 
         try {
-
-            await api.patch(`/api/tasks/${selectedTask.id}`, payload);
+            const changes = {}
+            for (const key of Object.keys(payload)) {
+                if (originalData[key] !== payload[key]) {
+                    changes[key] = payload[key]
+                }
+            }
+            await api.patch(`/api/tasks/${selectedTask.id}`, changes);
 
 
             setFormData({
@@ -69,17 +76,15 @@ export default function TasksFormModal({ isOpen, onClose, onTaskCreated, selecte
 
     useEffect(() => {
 
-
-        setFormData({
+        const taskData = {
             description: selectedTask?.description ?? '',
             assigned_auditor_id: selectedTask?.assigned_auditor_id ?? '',
             priority: selectedTask?.priority ?? '',
             start_date: selectedTask?.start_date ? selectedTask.start_date.split('T')[0] : '',
             due_date: selectedTask?.due_date ? selectedTask.due_date.split('T')[0] : ''
-
-
-
-        });
+        }
+        setFormData(taskData);
+        setOriginalData(taskData);
 
 
 

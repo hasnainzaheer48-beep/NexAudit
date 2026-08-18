@@ -7,6 +7,10 @@ import TableHead from "../components/ui/table/tableHead";
 import EmptyTable from "../components/ui/table/emptyTable";
 import TableCell from "../components/ui/table/tableCell";
 import PageTitle from "../components/ui/pageTitle";
+import EntityTypeBadge from "../components/ui/table/entityTypeBadge";
+import ActionBadge from "../components/ui/table/actionBadge";
+import DateCell from "../components/ui/table/dateCell";
+import ActivityLogBadge from "../components/ui/table/activityLogBadge";
 
 export default function ActivityLogs() {
 
@@ -25,8 +29,7 @@ export default function ActivityLogs() {
                             <TableHead >Entity Type</TableHead>
                             <TableHead >Changed By</TableHead>
                             <TableHead >Action</TableHead>
-                            <TableHead >Old Value</TableHead>
-                            <TableHead >New Value</TableHead>
+                            <TableHead >Changes</TableHead>
                             <TableHead >Created At</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -37,20 +40,17 @@ export default function ActivityLogs() {
                                     <TableRow key={activityLog.id}>
                                         <TableCell >{activityLog.id}</TableCell>
                                         <TableCell >{activityLog.entity_id}</TableCell>
-                                        <TableCell >{activityLog.entity_type}</TableCell>
+                                        <TableCell ><EntityTypeBadge type={activityLog.entity_type} /></TableCell>
                                         <TableCell >{activityLog.changed_by}</TableCell>
-                                        <TableCell >{activityLog.action}</TableCell>
+                                        <TableCell ><ActionBadge action={activityLog.action} /></TableCell>
                                         <TableCell >
-                                            <pre>
-                                                {activityLog.old_value ? JSON.stringify(activityLog.old_value, null, 2) : '-'}
-                                            </pre>
+                                            <ActivityLogBadge oldValues={activityLog.old_value ?? JSON.stringify(activityLog.old_value, null, 2)}
+                                                newValues={activityLog.new_value ?? JSON.stringify(activityLog.new_value, null, 2)}
+                                                action={activityLog.action}
+                                            />
+
                                         </TableCell>
-                                        <TableCell >
-                                            <pre>
-                                                {activityLog.new_value ? JSON.stringify(activityLog.new_value, null, 2) : '-'}
-                                            </pre>
-                                        </TableCell>
-                                        <TableCell >{new Date(activityLog.created_at).toLocaleDateString()}</TableCell>
+                                        <TableCell ><DateCell date={new Date(activityLog.created_at).toLocaleString()} /></TableCell>
                                     </TableRow>
                                 );
                             })

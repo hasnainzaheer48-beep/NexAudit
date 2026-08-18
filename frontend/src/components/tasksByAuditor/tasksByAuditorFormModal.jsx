@@ -12,6 +12,7 @@ export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated
         status: ''
 
     });
+    const [originalData, setOriginalData] = useState(null)
 
     const statuses = ['Draft', 'In Progress', 'Finished'];
 
@@ -35,8 +36,14 @@ export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated
 
 
         try {
+            const changes = {}
+            for (const key of Object.keys(formData)) {
+                if (originalData[key] !== formData[key]) {
+                    changes[key] = formData[key]
+                }
+            }
 
-            await api.patch(`/api/tasks/${selectedTask.id}/status`, formData);
+            await api.patch(`/api/tasks/${selectedTask.id}/status`, changes);
 
 
             setFormData({
@@ -57,17 +64,11 @@ export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated
 
     useEffect(() => {
 
-
-        setFormData({
-
+        const taskData = {
             priority: selectedTask?.status ?? '',
-
-
-
-        });
-
-
-
+        }
+        setFormData(taskData);
+        setOriginalData(taskData);
     }, [selectedTask])
 
 

@@ -31,6 +31,8 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
         archived_at: ''
     });
 
+    const [originalData, setOriginalData] = useState(null)
+
 
 
     const isEditing = selectedAudit !== null;
@@ -56,8 +58,20 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
 
         try {
 
-            isEditing ? await api.patch(`/api/audits/${selectedAudit.id}`, formData) :
+            if (isEditing) {
+
+                const changes = {}
+                for (const key of Object.keys(formData)) {
+                    if (originalData[key] !== formData[key]) {
+                        changes[key] = formData[key]
+                    }
+                }
+                await api.patch(`/api/audits/${selectedAudit.id}`, changes)
+            }
+            else {
+
                 await api.post(`/api/audits`, formData);
+            }
 
             setFormData({
                 client_id: '',
@@ -86,7 +100,8 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
     useEffect(() => {
 
         if (isEditing) {
-            setFormData({
+
+            const auditData = {
                 client_id: selectedAudit.client_id,
                 template_id: selectedAudit.template_id,
                 audit_year: selectedAudit.audit_year,
@@ -98,7 +113,9 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
                 description: selectedAudit.description,
                 is_archived: selectedAudit.is_archived,
                 archived_at: selectedAudit.archived_at
-            });
+            }
+            setFormData(auditData);
+            setOriginalData(auditData);
 
         }
         else {
@@ -115,6 +132,7 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
                 is_archived: false,
                 archived_at: ''
             });
+            setOriginalData(null)
 
         }
     }, [selectedAudit])

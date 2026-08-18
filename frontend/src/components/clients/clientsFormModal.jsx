@@ -14,6 +14,7 @@ export default function ClientsFormModal({ isOpen, onClose, onClientCreated, sel
         phone_number: '',
         industry: ''
     });
+    const [originalData, setOriginalData] = useState(null)
 
     const isEditing = selectedClient !== null;
 
@@ -31,8 +32,18 @@ export default function ClientsFormModal({ isOpen, onClose, onClientCreated, sel
 
         try {
 
-            isEditing ? await api.patch(`api/clients/${selectedClient.id}`, formData) :
+            if (isEditing) {
+                const changes = {}
+                for (const key of Object.keys(formData)) {
+                    if (originalData[key] !== formData[key]) {
+                        changes[key] = formData[key]
+                    }
+                }
+                await api.patch(`api/clients/${selectedClient.id}`, changes)
+            }
+            else {
                 await api.post(`api/clients`, formData);
+            }
 
             setFormData({
                 company_name: '',
@@ -55,13 +66,16 @@ export default function ClientsFormModal({ isOpen, onClose, onClientCreated, sel
     useEffect(() => {
 
         if (isEditing) {
-            setFormData({
+            const clientData = {
                 company_name: selectedClient.company_name,
                 email: selectedClient.email,
                 location: selectedClient.location,
                 phone_number: selectedClient.phone_number,
                 industry: selectedClient.industry
-            });
+            }
+
+            setFormData(clientData);
+            setOriginalData(clientData);
 
         }
         else {
@@ -72,7 +86,7 @@ export default function ClientsFormModal({ isOpen, onClose, onClientCreated, sel
                 phone_number: '',
                 industry: ''
             });
-
+            setOriginalData(null)
         }
     }, [selectedClient])
 

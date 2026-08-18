@@ -15,6 +15,7 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
         version: '',
         is_active: true
     });
+    const [originalData, setOriginalData] = useState(null)
 
 
 
@@ -41,9 +42,18 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
 
         try {
 
-            isEditing ? await api.patch(`/api/audit-templates/${selectedAuditTemplate.id}`, formData) :
+            if (isEditing) {
+                const changes = {}
+                for (const key of Object.keys(formData)) {
+                    if (originalData[key] !== formData[key]) {
+                        changes[key] = formData[key]
+                    }
+                }
+                await api.patch(`/api/audit-templates/${selectedAuditTemplate.id}`, changes)
+            }
+            else {
                 await api.post(`/api/audit-templates`, formData);
-
+            }
             setFormData({
                 name: '',
                 description: '',
@@ -64,14 +74,20 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
 
     useEffect(() => {
 
+
+
         if (isEditing) {
-            setFormData({
+
+            const auditTemplateData = {
                 name: selectedAuditTemplate.name,
                 description: selectedAuditTemplate.description,
                 audit_type: selectedAuditTemplate.audit_type,
                 version: selectedAuditTemplate.version,
                 is_active: selectedAuditTemplate.is_active
-            });
+            }
+
+            setFormData(auditTemplateData);
+            setOriginalData(auditTemplateData);
 
         }
         else {
@@ -82,7 +98,7 @@ export default function AuditTemplatesFormModal({ isOpen, onClose, onAuditTempla
                 version: '',
                 is_active: true
             });
-
+            setOriginalData(null);
         }
     }, [selectedAuditTemplate])
 
