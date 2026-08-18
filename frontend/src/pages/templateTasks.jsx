@@ -13,6 +13,8 @@ import TableCell from "../components/ui/table/tableCell";
 import PriorityBadge from "../components/ui/table/priorityBadge";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
+import ConfirmModal from "../components/ui/ConfirmModal";
+
 
 
 
@@ -21,6 +23,7 @@ export default function TemplateTasks() {
 
     const { templateId } = useParams();
     const { loading, error, templateTasks, getTemplateTasks, setTemplateTasks } = useTemplateTasks(templateId);
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showModal, setShowModal] = useState(false);
     const [selectedTemplateTask, setSelectedTemplateTask] = useState(null);
 
@@ -33,6 +36,7 @@ export default function TemplateTasks() {
 
     const handleClose = () => {
         setShowModal(false);
+        setShowDeleteModal(false)
     }
 
 
@@ -44,7 +48,7 @@ export default function TemplateTasks() {
             setTemplateTasks((prev) => {
                 return prev.filter((templateTask) => templateTask.id !== templateTaskId);
             })
-
+            setShowDeleteModal(false)
 
 
         } catch (error) {
@@ -101,7 +105,8 @@ export default function TemplateTasks() {
                                                     setShowModal(true);
                                                 }}>Edit</Button>
                                                 <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                    return handleArchive(templateTask)
+                                                    setShowDeleteModal(true)
+                                                    setSelectedTemplateTask(templateTask)
                                                 }}>
                                                     Archive
                                                 </Button>
@@ -119,6 +124,15 @@ export default function TemplateTasks() {
                     onClose={handleClose}
                     onTemplateTaskCreated={getTemplateTasks}
                     templateId={templateId} />
+                <ConfirmModal
+                    isOpen={showDeleteModal}
+                    onClose={handleClose}
+                    onConfirm={() => { return handleArchive(selectedTemplateTask) }}
+
+                    title="Archive Template Task"
+                    message="Are you sure you want to Archive this Template Task?"
+                    action="Archive"
+                />
             </div>
         </div>
 

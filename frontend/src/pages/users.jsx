@@ -13,6 +13,7 @@ import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
 import DateCell from "../components/ui/table/dateCell";
 import RoleBadge from "../components/ui/roleBadge";
+import ConfirmModal from "../components/ui/ConfirmModal";
 
 
 
@@ -22,6 +23,7 @@ export default function Users() {
     const { users, getUsers, loading, error, setUsers } = useUsers();
     const [showModal, setShowModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
 
     const handleCreateUser = () => {
         setSelectedUser(null);
@@ -30,6 +32,7 @@ export default function Users() {
     }
     const handleClose = () => {
         setShowModal(false)
+        setShowDeleteModal(false)
     }
 
     const handleDelete = async (user) => {
@@ -40,6 +43,7 @@ export default function Users() {
             setUsers((prev) => {
                 return prev.filter((user) => user.id !== userId)
             })
+            setShowDeleteModal(false)
         }
         catch (error) {
             console.error(error);
@@ -97,7 +101,8 @@ export default function Users() {
                                                     setShowModal(true);
                                                 }}>Edit</Button >
                                                 <Button icon="Deactivate User" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                    handleDelete(user);
+                                                    setSelectedUser(user)
+                                                    setShowDeleteModal(true)
                                                 }}>Deactivate</Button>
                                             </div>
                                         </TableCell>
@@ -112,6 +117,15 @@ export default function Users() {
                 </Table>
 
                 <UserFormModal isOpen={showModal} onClose={handleClose} onUserCreated={getUsers} selectedUser={selectedUser} />
+                <ConfirmModal
+                    isOpen={showDeleteModal}
+                    onClose={handleClose}
+                    onConfirm={() => { return handleDelete(selectedUser) }}
+
+                    title="Deactivate User"
+                    message="Are you sure you want to Deactivate this  User?"
+                    action="Deactivate User"
+                />
             </div>
         </div>
     );
