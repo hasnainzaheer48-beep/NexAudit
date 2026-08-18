@@ -14,6 +14,7 @@ import TableCell from "../components/ui/table/tableCell";
 import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
 import Button from "../components/ui/button";
+import ConfirmModal from "../components/ui/ConfirmModal";
 
 
 
@@ -21,6 +22,7 @@ export default function AuditsByManager() {
 
     const { loading, error, audits, getAuditsByManager, setAudits } = useAuditByManager();
     const [showModal, setShowModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedAudit, setSelectedAudit] = useState(null);
     const navigate = useNavigate();
 
@@ -31,6 +33,7 @@ export default function AuditsByManager() {
 
     const handleClose = () => {
         setShowModal(false);
+        setShowDeleteModal(false)
     }
 
 
@@ -42,7 +45,7 @@ export default function AuditsByManager() {
             setAudits((prev) => {
                 return prev.filter((audit) => audit.id !== auditId);
             })
-
+            setShowDeleteModal(false);
 
 
         } catch (error) {
@@ -112,7 +115,8 @@ export default function AuditsByManager() {
 
                                                 <Button icon="Details" iconSize="Small" variant="Details" onClick={() => { navigate(`/audits/audit-details/${audit.id}`) }}>Details</Button>
                                                 <Button icon="Archive" iconSize="Small" variant="Archive/Deactivate" onClick={() => {
-                                                    return handleArchive(audit)
+                                                    setShowDeleteModal(true)
+                                                    setSelectedAudit(audit)
                                                 }} >Archive</Button>
                                             </div>
                                         </TableCell>
@@ -123,6 +127,7 @@ export default function AuditsByManager() {
                     </tbody>
                 </Table>
                 <AuditsFormModal isOpen={showModal} selectedAudit={selectedAudit} onClose={handleClose} onAuditCreated={getAuditsByManager} />
+                <ConfirmModal isOpen={showDeleteModal} onClose={handleClose} onConfirm={() => { return handleArchive(selectedAudit) }} selectedEntity={selectedAudit} />
             </div>
         </div>
 
