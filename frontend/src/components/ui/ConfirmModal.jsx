@@ -6,8 +6,7 @@ export default function ConfirmModal({ isOpen,
     onConfirm,
     title = "Are You Sure",
     message = "These changes are irreversable",
-    action = "Delete",
-    entity = ''
+    action = "Delete"
 }) {
     if (!isOpen) return null;
     return (
