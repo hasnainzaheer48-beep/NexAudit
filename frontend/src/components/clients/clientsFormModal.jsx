@@ -86,7 +86,7 @@ export default function ClientsFormModal({ isOpen, onClose, onClientCreated, sel
                 phone_number: '',
                 industry: ''
             });
-            setOriginalData(clientData)
+            setOriginalData(null)
         }
     }, [selectedClient])
 

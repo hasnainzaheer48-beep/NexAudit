@@ -10,6 +10,7 @@ import PageTitle from "../components/ui/pageTitle";
 import EntityTypeBadge from "../components/ui/table/entityTypeBadge";
 import ActionBadge from "../components/ui/table/actionBadge";
 import DateCell from "../components/ui/table/dateCell";
+import ActivityLogBadge from "../components/ui/table/activityLogBadge";
 
 export default function ActivityLogs() {
 
@@ -43,12 +44,11 @@ export default function ActivityLogs() {
                                         <TableCell >{activityLog.changed_by}</TableCell>
                                         <TableCell ><ActionBadge action={activityLog.action} /></TableCell>
                                         <TableCell >
-                                            <pre>
-                                                {activityLog.old_value ? JSON.stringify(activityLog.old_value, null, 2) : '-'}
-                                            </pre>
-                                            <pre>
-                                                {activityLog.new_value ? JSON.stringify(activityLog.new_value, null, 2) : '-'}
-                                            </pre>
+                                            <ActivityLogBadge oldValues={activityLog.old_value ?? JSON.stringify(activityLog.old_value, null, 2)}
+                                                newValues={activityLog.new_value ?? JSON.stringify(activityLog.new_value, null, 2)}
+                                                action={activityLog.action}
+                                            />
+
                                         </TableCell>
                                         <TableCell ><DateCell date={new Date(activityLog.created_at).toLocaleString()} /></TableCell>
                                     </TableRow>
