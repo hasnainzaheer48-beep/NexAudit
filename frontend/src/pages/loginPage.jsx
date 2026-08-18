@@ -3,6 +3,8 @@ import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../context/AuthContext'
+import FormField from "../components/ui/form/formField";
+import FormInput from "../components/ui/form/formInput";
 
 export default function Login() {
 
@@ -58,17 +60,19 @@ export default function Login() {
                     <img className="rounded-2xl " src="/loginPagefinal.png" />
                 </div>
                 {/* form */}
-                <div className="sm:w-1/2 p-4">
-                    <h1 className="font-bold text-5xl mb-5 text-center ">
-                        Welcome To NexAudit
-                    </h1>
-                    <h2 className="font-semibold text-2xl mb-23 text-center ">
-                        Login
-                    </h2>
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-8">
-                        <input className="border bg-white border-gray-500 text-2xl rounded-xl p-2 focus:outline-none focus:border-gray-700 " type="text" placeholder="Email" value={email} onChange={handleEmail} />
-                        <input className="border bg-white border-gray-500 text-2xl rounded-xl p-2 focus:outline-none focus:border-gray-700  " type="password" placeholder="Password" value={password} onChange={handlePassword} />
-                        <button className=" bg-[#4d1717] text-white text-2xl rounded-xl p-2 hover:scale-102 duration-300 ">Sign In</button>
+                <div className="sm:w-1/2 p-5 pt-30 space-y-1.5">
+                    <div >
+                        <div className="font-bold text-4xl ">Welcome Back</div>
+                        <div className="text-gray-500 text-sm font-medium">Sign in to continue to your NexAudit account</div>
+                    </div>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <FormField label={"Email"} size="Medium">
+                            <FormInput className="border bg-white border-gray-500 text-2xl rounded-xl p-2 focus:outline-none focus:border-gray-700 " type="text" placeholder="Email" value={email} onChange={handleEmail} />
+                        </FormField>
+                        <FormField label={"Password"} size="Medium">
+                            <FormInput className="border bg-white border-gray-500 text-2xl rounded-xl p-2 focus:outline-none focus:border-gray-700  " type="password" placeholder="Password" value={password} onChange={handlePassword} />
+                        </FormField>
+                        <button className=" bg-[#174d38] text-white text-xl tracking-wider font-medium rounded-xl p-2 hover:scale-102 duration-300 hover:bg-[#154533] ">Sign In</button>
                     </form>
                 </div>
             </div>
