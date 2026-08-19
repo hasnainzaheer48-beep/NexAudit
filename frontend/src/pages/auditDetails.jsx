@@ -8,8 +8,9 @@ import LoadingComponent from "../components/ui/loadingComponent";
 import AuditInfo from "../components/auditDetails/auditInfo";
 import PageTitle from "../components/ui/pageTitle";
 import ProgressCard from "../components/auditDetails/ProgressCard";
-
-
+import Button from "../components/ui/button";
+import { useState } from "react";
+import AuditsFormModal from "../components/audits/auditsFormModal";
 
 
 
@@ -20,6 +21,7 @@ export default function AuditDetails() {
     const { audit, getAudit, error, loading: auditLoading } = useAuditById(auditId);
     const { auditProgress, getAuditprogress, loading: progressLoading } = useAuditProgress(auditId);
     const { tasks, getTasksByAudit, loading: tasksLoading } = useTasksByAudit(auditId);
+    const [showModal, setShowModal] = useState(false);
     console.log(auditProgress);
 
     const handleFinishAudit = async () => {
@@ -35,6 +37,10 @@ export default function AuditDetails() {
         }
     }
 
+    const handleClose = () => {
+        setShowModal(false);
+    }
+
 
 
     if (auditLoading || progressLoading || tasksLoading) {
@@ -48,8 +54,9 @@ export default function AuditDetails() {
     return (
 
         <div className="flex flex-col gap-10 h-full">
-            <div>
+            <div className="flex justify-between">
                 <button onClick={() => navigate(-1)} className="font-bold text-xs hover:cursor-pointer hover:underline text-[#174d38] tracking-wide ">Back to Audits</button>
+                <Button variant="Edit" size="Normal" icon="Edit" iconSize="Small" onClick={() => { setShowModal(true) }} >Edit</Button>
             </div>
             <AuditInfo audit={audit} progress={auditProgress.progress} />
             <div className="border border-[#cbcbcb] rounded-2xl">
@@ -57,6 +64,7 @@ export default function AuditDetails() {
                 <AuditTasksTable tasks={tasks} getTasks={getTasksByAudit} />
             </div>
             <ProgressCard progress={auditProgress.progress} finished_task={auditProgress.finished_task} total_task={auditProgress.total_task} onClick={handleFinishAudit} auditStatus={audit.status} />
+            <AuditsFormModal isOpen={showModal} selectedAudit={audit} onClose={handleClose} onAuditCreated={getAudit} />
         </div>
     )
 }
