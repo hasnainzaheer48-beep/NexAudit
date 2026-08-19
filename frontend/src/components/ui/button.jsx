@@ -15,9 +15,14 @@ export default function Button({
         "Create": " border-[#174d38] text-[#174d38] hover:bg-[#174d38] hover:text-white transition",
         "Edit": " border-black bg-white text-black hover:bg-black hover:text-white transition ",
         "Archive/Deactivate": " border-[#4d1717] bg-white text-[#4d1717] hover:bg-[#4d1717] hover:text-white transition ",
+        "Deactivate": " border-[#4d1717] bg-white text-[#4d1717] hover:bg-[#4d1717] hover:text-white transition ",
+        "Deactivate User": " border-[#4d1717] bg-white text-[#4d1717] hover:bg-[#4d1717] hover:text-white transition ",
+        "Archive": " border-[#4d1717] bg-white text-[#4d1717] hover:bg-[#4d1717] hover:text-white transition ",
         "Details": "border-[#174d38] text-[#174d38] hover:bg-[#174d38] hover:text-white transition",
         "Upload": " border-[#cbcbcb] bg-white text-black hover:border-black hover:bg-black hover:text-white transition ",
-        "Cancel": " border-red-70000 bg-white text-red-700 hover:border-red-700 hover:bg-red-700 hover:text-white transition "
+        "Cancel": " border-red-700 bg-white text-red-700 hover:border-red-700 hover:bg-red-700 hover:text-white transition ",
+        "Delete": " border-red-700 bg-white text-red-700 hover:border-red-700 hover:bg-red-700 hover:text-white transition "
+
 
     }
 
@@ -31,6 +36,7 @@ export default function Button({
         "Create": Plus,
         "Edit": Pen,
         "Archive": Archive,
+        "Deactivate": Archive,
         "Deactivate User": UserRoundMinus,
         "Details": Info,
         "Task": List,

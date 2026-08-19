@@ -1,12 +1,21 @@
+import { useState } from 'react';
 import api from '../../api/axios'
 import Button from '../ui/button';
 import DocTypeBadge from '../ui/table/docTypeBadge';
 import TableCell from '../ui/table/tableCell';
 import TableRow from '../ui/table/tableRow';
+import ConfirmModal from '../ui/ConfirmModal';
 
 
 export default function DocumentRow({ document: doc, onDelete }) {
 
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+
+
+    const handleClose = () => {
+
+        setShowDeleteModal(false);
+    }
 
 
     const handleOpen = async () => {
@@ -45,6 +54,7 @@ export default function DocumentRow({ document: doc, onDelete }) {
     const handleDelete = async () => {
         try {
             await api.patch(`/api/documents/${doc.id}/delete`);
+            setShowDeleteModal(false);
             onDelete(doc.id);
         }
         catch (error) {
@@ -65,9 +75,17 @@ export default function DocumentRow({ document: doc, onDelete }) {
                 <div className='flex gap-3'>
                     <Button onClick={handleOpen} variant='Details' icon='View' iconSize='Small' isChildren={false} />
                     <Button variant='Edit' icon='Download' iconSize='Small' onClick={handleDownload} isChildren={false} />
-                    <Button onClick={handleDelete} variant='Archive/Deactivate' icon='Delete' iconSize='Smalll' isChildren={false} />
+                    <Button onClick={() => setShowDeleteModal(true)} variant='Archive/Deactivate' icon='Delete' iconSize='Smalll' isChildren={false} />
                 </div>
             </TableCell>
+            <ConfirmModal
+                isOpen={showDeleteModal}
+                onClose={handleClose}
+                onConfirm={handleDelete}
+                title="Delete Document"
+                message='Are you sure you want to delete this document?'
+                action="Delete"
+            />
         </TableRow>
     )
 }

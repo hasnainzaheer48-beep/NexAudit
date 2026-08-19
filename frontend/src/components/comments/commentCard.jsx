@@ -5,11 +5,13 @@ import { AuthContext } from "../../context/AuthContext";
 import { CircleUserRound } from "lucide-react";
 import RoleBadge from "../ui/roleBadge";
 import Button from "../ui/button";
+import ConfirmModal from "../ui/ConfirmModal";
 
 
 export default function CommentCard({ comment, onDelete, getComments }) {
 
     const [showModal, setShowModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const { user } = useContext(AuthContext);
 
 
@@ -22,11 +24,13 @@ export default function CommentCard({ comment, onDelete, getComments }) {
 
     const handleClose = () => {
         setShowModal(false);
+        setShowDeleteModal(false);
     }
 
     const handleDelete = async () => {
         try {
             await api.patch(`/api/comments/${comment.id}/delete`);
+            setShowDeleteModal(false)
             onDelete(comment.id);
 
         } catch (error) {
@@ -53,11 +57,22 @@ export default function CommentCard({ comment, onDelete, getComments }) {
             {
                 user.id === comment.user_id && <div id="Action Buttons" className="flex items-center gap-2">
                     <Button icon="Edit" variant="Edit" isChildren={false} iconSize="Small" onClick={handleEdit}>Edit</Button>
-                    <Button icon="Delete" variant="Archive/Deactivate" isChildren={false} iconSize="Small" onClick={handleEdit} onClick={handleDelete} >Delete</Button>
+                    <Button icon="Delete" variant="Archive/Deactivate" isChildren={false} iconSize="Small" onClick={handleEdit} onClick={() => {
+                        setShowDeleteModal(true)
+
+                    }
+                    } >Delete</Button>
                 </div>
             }
 
             <EditCommentFormModal isOpen={showModal} onClose={handleClose} comment={comment} onEdited={getComments} />
+            <ConfirmModal
+                isOpen={showDeleteModal}
+                onClose={handleClose}
+                onConfirm={handleDelete}
+                title="Delete Comment"
+                action="Delete"
+            />
         </div>
     )
 }
