@@ -13,10 +13,13 @@ const getTasks = async (req, res) => {
                                         tasks
                                         left join users
                                         on tasks.assigned_auditor_id = users.id
-                                        left join audits
+                                        join audits
                                         on tasks.audit_id = audits.id
                                         left join clients
-                                        on audits.client_id = clients.id`);
+                                        on audits.client_id = clients.id
+                                        
+                                        WHERE audits.is_archived = false
+                                        `);
         res.json(result.rows);
     }
 
@@ -40,11 +43,13 @@ const getTaskById = async (req, res) => {
                                         tasks
                                         left join users
                                         on tasks.assigned_auditor_id = users.id
-                                        left join audits
+                                        join audits
                                         on tasks.audit_id = audits.id
                                         left join clients
                                         on audits.client_id = clients.id
-                                        WHERE tasks.id = $1`, [id]);
+                                        WHERE tasks.id = $1
+                                        AND audits.is_archived = false
+                                        `, [id]);
         if (result.rows.length === 0) {
             return res.status(404).send('Could not find the Task');
         }
@@ -241,11 +246,13 @@ const getTasksByAudit = async (req, res) => {
                                         tasks
                                         left join users
                                         on tasks.assigned_auditor_id = users.id
-                                        left join audits
+                                        join audits
                                         on tasks.audit_id = audits.id
                                         left join clients
                                         on audits.client_id = clients.id
-                                        WHERE tasks.audit_id = $1`, [id]);
+                                        WHERE tasks.audit_id = $1
+                                        AND audits.is_archived = false
+                                        `, [id]);
         if (result.rows.length === 0) {
             return res.status(200).send([]);
         }
@@ -398,12 +405,13 @@ const getTasksByAuditor = async (req, res) => {
                                         tasks
                                         left join users
                                         on tasks.assigned_auditor_id = users.id
-                                        left join audits
+                                        join audits
                                         on tasks.audit_id = audits.id
                                         left join clients
                                         on audits.client_id = clients.id
         
         WHERE tasks.assigned_auditor_id = $1
+        AND audits.is_archived = false
 
 
         ORDER BY tasks.due_date ASC
@@ -505,9 +513,10 @@ const getTasksByManager = async (req, res) => {
                                         on tasks.audit_id = audits.id
                                         join clients
                                         on audits.client_id = clients.id
-                                        join users
+                                        left join users
                                         on tasks.assigned_auditor_id = users.id
                                         where manager_id = $1
+                                        AND audits.is_archived = false
 
 
 
