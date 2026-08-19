@@ -18,13 +18,16 @@ export default function UserFormModal({ isOpen, onClose, onUserCreated, selected
 
     });
 
+    const [originalData, setOriginalData] = useState(null)
+
     const isEditing = selectedUser !== null;
 
 
     useEffect(() => {
         if (!selectedUser) {
 
-            return setFormData(
+
+            setFormData(
                 {
                     first_name: '',
                     last_name: '',
@@ -33,21 +36,23 @@ export default function UserFormModal({ isOpen, onClose, onUserCreated, selected
                     role: 'ADMIN',
                     phone_number: ''
 
-                }
-            )
+                })
+
+            setOriginalData(null);
+
         }
         else {
 
-            setFormData(
-                {
-                    first_name: selectedUser.first_name,
-                    last_name: selectedUser.last_name,
-                    email: selectedUser.email,
-                    password: '',
-                    role: selectedUser.role,
-                    phone_number: selectedUser.phone_number
-                }
-            );
+            const userData = {
+                first_name: selectedUser.first_name,
+                last_name: selectedUser.last_name,
+                email: selectedUser.email,
+                password: '',
+                role: selectedUser.role,
+                phone_number: selectedUser.phone_number
+            }
+            setFormData(userData);
+            setOriginalData(userData)
             console.log(selectedUser);
 
         }
@@ -65,7 +70,18 @@ export default function UserFormModal({ isOpen, onClose, onUserCreated, selected
         event.preventDefault();
         console.log(formData)
         try {
-            isEditing ? await api.patch(`/api/users/${selectedUser.id}`, payload) : await api.post('/api/users', payload);
+            if (isEditing) {
+                const changes = {}
+                for (const key of Object.keys(payload)) {
+                    if (originalData[key] !== payload[key]) {
+                        changes[key] = payload[key]
+                    }
+                }
+                await api.patch(`/api/users/${selectedUser.id}`, changes)
+            }
+            else {
+                await api.post('/api/users', payload);
+            }
             setFormData({
                 first_name: '',
                 last_name: '',
