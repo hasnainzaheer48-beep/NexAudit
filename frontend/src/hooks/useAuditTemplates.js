@@ -33,7 +33,7 @@ export default function useAuditTemplates(page = 1, limit = 10) {
 
     useEffect(() => {
         getAuditTemplates();
-    }, [])
+    }, [page, limit])
 
     return (
         { loading, pagination, error, auditTemplates, getAuditTemplates, setAuditTemplates }

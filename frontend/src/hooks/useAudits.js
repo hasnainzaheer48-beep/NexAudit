@@ -33,7 +33,7 @@ export default function useAudits(page = 1, limit = 10) {
 
     useEffect(() => {
         getAudits();
-    }, [])
+    }, [page, limit])
 
     return (
         { loading, error, pagination, audits, getAudits, setAudits }

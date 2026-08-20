@@ -32,7 +32,7 @@ export default function useAuditByManager(page = 1, limit = 10) {
 
     useEffect(() => {
         getAuditsByManager();
-    }, [])
+    }, [page, limit])
 
     return (
         { loading, error, audits, pagination, getAuditsByManager, setAudits }

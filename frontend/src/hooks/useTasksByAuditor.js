@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 
 
-const useTasksByAuditor = () => {
+const useTasksByAuditor = (page = 1, limit = 10) => {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [pagination, setPagination] = useState(null)
     const [error, setError] = useState(null);
 
     const getTasksByAuditor = async () => {
@@ -13,8 +14,14 @@ const useTasksByAuditor = () => {
         try {
 
             setLoading(true);
-            const result = await api.get(`/api/tasks/me`);
-            setTasks(result.data);
+            const result = await api.get(`/api/tasks/me`, {
+                params: {
+                    page,
+                    limit
+                }
+            });
+            setTasks(result.data.data);
+            setPagination(result.data.pagination)
 
         }
         catch (error) {
@@ -30,9 +37,9 @@ const useTasksByAuditor = () => {
 
     useEffect(() => {
         getTasksByAuditor();
-    }, []);
+    }, [page, limit]);
 
-    return { loading, error, getTasksByAuditor, tasks }
+    return { loading, pagination, error, getTasksByAuditor, tasks }
 
 }
 

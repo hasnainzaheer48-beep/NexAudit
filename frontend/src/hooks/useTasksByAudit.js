@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 
 
-export default function useTasksByAudit(auditId) {
+export default function useTasksByAudit(auditId, page = 1, limit = 10) {
 
     const [tasks, setTasks] = useState([]);
+    const [pagination, setPagination] = useState(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -12,8 +13,15 @@ export default function useTasksByAudit(auditId) {
 
         try {
             setLoading(true);
-            const result = await api.get(`api/tasks/audit/${auditId}`);
-            setTasks(result.data)
+            const result = await api.get(`api/tasks/audit/${auditId}`, {
+                params: {
+                    page,
+                    limit
+                }
+            });
+            setTasks(result.data.data)
+            setPagination(result.data.pagination)
+
         }
         catch (error) {
             setError(error.message);
@@ -26,9 +34,9 @@ export default function useTasksByAudit(auditId) {
 
     useEffect(() => {
         getTasksByAudit();
-    }, []);
+    }, [page, limit]);
 
 
-    return { tasks, getTasksByAudit };
+    return { tasks, getTasksByAudit, pagination };
 
 }

@@ -32,7 +32,7 @@ export default function useClients(page = 1, limit = 10) {
 
     useEffect(() => {
         getClients();
-    }, [])
+    }, [page, limit])
 
     return (
         { loading, pagination, error, clients, getClients }
