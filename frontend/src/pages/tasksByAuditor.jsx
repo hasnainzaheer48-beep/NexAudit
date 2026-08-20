@@ -13,11 +13,13 @@ import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
+import Pagination from "../components/ui/pagination";
 
 
 export default function TasksByAuditor() {
 
-    const { tasks, loading, error, getTasksByAuditor } = useTasksByAuditor();
+    const [page, setPage] = useState(1)
+    const { tasks, pagination, loading, error, getTasksByAuditor } = useTasksByAuditor();
     const [showModal, setShowModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const navigate = useNavigate();
@@ -100,6 +102,7 @@ export default function TasksByAuditor() {
                     onTaskUpdated={getTasksByAuditor}
                 />
             </div>
+            <Pagination pagination={pagination} onPageChange={setPage} />
         </div >
 
 
