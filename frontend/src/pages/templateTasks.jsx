@@ -14,6 +14,7 @@ import PriorityBadge from "../components/ui/table/priorityBadge";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
 import ConfirmModal from "../components/ui/ConfirmModal";
+import Pagination from "../components/ui/pagination";
 
 
 
@@ -21,8 +22,9 @@ import ConfirmModal from "../components/ui/ConfirmModal";
 
 export default function TemplateTasks() {
 
+    const [page, setPage] = useState(1)
     const { templateId } = useParams();
-    const { loading, error, templateTasks, getTemplateTasks, setTemplateTasks } = useTemplateTasks(templateId);
+    const { loading, error, pagination, templateTasks, getTemplateTasks, setTemplateTasks } = useTemplateTasks(templateId);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showModal, setShowModal] = useState(false);
     const [selectedTemplateTask, setSelectedTemplateTask] = useState(null);
@@ -134,6 +136,7 @@ export default function TemplateTasks() {
                     action="Archive"
                 />
             </div>
+            < Pagination pagination={pagination} onPageChange={setPage} />
         </div>
 
 
