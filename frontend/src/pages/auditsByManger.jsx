@@ -15,12 +15,14 @@ import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
 import Button from "../components/ui/button";
 import ConfirmModal from "../components/ui/ConfirmModal";
+import Pagination from "../components/ui/pagination";
 
 
 
 export default function AuditsByManager() {
 
-    const { loading, error, audits, getAuditsByManager, setAudits } = useAuditByManager();
+    const [page, setPage] = useState(1)
+    const { loading, error, pagination, audits, getAuditsByManager, setAudits } = useAuditByManager();
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedAudit, setSelectedAudit] = useState(null);
@@ -137,6 +139,7 @@ export default function AuditsByManager() {
                     action="Archive"
                 />
             </div>
+            <Pagination pagination={pagination} onPageChange={setPage} />
         </div>
 
     )
