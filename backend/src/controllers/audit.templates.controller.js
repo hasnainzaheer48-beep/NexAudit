@@ -12,6 +12,7 @@ const getAuditTemplates = async (req, res) => {
         const result = await pool.query(`
             SELECT * FROM audit_templates
             WHERE is_active = true 
+            ORDER BY id ASC
             LIMIT $1
             OFFSET $2`, [limit, offset]);
         const countResult = await pool.query(`

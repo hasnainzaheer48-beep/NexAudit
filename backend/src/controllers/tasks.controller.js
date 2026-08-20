@@ -4,6 +4,9 @@ const { buildChanges } = require('../utils/buildChanges');
 //get Tasks
 
 const getTasks = async (req, res) => {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
     try {
         const result = await pool.query(`select 
                                         tasks.*,
@@ -19,8 +22,33 @@ const getTasks = async (req, res) => {
                                         on audits.client_id = clients.id
                                         
                                         WHERE audits.is_archived = false
-                                        `);
-        res.json(result.rows);
+                                        ORDER BY tasks.id ASC
+                                        LIMIT $1
+                                        OFFSET $2
+                                        `, [limit, offset]);
+        const countResult = await pool.query(`
+            SELECT COUNT(*)
+            FROM tasks
+            JOIN audits
+            ON tasks.audit_id = audits.id
+            WHERE audits.is_archived = false;
+            `)
+
+        const total = Number(countResult.rows[0].count)
+        const totalPages = Math.ceil(total / limit)
+        if (result.rows.length === 0) {
+            return res.status(404).send('Tasks not found');
+        }
+
+        return res.json({
+            data: result.rows,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages
+            }
+        });
     }
 
     catch (error) {
@@ -233,6 +261,9 @@ const deleteTask = async (req, res) => {
 
 const getTasksByAudit = async (req, res) => {
     try {
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
         const { id } = req.params;
         const audit = await pool.query(`SELECT id FROM audits where id=$1`, [id]);
         if (audit.rows.length === 0) {
@@ -252,11 +283,39 @@ const getTasksByAudit = async (req, res) => {
                                         on audits.client_id = clients.id
                                         WHERE tasks.audit_id = $1
                                         AND audits.is_archived = false
-                                        `, [id]);
+
+                                        ORDER BY tasks.id ASC
+                                        LIMIT $2
+                                        OFFSET $3
+
+                                        `, [id, limit, offset]);
         if (result.rows.length === 0) {
             return res.status(200).send([]);
         }
-        return res.json(result.rows);
+        const countResult = await pool.query(`
+            SELECT COUNT(*)
+            FROM tasks
+            JOIN audits
+            ON tasks.audit_id = audits.id
+            WHERE tasks.audit_id = $1
+            AND audits.is_archived = false
+            `, [id])
+
+        const total = Number(countResult.rows[0].count)
+        const totalPages = Math.ceil(total / limit)
+        if (result.rows.length === 0) {
+            return res.status(404).send('Tasks not found');
+        }
+
+        return res.json({
+            data: result.rows,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages
+            }
+        });
     }
 
     catch (error) {
@@ -393,7 +452,9 @@ const assignAuditor = async (req, res) => {
 const getTasksByAuditor = async (req, res) => {
 
     try {
-
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
         const auditorId = req.user.id;
 
         const result = await pool.query(`
@@ -415,8 +476,33 @@ const getTasksByAuditor = async (req, res) => {
 
 
         ORDER BY tasks.due_date ASC
-        `, [auditorId]);
-        res.json(result.rows);
+        LIMIT $2
+        OFFSET $3
+        `, [auditorId, limit, offset]);
+        const countResult = await pool.query(`
+            SELECT COUNT(*)
+            FROM tasks
+            JOIN audits
+            ON tasks.audit_id = audits.id
+            WHERE tasks.assigned_auditor_id = $1
+            AND audits.is_archived = false
+            `, [auditorId])
+
+        const total = Number(countResult.rows[0].count)
+        const totalPages = Math.ceil(total / limit)
+        if (result.rows.length === 0) {
+            return res.status(404).send('Tasks not found');
+        }
+
+        return res.json({
+            data: result.rows,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages
+            }
+        });
     }
     catch (error) {
         console.error(error);
@@ -498,6 +584,9 @@ const updateTaskStatus = async (req, res) => {
 const getTasksByManager = async (req, res) => {
     try {
 
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
         const managerId = req.user.id;
 
         const result = await pool.query(`
@@ -521,8 +610,33 @@ const getTasksByManager = async (req, res) => {
 
 
                                     ORDER BY tasks.due_date ASC
-        `, [managerId]);
-        res.json(result.rows);
+                                    LIMIT $2
+                                    OFFSET $3
+        `, [managerId, limit, offset]);
+        const countResult = await pool.query(`
+            SELECT COUNT(*)
+            FROM tasks
+            JOIN audits
+            ON tasks.audit_id = audits.id
+           where manager_id = $1
+            AND audits.is_archived = false
+            `, [managerId])
+
+        const total = Number(countResult.rows[0].count)
+        const totalPages = Math.ceil(total / limit)
+        if (result.rows.length === 0) {
+            return res.status(404).send('Tasks not found');
+        }
+
+        return res.json({
+            data: result.rows,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages
+            }
+        });
     }
     catch (error) {
         console.error(error);
