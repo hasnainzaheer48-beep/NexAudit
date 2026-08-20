@@ -14,11 +14,13 @@ import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
 import { Plus } from "lucide-react";
 import ConfirmModal from "../components/ui/ConfirmModal";
+import Pagination from "../components/ui/pagination";
 
 
 export default function AuditTemplates() {
 
-    const { loading, error, auditTemplates, getAuditTemplates, setAuditTemplates } = useAuditTemplates();
+    const [page, setPage] = useState(1)
+    const { loading, error, pagination, auditTemplates, getAuditTemplates, setAuditTemplates } = useAuditTemplates();
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedAuditTemplate, setSelectedAuditTemplate] = useState(null);
@@ -136,7 +138,7 @@ export default function AuditTemplates() {
                     action="Deactivate"
                 />
             </div>
-
+            <Pagination pagination={pagination} onPageChange={setPage} />
         </div>
 
 

@@ -11,10 +11,13 @@ import EntityTypeBadge from "../components/ui/table/entityTypeBadge";
 import ActionBadge from "../components/ui/table/actionBadge";
 import DateCell from "../components/ui/table/dateCell";
 import ActivityLogBadge from "../components/ui/table/activityLogBadge";
+import { useState } from "react";
+import Pagination from "../components/ui/pagination";
 
 export default function ActivityLogs() {
 
-    const { activityLogs, getActivityLogs, error, loading } = useActivityLogs();
+    const [page, setPage] = useState(1)
+    const { activityLogs, pagination, getActivityLogs, error, loading } = useActivityLogs(page, 10);
     if (loading) return <LoadingComponent />;
     if (error) return <div>{error}</div>
     return (
@@ -59,6 +62,7 @@ export default function ActivityLogs() {
                 </Table>
 
             </div>
+            <Pagination pagination={pagination} onPageChange={setPage} />
         </div>
     );
 }

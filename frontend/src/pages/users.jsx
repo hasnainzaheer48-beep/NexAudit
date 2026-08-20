@@ -14,13 +14,14 @@ import Button from "../components/ui/button";
 import DateCell from "../components/ui/table/dateCell";
 import RoleBadge from "../components/ui/roleBadge";
 import ConfirmModal from "../components/ui/ConfirmModal";
-
+import Pagination from "../components/ui/pagination";
 
 
 
 export default function Users() {
 
-    const { users, getUsers, loading, error, setUsers } = useUsers();
+    const [page, setPage] = useState(1)
+    const { users, getUsers, pagination, loading, error, setUsers } = useUsers();
     const [showModal, setShowModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -127,6 +128,7 @@ export default function Users() {
                     action="Deactivate User"
                 />
             </div>
+            <Pagination pagination={pagination} onPageChange={setPage} />
         </div>
     );
 }

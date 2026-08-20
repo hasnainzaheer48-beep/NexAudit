@@ -5,6 +5,9 @@ const { buildChanges } = require('../utils/buildChanges');
 //Get all Audits
 
 const getAudits = async (req, res) => {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
     try {
         const result = await pool.query(`SELECT
                                         audits.*,
@@ -20,8 +23,32 @@ const getAudits = async (req, res) => {
                                         LEFT JOIN audit_templates
                                         ON audits.template_id = audit_templates.id
                                         
-                                        WHERE is_archived = false`);
-        res.json(result.rows);
+                                        WHERE is_archived = false
+                                        
+                                        LIMIT $1
+                                        OFFSET $2
+                                        `, [limit, offset]);
+        const countResult = await pool.query(`
+            SELECT COUNT(*)
+            FROM audits
+            WHERE is_archived = false
+            `)
+
+        const total = Number(countResult.rows[0].count)
+        const totalPages = Math.ceil(total / limit)
+        if (result.rows.length === 0) {
+            return res.status(404).send('Logs not found');
+        }
+
+        return res.json({
+            data: result.rows,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages
+            }
+        });
     }
 
     catch (error) {
@@ -554,7 +581,9 @@ const finishAudit = async (req, res) => {
 
 const getAuditsByManager = async (req, res) => {
     try {
-
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
         const result = await pool.query(`SELECT
                                         audits.*,
                                         clients.company_name AS client,
@@ -569,9 +598,34 @@ const getAuditsByManager = async (req, res) => {
                                         ON audits.template_id = audit_templates.id
                                         WHERE audits.manager_id = $1
                                         AND is_archived = false
-                                        `, [req.user.id]);
 
-        res.json(result.rows);
+                                        ORDER BY audits.id ASC
+                                        LIMIT $2
+                                        OFFSET $3
+                                        `, [req.user.id, limit, offset]);
+
+        const countResult = await pool.query(`
+            SELECT COUNT(*)
+            FROM audits
+            WHERE audits.manager_id = $1
+            AND is_archived = false
+            `, [req.user.id])
+
+        const total = Number(countResult.rows[0].count)
+        const totalPages = Math.ceil(total / limit)
+        if (result.rows.length === 0) {
+            return res.status(404).send('Logs not found');
+        }
+
+        return res.json({
+            data: result.rows,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages
+            }
+        });
     }
 
     catch (error) {

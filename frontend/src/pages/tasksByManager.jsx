@@ -13,10 +13,13 @@ import PageTitle from "../components/ui/pageTitle";
 import LoadingComponent from "../components/ui/loadingComponent";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
+import Pagination from "../components/ui/pagination";
 
 
 export default function TasksByManager() {
-    const { loading, error, tasks, getTasksByManager } = useTasksByManager();
+
+    const [page, setPage] = useState(1)
+    const { loading, pagination, error, tasks, getTasksByManager } = useTasksByManager();
     const [showModal, setShowModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const navigate = useNavigate();
@@ -99,7 +102,7 @@ export default function TasksByManager() {
                     onTaskCreated={getTasksByManager}
                 />
             </div>
-
+            <Pagination pagination={pagination} onPageChange={setPage} />
         </div>
 
 

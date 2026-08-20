@@ -3,16 +3,23 @@ import api from "../api/axios";
 
 
 
-export default function useActivityLogs() {
+export default function useActivityLogs(page = 1, limit = 10) {
     const [activityLogs, setActivityLogs] = useState([]);
+    const [pagination, setPagination] = useState(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const getActivityLogs = async () => {
         try {
             setLoading(true);
-            const result = await api.get('/api/activity-logs');
-            setActivityLogs(result.data);
+            const result = await api.get('/api/activity-logs', {
+                params: {
+                    page,
+                    limit
+                }
+            });
+            setActivityLogs(result.data.data);
+            setPagination(result.data.pagination)
         }
         catch (error) {
             console.error(error);
@@ -25,7 +32,7 @@ export default function useActivityLogs() {
 
     useEffect(() => {
         getActivityLogs();
-    }, []);
+    }, [page, limit]);
 
-    return { activityLogs, getActivityLogs, error, loading }
+    return { activityLogs, pagination, getActivityLogs, error, loading }
 }

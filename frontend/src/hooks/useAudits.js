@@ -1,17 +1,24 @@
 import api from '../api/axios'
 import { useState, useEffect } from 'react';
 
-export default function useAudits() {
+export default function useAudits(page = 1, limit = 10) {
 
     const [audits, setAudits] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [pagination, setPagination] = useState(null)
     const [error, setError] = useState(null)
 
     const getAudits = async () => {
         try {
             setLoading(true);
-            const result = await api.get('/api/audits');
-            setAudits(result.data);
+            const result = await api.get('/api/audits', {
+                params: {
+                    page,
+                    limit
+                }
+            });
+            setAudits(result.data.data);
+            setPagination(result.data.pagination)
 
         }
         catch (error) {
@@ -26,10 +33,10 @@ export default function useAudits() {
 
     useEffect(() => {
         getAudits();
-    }, [])
+    }, [page, limit])
 
     return (
-        { loading, error, audits, getAudits, setAudits }
+        { loading, error, pagination, audits, getAudits, setAudits }
     );
 
 }

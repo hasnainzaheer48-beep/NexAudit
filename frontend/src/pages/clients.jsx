@@ -11,12 +11,13 @@ import TableCell from "../components/ui/table/tableCell";
 import EmptyTable from "../components/ui/table/emptyTable";
 import LoadingComponent from "../components/ui/loadingComponent";
 import Button from "../components/ui/button";
+import Pagination from "../components/ui/pagination";
 
 
 
 export default function Clients() {
-
-    const { loading, error, clients, getClients } = useClients();
+    const [page, setPage] = useState(1)
+    const { loading, error, pagination, clients, getClients } = useClients();
     const [showModal, setShowModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
     const { user } = useContext(AuthContext);
@@ -90,6 +91,7 @@ export default function Clients() {
                 </Table>
                 <ClientsFormModal isOpen={showModal} selectedClient={selectedClient} onClose={handleClose} onClientCreated={getClients} />
             </div>
+            <Pagination pagination={pagination} onPageChange={setPage} />
         </div>
 
 

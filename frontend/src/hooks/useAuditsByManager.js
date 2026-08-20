@@ -1,16 +1,23 @@
 import api from '../api/axios'
 import { useState, useEffect } from 'react';
 
-export default function useAuditByManager(managerId) {
+export default function useAuditByManager(page = 1, limit = 10) {
     const [audits, setAudits] = useState([]);
+    const [pagination, setPagination] = useState(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null)
 
     const getAuditsByManager = async () => {
         try {
             setLoading(true);
-            const result = await api.get('/api/audits/me');
-            setAudits(result.data);
+            const result = await api.get('/api/audits/me', {
+                params: {
+                    page,
+                    limit
+                }
+            });
+            setAudits(result.data.data);
+            setPagination(result.data.pagination)
 
         }
         catch (error) {
@@ -25,10 +32,10 @@ export default function useAuditByManager(managerId) {
 
     useEffect(() => {
         getAuditsByManager();
-    }, [])
+    }, [page, limit])
 
     return (
-        { loading, error, audits, getAuditsByManager, setAudits }
+        { loading, error, audits, pagination, getAuditsByManager, setAudits }
     );
 
 

@@ -67,18 +67,18 @@ export default function Sidebar() {
                 }
 
             </nav>
-            <div className={`bg-[#174d38] text-white flex py-2 px-2 items-center rounded-xl ${expanded ? "bg-[#174d38]" : "bg-transparent"}`}>
-                <CircleUser className={`w-9 h-9  rounded-full ${expanded ? "text-white bg-[#174d38]" : "text-[#174d38] bg-white ml-1"}`} />
+            <div className={`text-[#174d38]  flex py-2 px-2 items-center rounded-xl border border-[#cbcbcb]`}>
+                <CircleUser className={`w-9 h-9 rounded-full text-[#174d38] bg-white ml-1`} />
                 <div className={`  flex justify-between items-center overflow-hidden transition-all ${expanded ? "flex-1 ml-3" : 'w-0'}`}>
                     <div className="leading-4 min-w-0">
-                        <h4 className="font-semibold text-lg truncate">{user.first_name + ' ' + user.last_name}</h4>
+                        <h4 className="font-medium text-lg truncate">{user.first_name + ' ' + user.last_name}</h4>
                         <span className="text-sm block truncate">{user.email}</span>
                     </div>
-                    <button className="bg-[#298561] shrink-0 text-white rounded-2xl p-2 font-semibold hover:cursor-pointer hover:scale-103 duration-300 " onClick={handleClick}>
+                    <button className="bg-[#174d38] shrink-0 text-white rounded-2xl p-2 font-semibold hover:cursor-pointer hover:scale-103 duration-300 " onClick={handleClick}>
                         <LogOut />
                     </button>
                 </div>
             </div>
-        </aside>
+        </aside >
     )
 }

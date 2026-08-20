@@ -1,17 +1,23 @@
 import { useState, useEffect } from "react";
 import api from '../api/axios'
 
-export default function useUsers() {
+export default function useUsers(page = 1, limit = 10) {
     const [users, setUsers] = useState([]);
+    const [pagination, setPagination] = useState(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null)
 
     const getUsers = async () => {
         try {
             setLoading(true)
-            const result = await api.get('/api/users');
-            setUsers(result.data)
-            console.log(result.data);
+            const result = await api.get('/api/users', {
+                params: {
+                    page,
+                    limit
+                }
+            });
+            setUsers(result.data.data)
+            setPagination(result.data.pagination)
         }
         catch (error) {
             console.error(error);
@@ -27,9 +33,9 @@ export default function useUsers() {
     useEffect(() => {
         getUsers();
 
-    }, []);
+    }, [page, limit]);
 
-    return ({ users, getUsers, loading, error, setUsers })
+    return ({ users, pagination, getUsers, loading, error, setUsers })
 
 
 }

@@ -14,13 +14,14 @@ import PriorityBadge from "../components/ui/table/priorityBadge";
 import StatusBadge from "../components/ui/table/statusBadge";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
+import Pagination from "../components/ui/pagination";
 
 
 
 export default function Tasks() {
 
-
-    const { loading, error, tasks, getTasks } = useTasks();
+    const [page, setPage] = useState(1)
+    const { loading, pagination, error, tasks, getTasks } = useTasks();
     const [showModal, setShowModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const navigate = useNavigate();
@@ -101,6 +102,8 @@ export default function Tasks() {
                     onTaskCreated={getTasks}
                 />
             </div>
+
+            <Pagination pagination={pagination} onPageChange={setPage} />
         </div>
 
 
