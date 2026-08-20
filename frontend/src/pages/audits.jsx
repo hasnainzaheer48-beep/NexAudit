@@ -14,12 +14,14 @@ import PageTitle from "../components/ui/pageTitle";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
 import ConfirmModal from "../components/ui/ConfirmModal";
+import Pagination from "../components/ui/pagination";
 
 
 
 export default function Audits() {
 
-    const { loading, error, audits, getAudits, setAudits } = useAudits();
+    const [page, setPage] = useState(1)
+    const { loading, error, pagination, audits, getAudits, setAudits } = useAudits(page, 10);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedAudit, setSelectedAudit] = useState(null);
 
@@ -116,9 +118,7 @@ export default function Audits() {
                     action="Archive"
                 />
             </div>
-
-
-
+            <Pagination pagination={pagination} onPageChange={setPage} />
 
         </div>
     );

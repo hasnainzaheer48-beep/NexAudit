@@ -31,6 +31,7 @@ const getAudits = async (req, res) => {
         const countResult = await pool.query(`
             SELECT COUNT(*)
             FROM audits
+            WHERE is_archived = false
             `)
 
         const total = Number(countResult.rows[0].count)
@@ -604,7 +605,9 @@ const getAuditsByManager = async (req, res) => {
         const countResult = await pool.query(`
             SELECT COUNT(*)
             FROM audits
-            `)
+            WHERE audits.manager_id = $1
+            AND is_archived = false
+            `, [req.user.id])
 
         const total = Number(countResult.rows[0].count)
         const totalPages = Math.ceil(total / limit)
