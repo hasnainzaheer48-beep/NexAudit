@@ -5,9 +5,36 @@ const { buildChanges } = require('../utils/buildChanges');
 //Get all audit templates
 
 const getAuditTemplates = async (req, res) => {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
     try {
-        const result = await pool.query(`SELECT * FROM audit_templates WHERE is_active = true`);
-        res.json(result.rows);
+        const result = await pool.query(`
+            SELECT * FROM audit_templates
+            WHERE is_active = true 
+            LIMIT $1
+            OFFSET $2`, [limit, offset]);
+        const countResult = await pool.query(`
+            SELECT COUNT(*)
+            FROM audit_templates
+            WHERE is_active = true
+            `)
+
+        const total = Number(countResult.rows[0].count)
+        const totalPages = Math.ceil(total / limit)
+        if (result.rows.length === 0) {
+            return res.status(404).send('Templates not found');
+        }
+
+        return res.json({
+            data: result.rows,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages
+            }
+        });
     }
 
     catch (error) {
