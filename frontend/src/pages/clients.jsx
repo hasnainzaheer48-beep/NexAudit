@@ -17,7 +17,7 @@ import Pagination from "../components/ui/pagination";
 
 export default function Clients() {
     const [page, setPage] = useState(1)
-    const { loading, error, pagination, clients, getClients } = useClients();
+    const { loading, error, pagination, clients, getClients } = useClients(page, 10);
     const [showModal, setShowModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
     const { user } = useContext(AuthContext);

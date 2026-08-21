@@ -20,7 +20,7 @@ import Pagination from "../components/ui/pagination";
 export default function AuditTemplates() {
 
     const [page, setPage] = useState(1)
-    const { loading, error, pagination, auditTemplates, getAuditTemplates, setAuditTemplates } = useAuditTemplates();
+    const { loading, error, pagination, auditTemplates, getAuditTemplates, setAuditTemplates } = useAuditTemplates(page, 10);
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedAuditTemplate, setSelectedAuditTemplate] = useState(null);

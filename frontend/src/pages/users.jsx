@@ -21,7 +21,7 @@ import Pagination from "../components/ui/pagination";
 export default function Users() {
 
     const [page, setPage] = useState(1)
-    const { users, getUsers, pagination, loading, error, setUsers } = useUsers();
+    const { users, getUsers, pagination, loading, error, setUsers } = useUsers(page, 10);
     const [showModal, setShowModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false)

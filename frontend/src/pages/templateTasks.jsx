@@ -24,7 +24,7 @@ export default function TemplateTasks() {
 
     const [page, setPage] = useState(1)
     const { templateId } = useParams();
-    const { loading, error, pagination, templateTasks, getTemplateTasks, setTemplateTasks } = useTemplateTasks(templateId);
+    const { loading, error, pagination, templateTasks, getTemplateTasks, setTemplateTasks } = useTemplateTasks(templateId, page, 10);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showModal, setShowModal] = useState(false);
     const [selectedTemplateTask, setSelectedTemplateTask] = useState(null);

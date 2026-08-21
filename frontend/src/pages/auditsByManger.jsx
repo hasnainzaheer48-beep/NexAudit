@@ -22,7 +22,7 @@ import Pagination from "../components/ui/pagination";
 export default function AuditsByManager() {
 
     const [page, setPage] = useState(1)
-    const { loading, error, pagination, audits, getAuditsByManager, setAudits } = useAuditByManager();
+    const { loading, error, pagination, audits, getAuditsByManager, setAudits } = useAuditByManager(page, 10);
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedAudit, setSelectedAudit] = useState(null);

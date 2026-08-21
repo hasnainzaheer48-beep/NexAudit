@@ -19,7 +19,7 @@ import Pagination from "../components/ui/pagination";
 export default function TasksByManager() {
 
     const [page, setPage] = useState(1)
-    const { loading, pagination, error, tasks, getTasksByManager } = useTasksByManager();
+    const { loading, pagination, error, tasks, getTasksByManager } = useTasksByManager(page, 10);
     const [showModal, setShowModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
     const navigate = useNavigate();
