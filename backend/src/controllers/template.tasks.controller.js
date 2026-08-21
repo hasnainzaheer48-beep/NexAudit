@@ -215,9 +215,7 @@ const getTemplateTaskByAuditTemplate = async (req, res) => {
 
         const total = Number(countResult.rows[0].count)
         const totalPages = Math.ceil(total / limit)
-        if (result.rows.length === 0) {
-            return res.status(404).send('Template Task not found');
-        }
+
 
         return res.json({
             data: result.rows,
