@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useNavigation, useParams } from "react-router-dom";
 import useTemplateTasks from "../hooks/useTemplateTasks";
 import { useState } from "react";
 import TemplateTasksFormModal from "../components/templateTasks/templateTasksFormModal";
@@ -19,7 +19,6 @@ import Pagination from "../components/ui/pagination";
 
 
 
-
 export default function TemplateTasks() {
 
     const [page, setPage] = useState(1)
@@ -28,7 +27,7 @@ export default function TemplateTasks() {
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [showModal, setShowModal] = useState(false);
     const [selectedTemplateTask, setSelectedTemplateTask] = useState(null);
-
+    const navigate = useNavigate();
 
 
     const handleCreateTemplateTask = () => {
@@ -68,11 +67,15 @@ export default function TemplateTasks() {
     }
 
 
+
     return (
         <div className="flex flex-col h-full">
+            <div className="px-3">
+                <button onClick={() => navigate(-1)} className="font-bold text-xs hover:cursor-pointer hover:underline text-[#174d38] tracking-wide ">Go Back</button>
+            </div>
             <div className="flex justify-between items-center">
-                <PageTitle title={"Template Tasks"} />
-                <Button size="Large" onClick={handleCreateTemplateTask}>Create Template Tasks</Button>
+                <PageTitle title={`Template Tasks of ${templateTasks[0].template_name}`} variant="Dashboard" />
+                <Button size="Normal" onClick={handleCreateTemplateTask}>Create Template Tasks</Button>
             </div>
             <div className="flex-1 min-h-0">
                 <Table>

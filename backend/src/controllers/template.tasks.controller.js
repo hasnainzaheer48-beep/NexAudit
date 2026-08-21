@@ -197,8 +197,11 @@ const getTemplateTaskByAuditTemplate = async (req, res) => {
     try {
         const { templateId } = req.params;
         const result = await pool.query(`
-            SELECT * 
+            select template_tasks.*,
+            audit_templates.name AS template_name
             FROM template_tasks
+            JOIN audit_templates
+            ON template_tasks.template_id = audit_templates.id
             WHERE template_id = $1
             AND is_archived = false
             ORDER BY order_number
