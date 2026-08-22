@@ -26,7 +26,6 @@ export default function UpcomingAudits({ role }) {
                         <TableRow>
 
                             <TableHead>Title</TableHead>
-                            <TableHead>Audit Id</TableHead>
                             <TableHead>Company</TableHead>
                             <TableHead>Priority</TableHead>
                             <TableHead>Status</TableHead>
@@ -43,7 +42,6 @@ export default function UpcomingAudits({ role }) {
                                     <TableRow key={task.id}>
 
                                         <TableCell>{task.title}</TableCell>
-                                        <TableCell>{task.audit_id}</TableCell>
 
                                         <TableCell>{task.company}</TableCell>
 
