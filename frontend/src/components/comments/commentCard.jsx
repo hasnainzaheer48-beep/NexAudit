@@ -57,7 +57,7 @@ export default function CommentCard({ comment, onDelete, getComments }) {
             {
                 user.id === comment.user_id && <div id="Action Buttons" className="flex items-center gap-2">
                     <Button icon="Edit" variant="Edit" isChildren={false} iconSize="Small" onClick={handleEdit}>Edit</Button>
-                    <Button icon="Delete" variant="Archive/Deactivate" isChildren={false} iconSize="Small" onClick={handleEdit} onClick={() => {
+                    <Button icon="Delete" variant="Archive/Deactivate" isChildren={false} iconSize="Small" onClick={() => {
                         setShowDeleteModal(true)
 
                     }

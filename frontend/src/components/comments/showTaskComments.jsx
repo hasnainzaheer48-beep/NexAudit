@@ -1,7 +1,7 @@
 
 import CommentCard from "./commentCard";
 
-export default function ShowTaskComments({ taskId, comments, setComments, getComments }) {
+export default function ShowTaskComments({ comments, setComments, getComments }) {
 
 
 
