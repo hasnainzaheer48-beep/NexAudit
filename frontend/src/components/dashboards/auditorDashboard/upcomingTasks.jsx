@@ -10,6 +10,8 @@ import TableHead from '../../ui/table/tableHead';
 import TableHeader from '../../ui/table/tableHeader';
 import TableRow from '../../ui/table/tableRow';
 import Button from '../../ui/button';
+import PriorityBadge from '../../ui/table/priorityBadge';
+import StatusBadge from '../../ui/table/statusBadge';
 
 export default function UpcomingAudits({ role }) {
 
@@ -46,8 +48,8 @@ export default function UpcomingAudits({ role }) {
                                         <TableCell>{task.company}</TableCell>
 
 
-                                        <TableCell>{task.priority}</TableCell>
-                                        <TableCell>{task.status}</TableCell>
+                                        <TableCell><PriorityBadge priority={task.priority} /></TableCell>
+                                        <TableCell><StatusBadge status={task.status} /></TableCell>
                                         <TableCell>{task.start_date ? new Date(task.start_date).toLocaleDateString() : 'Null'}</TableCell>
                                         <TableCell>{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</TableCell>
 
