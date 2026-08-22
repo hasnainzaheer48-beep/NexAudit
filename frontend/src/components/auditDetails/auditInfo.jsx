@@ -1,5 +1,4 @@
 import { FileChartColumnIncreasing } from "lucide-react";
-import StatusBadge from "../ui/table/statusBadge";
 import AuditInfoCard from "./auditInfoCard";
 
 export default function AuditInfo({ audit, progress }) {
