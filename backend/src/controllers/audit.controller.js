@@ -24,6 +24,8 @@ const getAudits = async (req, res) => {
                                         ON audits.template_id = audit_templates.id
                                         
                                         WHERE is_archived = false
+
+                                        ORDER BY id ASC
                                         
                                         LIMIT $1
                                         OFFSET $2
@@ -90,94 +92,6 @@ const getAuditById = async (req, res) => {
     }
 }
 
-//Create Audit
-
-// const createAudit = async (req, res) => {
-//     try {
-//         const { client_id,
-//             template_id,
-//             manager_id,
-
-//             audit_year,
-//             audit_type,
-
-//             priority,
-//             status,
-
-//             description,
-//             start_date,
-//             due_date } = req.body;
-
-//         if (!client_id) {
-//             return res.status(400).send("Client id is required");
-//         }
-
-//         if (!template_id) {
-//             return res.status(400).send("Template Id is required");
-//         }
-
-//         if (!manager_id) {
-//             return res.status(400).send("Manager id is required");
-//         }
-
-//         if (!audit_year) {
-//             return res.status(400).send("Audit Year is required");
-//         }
-
-//         if (!audit_type) {
-//             return res.status(400).send("Audit Type is required");
-//         }
-
-//         if (!priority) {
-//             return res.status(400).send("Priority is required");
-//         }
-
-
-//         const result = await pool.query(`INSERT INTO 
-//                                          audits( client_id,
-//                                          template_id,
-//                                          manager_id,
-
-//                                          audit_year,
-//                                          audit_type,
-
-//                                          priority,
-//                                          status,
-
-//                                          description,
-//                                          start_date,
-//                                          due_date)
-//                                          VALUES
-//                                          ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-//                                          RETURNING *`,
-//             [
-//                 client_id,
-//                 template_id,
-//                 manager_id,
-
-//                 audit_year,
-//                 audit_type,
-
-//                 priority,
-//                 status,
-
-//                 description,
-//                 start_date,
-//                 due_date
-//             ]);
-
-
-
-//         res.json(result.rows[0]);
-//     }
-
-//     catch (error) {
-//         console.error(error);
-//         res.status(500).send("Could not Create Audit");
-
-//     }
-
-// }
 
 
 const createAudit = async (req, res) => {
