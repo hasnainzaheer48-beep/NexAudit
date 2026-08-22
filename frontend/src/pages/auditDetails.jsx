@@ -22,7 +22,7 @@ export default function AuditDetails() {
     const { auditProgress, getAuditprogress, loading: progressLoading } = useAuditProgress(auditId);
     const { tasks, getTasksByAudit, loading: tasksLoading } = useTasksByAudit(auditId);
     const [showModal, setShowModal] = useState(false);
-    console.log(auditProgress);
+
 
     const handleFinishAudit = async () => {
         try {

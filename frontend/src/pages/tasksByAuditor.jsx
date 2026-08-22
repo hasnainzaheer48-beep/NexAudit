@@ -24,7 +24,6 @@ export default function TasksByAuditor() {
     const [selectedTask, setSelectedTask] = useState(null);
     const navigate = useNavigate();
 
-    console.log(tasks);
     const handleClose = () => {
         setShowModal(false);
     }

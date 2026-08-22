@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext';
 import AdminDashboard from '../components/dashboards/adminDashboard/adminDashboard';
 import AuditorDashboard from '../components/dashboards/auditorDashboard/auditorDashboard';
@@ -11,7 +10,7 @@ import WelcomeCard from '../components/dashboards/welcomeCard';
 export default function Dashboard() {
 
 
-    const navigate = useNavigate();
+
     const { user, loading } = useContext(AuthContext);
     if (loading) return <LoadingScreen />;
     if (user.role === "ADMIN") {

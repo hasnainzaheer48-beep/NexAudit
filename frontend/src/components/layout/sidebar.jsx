@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import navigation from "../../utils/navigation";
-import { CircleUser, LogOut, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { CircleUser, LogOut, PanelLeftClose } from 'lucide-react';
 
 
 export default function Sidebar() {
