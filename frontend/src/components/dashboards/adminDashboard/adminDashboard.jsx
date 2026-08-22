@@ -6,7 +6,7 @@ import AdminStatGrid from "./adminStatGrid";
 import LoadingComponent from "../../ui/loadingComponent";
 
 export default function AdminDashboard() {
-    const { user, loading } = useContext(AuthContext);
+    const { loading } = useContext(AuthContext);
     if (loading) {
         return <LoadingComponent />
     }

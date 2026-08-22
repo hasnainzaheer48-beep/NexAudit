@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import api from '../../../api/axios'
 import useUpcoming from '../../../hooks/useUpcoming'
 import LoadingComponent from '../../ui/loadingComponent';
 import PageTitle from '../../ui/pageTitle';
