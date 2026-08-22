@@ -65,11 +65,11 @@ export default function TasksByAuditorFormModal({ isOpen, onClose, onTaskUpdated
     useEffect(() => {
 
         const taskData = {
-            priority: selectedTask?.status ?? '',
+            status: selectedTask?.status ?? '',
         }
         setFormData(taskData);
         setOriginalData(taskData);
-    }, [selectedTask])
+    }, [selectedTask, isOpen])
 
 
 
