@@ -20,16 +20,14 @@ export default function Login() {
         try {
             event.preventDefault();
             const result = await api.post('/api/auth/login', { email, password });
-            const { token, message } = result.data;
+            const { token } = result.data;
             localStorage.setItem("token", token);
             setToken(token);
-            console.log(token);
-            console.log(message);
+
             setEmail('');
             setPassword('');
             const userData = await api.get('/api/auth/me');
             setUser(userData.data);
-            console.log(userData.data);
             navigate("/dashboard");
         }
         catch (error) {

@@ -1,4 +1,4 @@
-import { ClipboardCheck } from "lucide-react";
+
 import PageTitle from "../ui/pageTitle";
 import ProgressCircle from "./ProgressCircle";
 import ProgressStat from "./ProgressStat";

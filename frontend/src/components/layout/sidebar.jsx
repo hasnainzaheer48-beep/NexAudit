@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import navigation from "../../utils/navigation";
-import { CircleUser, LogOut, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { CircleUser, LogOut, PanelLeftClose } from 'lucide-react';
 
 
 export default function Sidebar() {
@@ -28,9 +28,9 @@ export default function Sidebar() {
     return (
         <aside className={` bg-white border border-[#cbcbcb] flex flex-col h-full  rounded-2xl shadow-lg p-2 transition-all duration-300 ${expanded ? "w-64" : "w-20 rounded-4xl"} `}>
             <div className="p-4 pb-2 flex justify-between items-center ">
-                <img src="/logo.png" alt="Logo" className={`overflow-hidden transition-all ${expanded ? "w-34" : "w-0"}`} />
+                <img onClick={() => setExpanded(curr => !curr)} src="/logo.png" alt="Logo" className={`overflow-hidden transition-all ${expanded ? "w-34" : "w-0"}`} />
                 <button onClick={() => setExpanded(curr => !curr)} >
-                    {expanded ? < PanelLeftClose className="text-gray-500 " /> : <img src="/logoOnly.png" className="w-7" />}
+                    {expanded ? < PanelLeftClose className="text-gray-500 hover:cursor-pointer hover:bg-gray-100 rounded-md transition " /> : <img src="/logoOnly.png" className="w-7" />}
                 </button>
             </div>
             <nav className="flex-1 flex flex-col p-3 gap-2">
@@ -48,7 +48,9 @@ export default function Sidebar() {
                                 : 'text-gray-600 hover:bg-[#174d38] hover:text-white'
                             }
                             `}>
-                            <Icon className={`w-5 h-5 shrink-0 items-center ${expanded ? "" : " group-hover:scale-120 grorup-hover:p-3 duration-150"}`} />
+                            <div className="flex justify-center items-center">
+                                <Icon className={`w-5 h-5 shrink-0 items-center ${expanded ? "" : " group-hover:scale-120 grorup-hover:p-3 duration-150"}`} />
+                            </div>
                             <span className={`overflow-hidden whitespace-nowrap transition-all ${expanded ? "w-30" : "w-0"}`}>
                                 {link.name}
                             </span>

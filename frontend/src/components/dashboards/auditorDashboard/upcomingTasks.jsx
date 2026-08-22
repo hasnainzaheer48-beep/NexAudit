@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import api from '../../../api/axios'
 import useUpcoming from '../../../hooks/useUpcoming'
 import LoadingComponent from '../../ui/loadingComponent';
 import PageTitle from '../../ui/pageTitle';
@@ -10,6 +9,8 @@ import TableHead from '../../ui/table/tableHead';
 import TableHeader from '../../ui/table/tableHeader';
 import TableRow from '../../ui/table/tableRow';
 import Button from '../../ui/button';
+import PriorityBadge from '../../ui/table/priorityBadge';
+import StatusBadge from '../../ui/table/statusBadge';
 
 export default function UpcomingAudits({ role }) {
 
@@ -26,7 +27,6 @@ export default function UpcomingAudits({ role }) {
                         <TableRow>
 
                             <TableHead>Title</TableHead>
-                            <TableHead>Audit Id</TableHead>
                             <TableHead>Company</TableHead>
                             <TableHead>Priority</TableHead>
                             <TableHead>Status</TableHead>
@@ -43,13 +43,12 @@ export default function UpcomingAudits({ role }) {
                                     <TableRow key={task.id}>
 
                                         <TableCell>{task.title}</TableCell>
-                                        <TableCell>{task.audit_id}</TableCell>
 
                                         <TableCell>{task.company}</TableCell>
 
 
-                                        <TableCell>{task.priority}</TableCell>
-                                        <TableCell>{task.status}</TableCell>
+                                        <TableCell><PriorityBadge priority={task.priority} /></TableCell>
+                                        <TableCell><StatusBadge status={task.status} /></TableCell>
                                         <TableCell>{task.start_date ? new Date(task.start_date).toLocaleDateString() : 'Null'}</TableCell>
                                         <TableCell>{task.due_date ? new Date(task.due_date).toLocaleDateString() : 'Null'}</TableCell>
 

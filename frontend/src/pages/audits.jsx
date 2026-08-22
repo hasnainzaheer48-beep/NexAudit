@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import useAudits from "../hooks/useAudits";
 import api from "../api/axios";
@@ -21,7 +21,7 @@ import Pagination from "../components/ui/pagination";
 export default function Audits() {
 
     const [page, setPage] = useState(1)
-    const { loading, error, pagination, audits, getAudits, setAudits } = useAudits(page, 10);
+    const { loading, error, pagination, audits, setAudits } = useAudits(page, 10);
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const [selectedAudit, setSelectedAudit] = useState(null);
 

@@ -17,7 +17,7 @@ import Pagination from "../components/ui/pagination";
 export default function ActivityLogs() {
 
     const [page, setPage] = useState(1)
-    const { activityLogs, pagination, getActivityLogs, error, loading } = useActivityLogs(page, 10);
+    const { activityLogs, pagination, error, loading } = useActivityLogs(page, 10);
     if (loading) return <LoadingComponent />;
     if (error) return <div>{error}</div>
     return (

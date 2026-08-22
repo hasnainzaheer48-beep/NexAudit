@@ -12,7 +12,7 @@ export default function AdminStatGrid() {
         adminUserStats,
         adminClientStats,
         adminAuditStats,
-        getStats } = useAdminStats();
+    } = useAdminStats();
 
 
 

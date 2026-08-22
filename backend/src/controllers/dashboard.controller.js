@@ -5,8 +5,8 @@ const getAuditStats = async (req, res) => {
     try {
         const result = await pool.query(`
             select
-            COUNT(*) as total_audits,
-            COUNT(*) FILTER(WHERE status = 'In Progress' ) AS progress_audits,
+            COUNT(*) FILTER(WHERE is_archived = false ) as total_audits,
+            COUNT(*) FILTER(WHERE status = 'In Progress' AND is_archived = false ) AS progress_audits,
             COUNT(*) FILTER(WHERE status = 'Finished' )AS finished_audits
 
             from audits
@@ -40,6 +40,7 @@ const getOverdueAudits = async (req, res) => {
             where due_date < NOW() 
             AND status != 'Finished'
             AND manager_id = $1
+            AND is_archived = false
            
             `, [req.user.id])
 
@@ -70,6 +71,7 @@ const getUpcomingAudits = async (req, res) => {
                                         AND due_date <= NOW() + INTERVAL '7 days'
                                         AND status != 'Finished'
                                         AND manager_id = $1
+                                        AND is_archived = false
 
                                         ORDER BY due_date ASC
            
@@ -90,13 +92,16 @@ const getTasksStats = async (req, res) => {
     try {
         const result = await pool.query(`
             select
-            COUNT(*) as total_tasks,
-            COUNT(*) FILTER(WHERE status = 'In Progress' ) AS progress_tasks,
-            COUNT(*) FILTER(WHERE status = 'Finished' )AS finished_tasks
+            COUNT(*) FILTER(WHERE audits.is_archived = false) as total_tasks,
+            COUNT(*) FILTER(WHERE tasks.status = 'In Progress' and audits.is_archived = false) AS progress_tasks,
+            COUNT(*) FILTER(WHERE tasks.status = 'Finished' )AS finished_tasks
 
             from tasks
+            join audits
+            on tasks.audit_id = audits.id
 
             where assigned_auditor_id = $1
+            
             `, [req.user.id])
 
         return res.json(result.rows[0]);
@@ -125,7 +130,7 @@ const getOverdueTasks = async (req, res) => {
             where tasks.due_date < NOW() 
             AND tasks.status != 'Finished'
             AND tasks.assigned_auditor_id = $1
-
+            AND audits.is_archived = false
             ORDER BY tasks.due_date ASC
            
             `, [req.user.id])
@@ -156,7 +161,7 @@ const getUpcomingTasks = async (req, res) => {
                                         AND tasks.due_date <= NOW() + INTERVAL '7 days'
                                         AND tasks.status != 'Finished'
                                         AND tasks.assigned_auditor_id = $1
-
+                                        AND audits.is_archived = false
                                         ORDER BY tasks.due_date ASC
            
             `, [req.user.id])

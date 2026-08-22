@@ -12,7 +12,6 @@ import TableCell from "../components/ui/table/tableCell";
 import TableHead from "../components/ui/table/tableHead";
 import EmptyTable from "../components/ui/table/emptyTable";
 import Button from "../components/ui/button";
-import { Plus } from "lucide-react";
 import ConfirmModal from "../components/ui/ConfirmModal";
 import Pagination from "../components/ui/pagination";
 

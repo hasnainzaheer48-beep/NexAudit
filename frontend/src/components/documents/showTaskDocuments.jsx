@@ -1,16 +1,14 @@
 import useDocuments from "../../hooks/useDocuments";
-import DocumentCard from "./documentRow";
 import Table from '../ui/table/table'
 import TableHeader from "../ui/table/tableHeader";
 import TableRow from "../ui/table/tableRow";
 import TableHead from "../ui/table/tableHead";
-import TableCell from "../ui/table/tableCell";
 import DocumentRow from "./documentRow";
 import EmptyTable from "../ui/table/emptyTable";
 
 export default function ShowTaskDocuments({ taskId }) {
 
-    const { documents, loading, error, getDocuments, setDocuments } = useDocuments(taskId);
+    const { documents, loading, error, setDocuments } = useDocuments(taskId);
 
 
     if (loading) return null;

@@ -1,13 +1,12 @@
-import InfoCard from "../../ui/infoCard";
+
 import { AuthContext } from '../../../context/AuthContext'
 import { useContext } from "react";
-import StatGrid from "../statGrid";
 import RecentActivity from '../recentActivity';
 import AdminStatGrid from "./adminStatGrid";
 import LoadingComponent from "../../ui/loadingComponent";
 
 export default function AdminDashboard() {
-    const { user, loading } = useContext(AuthContext);
+    const { loading } = useContext(AuthContext);
     if (loading) {
         return <LoadingComponent />
     }
