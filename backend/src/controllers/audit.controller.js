@@ -182,7 +182,7 @@ const createAudit = async (req, res) => {
 
         const audit = auditResult.rows[0];
 
-        const templateTasksResult = await client.query(`SELECT * FROM template_tasks WHERE template_id = $1`, [audit.template_id]);
+        const templateTasksResult = await client.query(`SELECT * FROM template_tasks WHERE template_id = $1 and is_archived = false`, [audit.template_id]);
         const templateTasks = templateTasksResult.rows;
 
         for (const task of templateTasks) {

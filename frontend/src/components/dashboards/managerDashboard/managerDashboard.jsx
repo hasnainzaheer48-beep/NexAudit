@@ -19,7 +19,10 @@ export default function ManagerDashboard() {
                 <OverdueAudits role={(user.role).toLowerCase()} />
             </div>
             <div className='flex-1 min-h-0 grid sm:grid-cols-1 md:grid-cols-2 gap-2'>
-                <UpcomingAudits role={(user.role).toLowerCase()} />
+                <div className='min-h-0'>
+                    <UpcomingAudits role={(user.role).toLowerCase()} />
+
+                </div>
                 <RecentActivity />
             </div>
         </div>

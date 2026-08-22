@@ -135,7 +135,7 @@ export default function AuditsFormModal({ isOpen, onClose, onAuditCreated, selec
             setOriginalData(null)
 
         }
-    }, [selectedAudit])
+    }, [selectedAudit, isOpen])
 
 
 
