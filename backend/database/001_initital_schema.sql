@@ -1,16 +1,3 @@
-DROP TABLE IF EXISTS activity_logs;
-DROP TABLE IF EXISTS documents;
-DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS tasks;
-DROP TABLE IF EXISTS audits;
-DROP TABLE IF EXISTS template_tasks;
-DROP TABLE IF EXISTS audit_templates;
-DROP TABLE IF EXISTS clients;
-DROP TABLE IF EXISTS users;
-
-
-
-
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
 	first_name VARCHAR(50) NOT NULL,
@@ -145,7 +132,7 @@ CREATE TABLE documents (
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	is_deleted BOOLEAN DEFAULT false,
 	deleted_at TIMESTAMP,
-	deleted_by INT REFERENCES users(id);
+	deleted_by INT REFERENCES users(id)
 );
 
 CREATE TABLE activity_logs(
