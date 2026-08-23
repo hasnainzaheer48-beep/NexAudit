@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/env')
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
     try {
 
         const { email, password } = req.body;
@@ -37,8 +37,7 @@ const login = async (req, res) => {
     }
 
     catch (error) {
-        console.error(error);
-        res.status(500).send('Failed To Login')
+        next(error)
     }
 
 
@@ -46,7 +45,7 @@ const login = async (req, res) => {
 }
 
 
-const getCurrentUser = async (req, res) => {
+const getCurrentUser = async (req, res, next) => {
 
     const id = req.user.id;
 
@@ -73,8 +72,7 @@ const getCurrentUser = async (req, res) => {
 
     }
     catch (error) {
-        console.error(error);
-        res.status(500).send('Could not get User');
+        next(error)
     }
 }
 
