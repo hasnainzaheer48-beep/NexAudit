@@ -8,9 +8,10 @@ const DB_DATABASE = process.env.DB_DATABASE
 const DB_USER = process.env.DB_USER
 const DB_PASSWORD = process.env.DB_PASSWORD
 const JWT_SECRET = process.env.JWT_SECRET
+const FRONTEND_URL = process.env.FRONTEND_URL
 
-if (!(DB_HOST && DB_PORT && DB_DATABASE && DB_USER && DB_PASSWORD && JWT_SECRET)) {
+if (!(DB_HOST && DB_PORT && DB_DATABASE && DB_USER && DB_PASSWORD && JWT_SECRET && FRONTEND_URL)) {
     throw new Error("Missing Cofiguration")
 }
 
-module.exports = { DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASSWORD, JWT_SECRET }
+module.exports = { DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASSWORD, JWT_SECRET, FRONTEND_URL }

@@ -13,8 +13,11 @@ const activityLoggerRouter = require('./routes/activity.logger.routes.js');
 const documentRouter = require('./routes/documents.routes.js');
 const commentsRouter = require('./routes/comments.routes.js');
 const dashboardRouter = require('./routes/dashboard.routes.js');
+const { FRONTEND_URL } = require('./config/env.js');
 
-app.use(cors());
+app.use(cors({
+    origin: FRONTEND_URL
+}));
 app.use(express.json());
 
 

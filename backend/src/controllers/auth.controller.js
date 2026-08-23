@@ -1,9 +1,7 @@
 const pool = require('../config/db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-
-dotenv.config();
+const { JWT_SECRET } = require('../config/env')
 
 const login = async (req, res) => {
     try {
@@ -29,7 +27,7 @@ const login = async (req, res) => {
             email: user.email,
             role: user.role
 
-        }, process.env.JWT_SECRET, { expiresIn: "1d" });
+        }, JWT_SECRET, { expiresIn: "1d" });
 
         res.json({
             message: "Login Successful",
