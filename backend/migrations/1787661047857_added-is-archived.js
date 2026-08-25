@@ -11,7 +11,8 @@ export const shorthands = undefined;
 export const up = (pgm) => {
     pgm.sql(`
         ALTER TABLE template_tasks
-        ADD is_archived BOOLEAN DEFAULT FALSE
+        ADD COLUMN is_archived BOOLEAN DEFAULT FALSE
+        
         `)
 };
 
