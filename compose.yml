@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=nexaudit
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5433:5432
+    volumes:
+      - nexaudit-postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d nexaudit" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    ports:
+      - 3000:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    env_file:
+      - ./backend/.env
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=/
+    depends_on:
+      - backend
+    ports:
+      - 5173:80
+
+volumes:
+  nexaudit-postgres-data:
+    external: true
