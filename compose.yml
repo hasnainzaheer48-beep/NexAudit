@@ -42,6 +42,8 @@ services:
         - VITE_API_URL=/
     depends_on:
       - backend
+    environment:
+      - BACKEND_URL=http://backend:3000
     ports:
       - 5173:80
 
