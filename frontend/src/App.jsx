@@ -20,6 +20,7 @@ import AuditsByManager from './pages/auditsByManger'
 import TasksByManager from './pages/tasksByManager'
 import { AuthContext } from './context/AuthContext'
 import LoadingScreen from './components/ui/loadingScreen'
+import { Navigate } from "react-router-dom";
 
 
 
@@ -38,6 +39,7 @@ function App() {
 
 
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route element={< ProtectedRoute />}>
           <Route element={< Layout />}>
