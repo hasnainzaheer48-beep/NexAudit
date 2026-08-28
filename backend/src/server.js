@@ -40,7 +40,7 @@ async function startServer() {
     try {
         await pool.query('SELECT 1');
 
-        const PORT = process.env.DB_PORT || 3000;
+        const PORT = process.env.PORT || 3000;
 
         app.listen(PORT);
         console.log("LISTENING ON PORT 3000");
