@@ -37,21 +37,18 @@ app.use('/api/dashboard/', dashboardRouter);
 app.use(errorHandler);
 
 async function startServer() {
+    const PORT = process.env.PORT || 3000;
+
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`LISTENING ON PORT ${PORT}`);
+    });
+
     try {
         await pool.query('SELECT 1');
-
-        const PORT = process.env.PORT || 3000;
-
-        app.listen(PORT);
-        console.log("LISTENING ON PORT 3000");
-        console.log("CONNECTED TO POSTGRE");
-
+        console.log('CONNECTED TO POSTGRE');
+    } catch (error) {
+        console.error('POSTGRES CONNECTION FAILED:', error);
     }
-    catch (error) {
-        console.log(error);
-        console.log("FAILED TO CONECT TO POSTGRE");
-    }
-
 }
 
 startServer();
